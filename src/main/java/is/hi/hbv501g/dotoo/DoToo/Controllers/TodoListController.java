@@ -1,4 +1,4 @@
-package is.hi.hbv501g.dotoo.DoToo;
+package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
@@ -10,39 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
+
 @Controller
-public class HomeController {
+public class TodoListController {
 
     private TodoListService todoListService;
 
     @Autowired
-    public HomeController(TodoListService todoListService) {this.todoListService = todoListService;}
-
-    @RequestMapping("/")
-    public String HomePage() {
-
-        return "Velkomin";
-    }
-
-    @RequestMapping("/login")
-    public String LoginPage() {
-        return "LoginPage";
-    }
-
-    @RequestMapping("/signup")
-    public String SignupPage() {
-        return "SignupPage";
-    }
-
-    @RequestMapping("/main")
-    public String MainPage() {
-        return "MainPage";
-    }
-
-    @RequestMapping("/calendar")
-    public String CalendarPage() {
-        return "CalendarPage";
-    }
+    public TodoListController(TodoListService todoListService) {this.todoListService = todoListService;}
 
     @RequestMapping("/todolist")
     public String TodoListPage(Model model) {
@@ -51,7 +27,7 @@ public class HomeController {
     }
 
     @RequestMapping(value="/addtodolist", method = RequestMethod.POST)
-    public String addTodoList(TodoList todolist, BindingResult result, Model model) { // @Valid virkar ekki
+    public String addTodoList(@Valid TodoList todolist, BindingResult result, Model model) { // @Valid virkar ekki
         if(result.hasErrors()) {
             return "addtodolist";
         }
