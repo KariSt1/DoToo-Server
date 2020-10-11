@@ -1,9 +1,6 @@
 package is.hi.hbv501g.dotoo.DoToo.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TodoListItem {
@@ -14,6 +11,9 @@ public class TodoListItem {
 
     private String description;
     private boolean isDone;
+
+    @ManyToOne
+    private TodoList todoList;
 
     public TodoListItem() {
     }
@@ -46,5 +46,13 @@ public class TodoListItem {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public TodoList getTodoList() {
+        return todoList;
+    }
+
+    public void setTodoList(TodoList todoList) {
+        this.todoList = todoList;
     }
 }
