@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Velkomin</title>
 </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 <body>
 <p>Velkomin á DoToo</p>
+<div class="container">
+    <div th:switch="${users}">
+        <h2 th:case="null">No users yet!</h2>
+        <table class="table">
+            <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.name}" scope="row"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
 <body>
-<p>Þetta er login síða</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Login</h1>
+            <form action="#" th:action="@{/loginUser}" th:object="${user}" method="POST">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">Invalid username or password</div>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" th:field="*{username}" placeholder="Username" class="form-control">
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" th:field="*{password}" placeholder="Password" class="form-control">
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" class="form-control btn btn-primary" value="Login">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span>Not registered yet? <a href="/" th:href="@{/signup}">Register here</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
