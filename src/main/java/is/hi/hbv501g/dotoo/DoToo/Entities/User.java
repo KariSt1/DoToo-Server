@@ -1,10 +1,9 @@
 package is.hi.hbv501g.dotoo.DoToo.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -16,6 +15,9 @@ public class User {
     private String name;
     @NotNull
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<TodoList> todoLists = new ArrayList<>();
 
     public String getUsername() {
         return username;
