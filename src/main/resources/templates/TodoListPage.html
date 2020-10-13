@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>TodoList</title>
 </head>
 <body>
 <p>Þetta er todo-list síðan</p>
+<div class="todolists" th:each="todolist : ${todolists}">
+    <table class="table">
+        <thead>
+            <th scope="col"></th>
+        </thead>
+        <tbody th:each="item : ${todolist.items}">
+            <tr>
+                <td><input type="checkbox" id="isDone${loop.index}" name="vehicle1" checked="${item.isDone}"></td>
+                <td th:text="${item.description}" scope="row"></td>
+            </tr>
+        </tbody>
+    </table>
+    <form class="empty-tditem" th:action="@{/additem}" th:object="${todolists}" method="POST">
+        <input type="text">
+    </form>
+</div>
+
+
 </body>
 </html>

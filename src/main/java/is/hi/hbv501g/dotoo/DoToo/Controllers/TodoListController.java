@@ -1,6 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
+import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,13 @@ public class TodoListController {
     public String deleteTodoList(@PathVariable("id") long id, Model model) {
         TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
         todoListService.delete(todolist);
+        model.addAttribute("todolists", todoListService.findAll());
+        return "TodoListPage";
+    }
+
+    @RequestMapping(value = "/additem", method = RequestMethod.POST)
+    public String addItem(Model model, TodoList list, TodoListItem item) {
+        todoListService.addItem(list, item);
         model.addAttribute("todolists", todoListService.findAll());
         return "TodoListPage";
     }
