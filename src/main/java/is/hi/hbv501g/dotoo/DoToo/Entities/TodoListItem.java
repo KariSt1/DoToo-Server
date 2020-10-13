@@ -18,10 +18,10 @@ public class TodoListItem {
     public TodoListItem() {
     }
 
-    public TodoListItem(long id, String description, boolean isDone) {
-        this.id = id;
+    public TodoListItem(String description, boolean isDone, TodoList todoList) {
         this.description = description;
         this.isDone = isDone;
+        this.todoList = todoList;
     }
 
     public long getId() {
@@ -55,4 +55,5 @@ public class TodoListItem {
     public void setTodoList(TodoList todoList) {
         this.todoList = todoList;
     }
+
 }

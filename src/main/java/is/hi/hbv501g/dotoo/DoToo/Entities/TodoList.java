@@ -59,4 +59,13 @@ public class TodoList {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public TodoList(String name, String color, User user) {
+        this.name = name;
+        this.color = color;
+        this.user = user;
+    }
+
+    public TodoList() {
+    }
 }

@@ -42,4 +42,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public User(String username, String name, @NotNull String password) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+    }
+
+    public User() {
+    }
 }

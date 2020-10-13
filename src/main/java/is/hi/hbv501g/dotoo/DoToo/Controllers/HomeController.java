@@ -1,6 +1,8 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
+import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
+import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +35,22 @@ public class HomeController {
     @RequestMapping("/main")
     public String MainPage() {
         return "MainPage";
+    }
+
+    @RequestMapping("/makedata")
+    public String makeData(Model model) {
+
+        User nonni = new User("nonni", "Nonni", "1234");
+        userService.save(nonni);
+
+
+        for(int i=1; i<5; i++) {
+            TodoList todoList = new TodoList("Innkaupalisti " + i, "FFFFFF", nonni);
+            todoListService.save(todoList);
+            for(int j=1; j<4;j++) {
+                 todoListService.addItem(todoList, new TodoListItem(i + " mjólk", false, todoList));
+            }
+        }
+        return "redirect:/";
     }
 }

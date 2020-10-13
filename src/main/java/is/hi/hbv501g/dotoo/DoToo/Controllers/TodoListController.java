@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class TodoListController {
@@ -23,6 +24,7 @@ public class TodoListController {
 
     @RequestMapping("/todolist")
     public String TodoListPage(Model model) {
+        List<TodoList> lists = todoListService.findAll();
         model.addAttribute("todolists", todoListService.findAll());
         return "TodoListPage";
     }
