@@ -21,22 +21,22 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {this.userService = userService;}
 
-    @RequestMapping("/login")
-    public String LoginPage(Model model) {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginGET(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "LoginPage";
     }
 
-    @RequestMapping("/signup")
-    public String SignupPage(Model model) {
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signupGET(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "SignupPage";
     }
 
-    @RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-    public String loginUser(@Valid User user, BindingResult result, Model model) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginPOST(@Valid User user, BindingResult result, Model model) {
         if(result.hasErrors()) {
 
             System.out.println("Result errors: " + result.getFieldErrors());
@@ -56,8 +56,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/signupUser", method = RequestMethod.POST)
-    public String signupUser(@Valid User user, BindingResult result, Model model) {
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    public String signupPOST(@Valid User user, BindingResult result, Model model) {
         if(result.hasErrors()) {
             return "LoginPage";
         }
