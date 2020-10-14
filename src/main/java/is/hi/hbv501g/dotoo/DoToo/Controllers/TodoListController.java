@@ -64,4 +64,9 @@ public class TodoListController {
         model.addAttribute("todolists", todoListService.findAll());
         return "redirect:/todolist";
     }
+
+    @RequestMapping(value = "/newtodolist")
+    public String MakeTodoList() {
+        return "NewToDoListPage";
+    }
 }
