@@ -9,12 +9,13 @@
 <div class="todolists" th:each="todolist : ${todolists}">
     <table class="table">
         <thead>
+            <th scope="col" th:text="Done"></th>
             <th scope="col" th:text="${todolist.name}"></th>
         </thead>
         <tbody>
             <tr th:each="item : ${todolist.items}">
-                <td><input type="checkbox" id="isDone${loop.index}" name="vehicle1" checked="${item.isDone}"></td>
-                <td th:text="${item.description}" scope="row"></td>
+                <td><input type="checkbox" th:checked="${item.checked}"></td>
+                <td th:text="${item.description}"></td>
             </tr>
         </tbody>
     </table>

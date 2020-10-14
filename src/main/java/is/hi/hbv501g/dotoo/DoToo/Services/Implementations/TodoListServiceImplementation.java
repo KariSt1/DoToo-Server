@@ -2,6 +2,7 @@ package is.hi.hbv501g.dotoo.DoToo.Services.Implementations;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
+import is.hi.hbv501g.dotoo.DoToo.Repositories.TodoListItemRepository;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.TodoListRepository;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,36 +14,41 @@ import java.util.Optional;
 @Service
 public class TodoListServiceImplementation implements TodoListService {
 
-    TodoListRepository repository;
+    TodoListRepository listRepository;
+    TodoListItemRepository itemRepository;
 
     @Autowired
-    public TodoListServiceImplementation(TodoListRepository todoListRepository) {this.repository = todoListRepository;}
+    public TodoListServiceImplementation(TodoListRepository todoListRepository, TodoListItemRepository itemRepository) {
+        this.listRepository = todoListRepository;
+        this.itemRepository = itemRepository;
+    }
 
     @Override
     public TodoList save(TodoList todolist) {
-        return repository.save(todolist);
+        return listRepository.save(todolist);
     }
 
     @Override
     public void delete(TodoList todolist) {
-        repository.delete(todolist);
+        listRepository.delete(todolist);
     }
 
     @Override
     public List<TodoList> findAll() {
-        return repository.findAll();
+        return listRepository.findAll();
     }
 
     @Override
     public Optional<TodoList> findById(long id) {
-        return repository.findById(id);
+        return listRepository.findById(id);
     }
 
     @Override
     public TodoList addItem(TodoList list, TodoListItem item) {
        List<TodoListItem> currentItems = list.getItems();
+       itemRepository.save(item);
        currentItems.add(item);
        list.setItems(currentItems);
-       return repository.save(list);
+       return listRepository.save(list);
     }
 }

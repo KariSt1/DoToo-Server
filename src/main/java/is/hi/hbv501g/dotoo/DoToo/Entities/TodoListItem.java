@@ -10,7 +10,7 @@ public class TodoListItem {
     private long id;
 
     private String description;
-    private boolean isDone;
+    private boolean checked;
 
     @ManyToOne
     private TodoList todoList;
@@ -20,7 +20,7 @@ public class TodoListItem {
 
     public TodoListItem(String description, boolean isDone, TodoList todoList) {
         this.description = description;
-        this.isDone = isDone;
+        this.checked = isDone;
         this.todoList = todoList;
     }
 
@@ -40,12 +40,12 @@ public class TodoListItem {
         this.description = description;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public boolean getChecked() {
+        return checked;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setChecked(boolean done) {
+        checked = done;
     }
 
     public TodoList getTodoList() {
