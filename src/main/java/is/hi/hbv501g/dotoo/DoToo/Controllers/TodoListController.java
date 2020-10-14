@@ -2,15 +2,14 @@ package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
+import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
+import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,9 +19,13 @@ import java.util.Optional;
 public class TodoListController {
 
     private TodoListService todoListService;
+    private UserService userService;
 
     @Autowired
-    public TodoListController(TodoListService todoListService) {this.todoListService = todoListService;}
+    public TodoListController(TodoListService todoListService, UserService userService) {
+        this.todoListService = todoListService;
+        this.userService = userService;
+    }
 
     @RequestMapping("/todolist")
     public String TodoListPage(Model model) {
@@ -65,8 +68,28 @@ public class TodoListController {
         return "redirect:/todolist";
     }
 
-    @RequestMapping(value = "/newtodolist")
-    public String MakeTodoList() {
-        return "NewToDoListPage";
+    @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
+    public String newTodoList() {
+        return "NewTodoListPage";
+    }
+
+    @RequestMapping("/makenewtodolist")
+    public String makeTodoList(@RequestParam(value = "name") String name,
+                               Model model) {
+        User jonni = new User("jonni", "Jonni", "12334");
+        userService.save(jonni);
+        TodoList todoList = new TodoList(name, "FFFF",jonni);
+        todoListService.save(todoList);
+        return "redirect:/todolist";
+    }
+
+    @RequestMapping(value = "/additemnewtodolist", method = RequestMethod.POST)
+    public String addItemNewTodoList(@RequestParam(value = "description") String description,
+                          @RequestParam(value = "listId") long id,
+                          Model model) {
+        Optional<TodoList> todolist = todoListService.findById(id);
+        todoListService.addItem(todolist.get(), new TodoListItem(description, false, todolist.get()));
+        model.addAttribute("todolists", todoListService.findAll());
+        return "redirect:/newtodolist";
     }
 }
