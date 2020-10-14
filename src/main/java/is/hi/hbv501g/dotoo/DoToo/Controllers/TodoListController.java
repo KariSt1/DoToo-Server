@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TodoListController {
@@ -55,8 +56,11 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    public String addItem(@RequestParam(value = "description") String description, Model model,@Valid TodoList list, BindingResult result) {
-        todoListService.addItem(list, new TodoListItem(description, false, list));
+    public String addItem(@RequestParam(value = "description") String description,
+                          @RequestParam(value = "listId") long id,
+                          Model model) {
+        Optional<TodoList> todolist = todoListService.findById(id);
+        todoListService.addItem(todolist.get(), new TodoListItem(description, false, todolist.get()));
         model.addAttribute("todolists", todoListService.findAll());
         return "redirect:/todolist";
     }

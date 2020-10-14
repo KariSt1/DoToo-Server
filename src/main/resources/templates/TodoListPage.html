@@ -9,7 +9,6 @@
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
-<p>Þetta er todo-list síðan</p>
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 well" th:each="todolist : ${todolists}">
@@ -26,12 +25,14 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button">Add item</button>
+            <form action="#" method="POST" th:action="@{/additem(listId=${todolist.id})}">
+                <div class="input-group">
+                    <input type="text" class="form-control" th:name="description">
+                    <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Add item</button>
                 </span>
-            </div>
+                </div>
+            </form>
             <!--
             <form class="empty-tditem" th:action="@{/additem}" method="POST">
                 <div class="form-group">
