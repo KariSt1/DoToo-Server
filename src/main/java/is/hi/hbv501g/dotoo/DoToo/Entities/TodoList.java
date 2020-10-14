@@ -14,7 +14,7 @@ public class TodoList {
     private String name;
     private String color;
 
-    @OneToMany(mappedBy = "todoList")
+    @OneToMany(mappedBy = "todoList", cascade=CascadeType.ALL)
     private List<TodoListItem> items = new ArrayList<>();
 
     @ManyToOne

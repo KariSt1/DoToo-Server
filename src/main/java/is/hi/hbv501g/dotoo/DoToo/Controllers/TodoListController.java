@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -54,9 +55,9 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    public String addItem(Model model, TodoList list, TodoListItem item) {
-        todoListService.addItem(list, item);
+    public String addItem(@RequestParam(value = "description") String description, Model model,@Valid TodoList list, BindingResult result) {
+        todoListService.addItem(list, new TodoListItem(description, false, list));
         model.addAttribute("todolists", todoListService.findAll());
-        return "TodoListPage";
+        return "redirect:/todolist";
     }
 }

@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>TodoList</title>
 </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 <body>
-<p>Þetta er todo-list síðan</p>
-<div class="todolists" th:each="todolist : ${todolists}">
-    <table class="table">
-        <thead>
-            <th scope="col" th:text="Done"></th>
-            <th scope="col" th:text="${todolist.name}"></th>
-        </thead>
-        <tbody>
-            <tr th:each="item : ${todolist.items}">
-                <td><input type="checkbox" th:checked="${item.checked}"></td>
-                <td th:text="${item.description}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <form class="empty-tditem" th:action="@{/additem}" th:object="${todolists}" method="POST">
-        <input type="text">
-    </form>
-</div>
+    <p>Þetta er todo-list síðan</p>
+    <div class="container">
+        <div class="row">
+            <div class="col" th:each="todolist : ${todolists}">
+                <table class="table">
+                    <caption class="text-left" th:text="${todolist.name}"></caption>
+                    <thead>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${todolist.items}">
+                        <td><input type="checkbox" th:checked="${item.checked}"></td>
+                        <td th:text="${item.description}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <form class="empty-tditem" th:action="@{/additem}" method="POST">
+                    <div class="form-group">
+                        <input type="text" th:name="description" class="form-control">
+                        <input type="submit" class="form-control btn btn-primary" value="Add item">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 </body>

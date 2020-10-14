@@ -46,9 +46,10 @@ public class TodoListServiceImplementation implements TodoListService {
     @Override
     public TodoList addItem(TodoList list, TodoListItem item) {
        List<TodoListItem> currentItems = list.getItems();
-       itemRepository.save(item);
        currentItems.add(item);
-       list.setItems(currentItems);
-       return listRepository.save(list);
+        list.setItems(currentItems);
+        TodoList thelist = listRepository.save(list);
+        itemRepository.save(item);
+        return thelist;
     }
 }
