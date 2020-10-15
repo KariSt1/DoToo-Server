@@ -2,6 +2,7 @@ package is.hi.hbv501g.dotoo.DoToo.Services.Implementations;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
+import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.TodoListItemRepository;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.TodoListRepository;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
@@ -44,11 +45,17 @@ public class TodoListServiceImplementation implements TodoListService {
     }
 
     @Override
+    public List<TodoList> findByUser(User user) {
+        return listRepository.findByUser(user);
+    }
+
+    @Override
     public TodoList addItem(TodoList list, TodoListItem item) {
         List<TodoListItem> currentItems = list.getItems();
         currentItems.add(item);
         list.setItems(currentItems);
         return listRepository.save(list);
     }
+
 
 }
