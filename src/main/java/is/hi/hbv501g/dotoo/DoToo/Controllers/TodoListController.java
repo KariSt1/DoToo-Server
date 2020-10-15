@@ -85,11 +85,10 @@ public class TodoListController {
 
     @RequestMapping(value = "/additemnewtodolist", method = RequestMethod.POST)
     public String addItemNewTodoList(@RequestParam(value = "description") String description,
-                          @RequestParam(value = "listId") long id,
-                          Model model) {
-        Optional<TodoList> todolist = todoListService.findById(id);
-        todoListService.addItem(todolist.get(), new TodoListItem(description, false, todolist.get()));
-        model.addAttribute("todolists", todoListService.findAll());
+                                     @RequestParam(value = "todolist") TodoList todolist,
+                                    Model model) {
+        todoListService.addItem(todolist, new TodoListItem(description, false, todolist));
+        todoListService.save(todolist);
         return "redirect:/newtodolist";
     }
 }
