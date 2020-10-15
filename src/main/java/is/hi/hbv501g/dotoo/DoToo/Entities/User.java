@@ -10,11 +10,11 @@ public class User {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String username;
+    public String username;
 
-    private String name;
+    public String name;
     @NotNull
-    private String password;
+    public String password;
 
     @OneToMany(mappedBy = "user")
     private List<TodoList> todoLists = new ArrayList<>();

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -22,38 +23,38 @@ public class UserController {
     public UserController(UserService userService) {this.userService = userService;}
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+    public String loginGET(User user) {
         return "LoginPage";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signupGET(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+    public String signupGET(User user) {
         return "SignupPage";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(@Valid User user, BindingResult result, Model model) {
+    public String loginPOST(@Valid User user, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()) {
 
             System.out.println("Result errors: " + result.getFieldErrors());
             return "LoginPage";
         }
-        Optional<User> loggedInUser = userService.findById(user.getUsername());
-        if(loggedInUser.isPresent()) {
-            System.out.println("User is present!");
-            if(loggedInUser.get().getPassword().equals(user.getPassword())) {
-                return "redirect:/";
-            } else {
-                return "redirect:/login?error=true";
-            }
-        } else {
-            System.out.println("User is not present!");
-            return "redirect:/login?error=true";
+        User exists = userService.login(user);
+        if(exists == null){
+            session.setAttribute("loggedInUser", user);
+            return "redirect:/";
         }
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
+    public String loggedinGET(HttpSession session, Model model){
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if(sessionUser  == null){
+            model.addAttribute("loggedinuser", sessionUser);
+            return "LoggedInUser";
+        }
+        return "redirect:/";
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)
@@ -61,8 +62,8 @@ public class UserController {
         if(result.hasErrors()) {
             return "LoginPage";
         }
-        Optional<User> loggedInUser = userService.findById(user.getUsername());
-        if(loggedInUser.isPresent()) {
+        User exists = userService.findByUserName(user.username);
+        if(exists != null) {
             return "redirect:/signup?error=true";
         } else {
             System.out.println("User not present, signing up now!");
