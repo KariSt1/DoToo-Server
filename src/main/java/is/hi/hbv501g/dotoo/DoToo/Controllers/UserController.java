@@ -40,7 +40,7 @@ public class UserController {
             return "LoginPage";
         }
         User exists = userService.login(user);
-        if(exists == null){
+        if(exists != null){
             session.setAttribute("loggedInUser", user);
             return "redirect:/";
         }
@@ -50,7 +50,7 @@ public class UserController {
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
     public String loggedinGET(HttpSession session, Model model){
         User sessionUser = (User) session.getAttribute("loggedInUser");
-        if(sessionUser  == null){
+        if(sessionUser  != null){
             model.addAttribute("loggedinuser", sessionUser);
             return "LoggedInUser";
         }

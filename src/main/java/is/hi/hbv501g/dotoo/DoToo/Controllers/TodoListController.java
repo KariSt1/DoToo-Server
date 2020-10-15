@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +29,9 @@ public class TodoListController {
     }
 
     @RequestMapping("/todolist")
-    public String TodoListPage(Model model) {
-        List<TodoList> lists = todoListService.findAll();
-        model.addAttribute("todolists", todoListService.findAll());
+    public String TodoListPage(Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("todolists", todoListService.findByUser(sessionUser));
         return "TodoListPage";
     }
 
@@ -75,10 +76,9 @@ public class TodoListController {
 
     @RequestMapping("/makenewtodolist")
     public String makeTodoList(@RequestParam(value = "name") String name,
-                               Model model) {
-        User jonni = new User("jonni", "Jonni", "12334");
-        userService.save(jonni);
-        TodoList todoList = new TodoList(name, "FFFF",jonni);
+                               Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        TodoList todoList = new TodoList(name, "FFFF", sessionUser);
         todoListService.save(todoList);
         return "redirect:/todolist";
     }
