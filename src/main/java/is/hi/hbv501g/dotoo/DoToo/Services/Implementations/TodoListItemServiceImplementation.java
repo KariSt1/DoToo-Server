@@ -4,6 +4,7 @@ import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.TodoListItemRepository;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,11 @@ import java.util.Optional;
 public class TodoListItemServiceImplementation implements TodoListItemService {
 
     TodoListItemRepository itemRepository;
+
+    @Autowired
+    public TodoListItemServiceImplementation(TodoListItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     @Override
     public TodoListItem save(TodoListItem item) {

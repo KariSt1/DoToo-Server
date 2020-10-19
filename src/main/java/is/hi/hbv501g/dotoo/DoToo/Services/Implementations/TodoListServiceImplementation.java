@@ -18,9 +18,8 @@ public class TodoListServiceImplementation implements TodoListService {
     TodoListRepository listRepository;
 
     @Autowired
-    public TodoListServiceImplementation(TodoListRepository todoListRepository, TodoListItemRepository itemRepository) {
+    public TodoListServiceImplementation(TodoListRepository todoListRepository) {
         this.listRepository = todoListRepository;
-        this.itemRepository = itemRepository;
     }
 
     @Override

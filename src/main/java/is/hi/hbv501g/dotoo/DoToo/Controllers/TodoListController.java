@@ -25,9 +25,12 @@ public class TodoListController {
     private UserService userService;
 
     @Autowired
-    public TodoListController(TodoListService todoListService, UserService userService) {
+    public TodoListController(TodoListService todoListService,
+                              UserService userService,
+                              TodoListItemService itemService) {
         this.todoListService = todoListService;
         this.userService = userService;
+        this.itemService = itemService;
     }
 
     @RequestMapping("/todolist")
@@ -95,7 +98,11 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
-    public String itemChecked(@RequestParam(value = "id") long id, Model model) {
-
+    public String itemChecked(@RequestParam(value = "id") long id,
+                              @RequestParam(value = "checked") boolean checked, Model model, HttpSession session) { ;
+        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
+        item.setChecked(checked);
+        itemService.save(item);
+        return "redirect:/todolist";
     }
 }
