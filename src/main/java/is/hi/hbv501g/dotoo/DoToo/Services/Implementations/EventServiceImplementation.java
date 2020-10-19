@@ -2,7 +2,7 @@ package is.hi.hbv501g.dotoo.DoToo.Services.Implementations;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.EventRepository;
-import is.hi.hbv501g.dotoo.DoToo.Services.CalendarService;
+import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CalendarServiceImplementation implements CalendarService {
+public class EventServiceImplementation implements EventService {
     EventRepository eventRepository;
 
     @Autowired
-    public CalendarServiceImplementation(EventRepository eventRepository) {
+    public EventServiceImplementation(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
 

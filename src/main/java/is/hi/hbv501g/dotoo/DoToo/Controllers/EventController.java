@@ -1,9 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
-import is.hi.hbv501g.dotoo.DoToo.Services.CalendarService;
-import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
-import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
+import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +12,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Controller
-public class CalendarController {
+public class EventController {
 
-    private CalendarService calendarService;
+    private EventService eventService;
     
     @Autowired
-    public CalendarController(CalendarService calendarService) {
-        this.calendarService = calendarService;
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
     }
 
     @RequestMapping("/calendar")
@@ -37,7 +35,7 @@ public class CalendarController {
                             @RequestParam(value = "title") String title, @RequestParam(value = "category") String category,
                             @RequestParam(value = "color") String color) {
         Event event = new Event(startDate, endDate, title, category, color);
-        calendarService.save(event);
+        eventService.save(event);
         return "redirect:/calendar";
     }
 }

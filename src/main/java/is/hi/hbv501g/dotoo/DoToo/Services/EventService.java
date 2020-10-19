@@ -5,7 +5,7 @@ import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
 import java.util.List;
 import java.util.Optional;
 
-public interface CalendarService {
+public interface EventService {
 
     Event save(Event event);
     void delete(Event event);
