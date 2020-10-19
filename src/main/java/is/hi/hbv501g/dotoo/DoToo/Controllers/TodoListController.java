@@ -3,6 +3,7 @@ package is.hi.hbv501g.dotoo.DoToo.Controllers;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
+import is.hi.hbv501g.dotoo.DoToo.Services.TodoListItemService;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class TodoListController {
 
     private TodoListService todoListService;
+    private TodoListItemService itemService;
     private UserService userService;
 
     @Autowired
