@@ -91,4 +91,9 @@ public class TodoListController {
         todoListService.save(todolist);
         return "redirect:/newtodolist";
     }
+
+    @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
+    public String itemChecked(@RequestParam(value = "id") long id, Model model) {
+
+    }
 }

@@ -56,7 +56,7 @@
                 <table class="card-table table">
                     <tbody>
                     <tr th:each="item : ${todolist.items}">
-                        <td style="width:8%"><input type="checkbox" th:checked="${item.checked}"></td>
+                        <td style="width:8%"><input type="checkbox" th:id="${item.id}" th:checked="${item.checked}"></td>
                         <td th:text="${item.description}" class="pull-left"></td>
                     </tr>
                     </tbody>
