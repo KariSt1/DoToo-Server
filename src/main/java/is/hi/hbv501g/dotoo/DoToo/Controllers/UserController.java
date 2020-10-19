@@ -44,7 +44,7 @@ public class UserController {
             session.setAttribute("loggedInUser", user);
             return "redirect:/";
         }
-        return "redirect:/";
+        return "redirect:/login?error=true";
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
