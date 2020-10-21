@@ -40,22 +40,6 @@ public class TodoListController {
         return "TodoListPage";
     }
 
-    @RequestMapping(value="/addtodolist", method = RequestMethod.POST)
-    public String addTodoList(@Valid TodoList todolist, BindingResult result, Model model) { // @Valid virkar ekki
-        if(result.hasErrors()) {
-            return "addtodolist";
-        }
-
-        todoListService.save(todolist);
-        model.addAttribute("todolists", todoListService.findAll());
-        return "TodoListPage";
-    }
-
-    @RequestMapping(value = "/addtodolist", method = RequestMethod.GET)
-    public String addTodoListFrom(Model model) {
-        return "addtodolist";
-    }
-
     @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
     public String deleteTodoList(@PathVariable("id") long id, Model model) {
         TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
