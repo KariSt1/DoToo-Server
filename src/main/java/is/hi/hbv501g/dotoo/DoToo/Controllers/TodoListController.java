@@ -65,7 +65,7 @@ public class TodoListController {
 
     @RequestMapping("/makenewtodolist")
     public String makeTodoList(@RequestParam(value = "name") String name,
-                               Model model, HttpSession session) {
+                               HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         TodoList todoList = new TodoList(name, "FFFF", sessionUser);
         todoListService.save(todoList);
@@ -74,8 +74,7 @@ public class TodoListController {
 
     @RequestMapping(value = "/additemnewtodolist", method = RequestMethod.POST)
     public String addItemNewTodoList(@RequestParam(value = "description") String description,
-                                     @RequestParam(value = "todolist") TodoList todolist,
-                                    Model model) {
+                                     @RequestParam(value = "todolist") TodoList todolist) {
         todoListService.addItem(todolist, new TodoListItem(description, false, todolist));
         todoListService.save(todolist);
         return "redirect:/newtodolist";
@@ -83,7 +82,7 @@ public class TodoListController {
 
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
-                              @RequestParam(value = "checked") boolean checked, Model model, HttpSession session) { ;
+                              @RequestParam(value = "checked") boolean checked) { ;
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
         item.setChecked(checked);
         itemService.save(item);

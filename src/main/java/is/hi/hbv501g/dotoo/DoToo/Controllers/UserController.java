@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(@Valid User user, BindingResult result, Model model, HttpSession session) {
+    public String loginPOST(@Valid User user, BindingResult result, HttpSession session) {
         if(result.hasErrors()) {
 
             System.out.println("Result errors: " + result.getFieldErrors());

@@ -38,7 +38,7 @@ public class HomeController {
     }
 
     @RequestMapping("/makedata")
-    public String makeData(Model model) {
+    public String makeData() {
 
         User nonni = new User("nonni", "Nonni", "1234");
         userService.save(nonni);
