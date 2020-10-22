@@ -36,6 +36,9 @@ public class TodoListController {
     @RequestMapping("/todolist")
     public String TodoListPage(Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
+        if(sessionUser == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
         return "TodoListPage";
     }

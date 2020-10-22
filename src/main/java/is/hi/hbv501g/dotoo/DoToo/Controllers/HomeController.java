@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 
@@ -27,7 +29,11 @@ public class HomeController {
     }
 
     @RequestMapping("/")
-    public String HomePage(Model model) {
+    public String HomePage(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if(user == null ) {
+            return "redirect:/login";
+        }
         model.addAttribute("users", userService.findAll());
         return "Velkomin";
     }
