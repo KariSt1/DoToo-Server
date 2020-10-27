@@ -3,6 +3,7 @@ package is.hi.hbv501g.dotoo.DoToo.Controllers;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
+import is.hi.hbv501g.dotoo.DoToo.Services.TodoListItemService;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,35 +21,26 @@ import java.util.Optional;
 public class TodoListController {
 
     private TodoListService todoListService;
+    private TodoListItemService itemService;
     private UserService userService;
 
     @Autowired
-    public TodoListController(TodoListService todoListService, UserService userService) {
+    public TodoListController(TodoListService todoListService,
+                              UserService userService,
+                              TodoListItemService itemService) {
         this.todoListService = todoListService;
         this.userService = userService;
+        this.itemService = itemService;
     }
 
     @RequestMapping("/todolist")
     public String TodoListPage(Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
+        if(sessionUser == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
         return "TodoListPage";
-    }
-
-    @RequestMapping(value="/addtodolist", method = RequestMethod.POST)
-    public String addTodoList(@Valid TodoList todolist, BindingResult result, Model model) { // @Valid virkar ekki
-        if(result.hasErrors()) {
-            return "addtodolist";
-        }
-
-        todoListService.save(todolist);
-        model.addAttribute("todolists", todoListService.findAll());
-        return "TodoListPage";
-    }
-
-    @RequestMapping(value = "/addtodolist", method = RequestMethod.GET)
-    public String addTodoListFrom(Model model) {
-        return "addtodolist";
     }
 
     @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
@@ -76,7 +68,7 @@ public class TodoListController {
 
     @RequestMapping("/makenewtodolist")
     public String makeTodoList(@RequestParam(value = "name") String name,
-                               Model model, HttpSession session) {
+                               HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         TodoList todoList = new TodoList(name, "FFFF", sessionUser);
         todoListService.save(todoList);
@@ -85,10 +77,18 @@ public class TodoListController {
 
     @RequestMapping(value = "/additemnewtodolist", method = RequestMethod.POST)
     public String addItemNewTodoList(@RequestParam(value = "description") String description,
-                                     @RequestParam(value = "todolist") TodoList todolist,
-                                    Model model) {
+                                     @RequestParam(value = "todolist") TodoList todolist) {
         todoListService.addItem(todolist, new TodoListItem(description, false, todolist));
         todoListService.save(todolist);
         return "redirect:/newtodolist";
+    }
+
+    @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
+    public String itemChecked(@RequestParam(value = "id") long id,
+                              @RequestParam(value = "checked") boolean checked) { ;
+        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
+        item.setChecked(checked);
+        itemService.save(item);
+        return "redirect:/todolist";
     }
 }

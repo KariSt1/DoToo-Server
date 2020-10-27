@@ -1,0 +1,5 @@
+.linethrough {
+    text-decoration: line-through;
+}
+
+// Skoða hvort þetta virkar í TodoListPage fyrir textann við hvert item:  th:classappend="${item.checked ? '' : 'linethrough'}"
