@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,6 +40,39 @@
 
 <body>
 <p>Þetta er dagatals síðan</p>
+<div class="calendar-grid col-md-6">
+    <form action="#" th:action="@{/calendar}" th:object="${event}">
+
+    </form>
+    <button class="btn" id="monthView">Month</button>
+    <button class="btn" id="weekView">Week</button>
+    <button class="btn" id="dayView">Day</button>
+    <div class="events">
+        <div class="event" th:each="event : ${events}">
+            <h2 th:text="${event.title}"></h2>
+            <p th:text="${event.startDate.DAY_OF_MONTH}+'/'+${event.startDate.MONTH}+'/'+${event.startDate.YEAR}"></p>
+            <p th:text="${event.endDate.DAY_OF_MONTH}+'/'+${event.endDate.MONTH}+'/'+${event.endDate.YEAR}"></p>
+            <!--<p th:text="${event.startDate.MONTH}">
+            <p th:text="${event.endDate.YEAR}">-->
+        </div>
+    </div>
+</div>
+
+<div id="new-event" class="container col-md-6">
+    <form action="#" method="POST" th:action="@{/makenewevent}">
+        <input type="text" class="form-control" th:name="title" placeholder="Event title">
+        <input type="datetime-local" id="start-date"
+               th:name="startDate" value="2018-06-12T19:30"
+               min="2018-06-07T00:00" max="2030-06-14T00:00">
+        <input type="datetime-local" id="end-date"
+               th:name="endDate" value="2018-06-12T20:30"
+               min="2018-06-07T00:00" max="2030-06-14T00:00">
+        <input type="text" class="form-control" th:name="category" placeholder="Category">
+        <input type="text" class="form-control" th:name="color" placeholder="Color">
+        <button type="submit" class="btn btn-primary" id="button-confirm">Confirm</button>
+
+    </form>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

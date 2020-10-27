@@ -19,6 +19,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<TodoList> todoLists = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Event> events = new ArrayList<>();
+
     public String getUsername() {
         return username;
     }

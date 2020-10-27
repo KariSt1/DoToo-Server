@@ -6,8 +6,7 @@ import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EventServiceImplementation implements EventService {
@@ -30,5 +29,53 @@ public class EventServiceImplementation implements EventService {
     }
     public Optional<Event> findById(long id) {
         return eventRepository.findById(id);
+    }
+
+    @Override
+    public List<Event> findByWeek(int year, int week) {
+        List<Event> events = findAll();
+        List<Event> eventsByWeek = new ArrayList<>();
+        for(int i = 0; i < events.size(); i++) {
+            Event event = events.get(i);
+            Calendar ev = event.getStartDate().getInstance();
+            if(ev.YEAR == year && ev.WEEK_OF_YEAR == week) eventsByWeek.add(event);
+        }
+        return eventsByWeek;
+    }
+
+    @Override
+    public List<Event> findByDay(int year, int month, int day) {
+        List<Event> events = findAll();
+        List<Event> eventsByDay = new ArrayList<>();
+        for(int i = 0; i < events.size(); i++) {
+            Event event = events.get(i);
+            Calendar ev = event.getStartDate().getInstance();
+            if(ev.YEAR == year && ev.MONTH == month && ev.DAY_OF_MONTH == day) eventsByDay.add(event);
+        }
+        return eventsByDay;
+    }
+
+    @Override
+    public List<Event> findByMonth(int year, int month) {
+        List<Event> events = findAll();
+        List<Event> eventsByMonth = new ArrayList<>();
+        for(int i = 0; i < events.size(); i++) {
+            Event event = events.get(i);
+            Calendar ev = event.getStartDate().getInstance();
+            if(ev.YEAR == year && ev.MONTH == month) eventsByMonth.add(event);
+        }
+        return eventsByMonth;
+    }
+
+    @Override
+    public List<Event> findByYear(int year) {
+        List<Event> events = findAll();
+        List<Event> eventsByYear = new ArrayList<>();
+        for(int i = 0; i < events.size(); i++) {
+            Event event = events.get(i);
+            Calendar ev = event.getStartDate().getInstance();
+            if(ev.YEAR == year)  eventsByYear.add(event);
+        }
+        return eventsByYear;
     }
 }
