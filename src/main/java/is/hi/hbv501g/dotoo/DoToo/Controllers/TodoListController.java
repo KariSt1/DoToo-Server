@@ -39,6 +39,7 @@ public class TodoListController {
         if(sessionUser == null) {
             return "redirect:/login";
         }
+        List<TodoList> lists = todoListService.findByUser(sessionUser);
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
         return "TodoListPage";
     }
@@ -57,7 +58,16 @@ public class TodoListController {
                           Model model) {
         Optional<TodoList> todolist = todoListService.findById(id);
         todoListService.addItem(todolist.get(), new TodoListItem(description, false, todolist.get()));
-        model.addAttribute("todolists", todoListService.findAll());
+        //model.addAttribute("todolists", todoListService.findAll());
+        return "redirect:/todolist";
+    }
+
+    @RequestMapping(value = "/deleteitem", method = RequestMethod.POST)
+    public String deleteItem(@RequestParam(value = "id") long id, Model model) {
+        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
+        itemService.delete(item);
+        System.out.println("Er í deleteitem");
+        //model.addAttribute("todolists", todoListService.findAll());
         return "redirect:/todolist";
     }
 
@@ -97,7 +107,7 @@ public class TodoListController {
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
                               @RequestParam(value = "checked") boolean checked) { ;
-        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
+        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
         item.setChecked(checked);
         itemService.save(item);
         return "redirect:/todolist";
