@@ -61,12 +61,12 @@ public class TodoListController {
         return "redirect:/todolist";
     }
 
-    @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
-    public String newTodoList() {
+    @RequestMapping(value = "/newtodolist", method = RequestMethod.GET)
+    public String newTodoListGET() {
         return "NewTodoListPage";
     }
 
-    @RequestMapping("/makenewtodolist")
+    @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
     public String makeTodoList(@RequestParam(value = "name") String name,
                                HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
