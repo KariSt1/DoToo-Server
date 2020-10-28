@@ -39,6 +39,7 @@ public class TodoListController {
         if (sessionUser == null) {
             return "redirect:/login";
         }
+        model.addAttribute("loggedinuser", sessionUser);
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
         return "TodoListPage";
     }

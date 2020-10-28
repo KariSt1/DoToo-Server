@@ -30,12 +30,17 @@ public class EventController {
     }
 
     @RequestMapping("/calendar")
-    public String CalendarPage(Model model) {
+    public String CalendarPage(Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if (sessionUser == null) {
+            return "redirect:/login";
+        }
         Calendar now = Calendar.getInstance();
         model.addAttribute("day", now.DAY_OF_WEEK);
         model.addAttribute("week", now.WEEK_OF_MONTH);
         model.addAttribute("month", now.MONTH);
         model.addAttribute("year", now.YEAR);
+        model.addAttribute("loggedinuser", sessionUser);
         model.addAttribute("events", eventService.findAll());
         return "CalendarPage";
     }

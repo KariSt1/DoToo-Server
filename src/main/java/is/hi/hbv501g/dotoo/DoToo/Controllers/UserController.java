@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -70,5 +71,11 @@ public class UserController {
             model.addAttribute("users", userService.findAll());
             return "redirect:/login?success=true";
         }
+    }
+
+    @RequestMapping(value="/signout", method = RequestMethod.GET)
+    public String signout(HttpSession session) {
+        session.removeAttribute("loggedInUser");
+        return "redirect:/login";
     }
 }
