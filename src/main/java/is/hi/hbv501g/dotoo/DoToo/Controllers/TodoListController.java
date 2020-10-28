@@ -65,7 +65,7 @@ public class TodoListController {
     public String newTodoListGET() {
         return "NewTodoListPage";
     }
-
+/**
     @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
     public String makeTodoList(@RequestParam(value = "name") String name,
                                HttpSession session) {
@@ -82,6 +82,17 @@ public class TodoListController {
         todoListService.save(todolist);
         return "redirect:/newtodolist";
     }
+
+    */
+
+    @RequestMapping(value = "/maketodolist", method = RequestMethod.POST)
+    public String makeTodoListPOST(@RequestParam(value = "name") String name, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        TodoList todolist = new TodoList(name, "FFF", sessionUser);
+        todoListService.save(todolist);
+        return "redirect:/todolist";
+    }
+
 
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
