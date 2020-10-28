@@ -1,3 +1,6 @@
 .linethrough {
     text-decoration: line-through;
+
+.card {
+    margin: 15px;
 }
