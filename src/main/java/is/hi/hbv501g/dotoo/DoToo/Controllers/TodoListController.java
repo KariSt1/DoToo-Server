@@ -9,12 +9,12 @@ import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -36,14 +36,14 @@ public class TodoListController {
     @RequestMapping("/todolist")
     public String TodoListPage(Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
-        if(sessionUser == null) {
+        if (sessionUser == null) {
             return "redirect:/login";
         }
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
         return "TodoListPage";
     }
 
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteTodoList(@PathVariable("id") long id, Model model) {
         TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
         todoListService.delete(todolist);
@@ -67,9 +67,9 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
-    public String newTodoListPOST(@RequestParam(value = "name") String name, HttpSession session) {
+    public String newTodoListPOST(@RequestParam(value = "name") String name, @RequestParam(value = "color") String color, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
-        TodoList todolist = new TodoList(name, "FFF", sessionUser);
+        TodoList todolist = new TodoList(name, color, sessionUser);
         todoListService.save(todolist);
         return "redirect:/todolist";
     }
@@ -77,7 +77,8 @@ public class TodoListController {
 
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
-                              @RequestParam(value = "checked") boolean checked) { ;
+                              @RequestParam(value = "checked") boolean checked) {
+        ;
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
         item.setChecked(checked);
         itemService.save(item);
