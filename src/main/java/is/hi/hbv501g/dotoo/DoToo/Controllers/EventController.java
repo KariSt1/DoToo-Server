@@ -46,7 +46,9 @@ public class EventController {
                             @RequestParam(value = "color") String color, HttpSession session) throws ParseException {
         Calendar sd = Calendar.getInstance();
         Calendar ed = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DDTHH:mm", Locale.ENGLISH);
+        startDate = startDate.replace(startDate.charAt(10), ' ');
+        endDate = endDate.replace(endDate.charAt(10), ' '); //Get rid of the T from date string
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm", Locale.ENGLISH);
         sd.setTime(sdf.parse(startDate));
         ed.setTime(sdf.parse(endDate));
 
