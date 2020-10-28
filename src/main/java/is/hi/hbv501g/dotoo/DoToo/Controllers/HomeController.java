@@ -40,6 +40,7 @@ public class HomeController {
         if(user == null ) {
             return "redirect:/login";
         }
+        model.addAttribute("loggedinuser", user);
         model.addAttribute("users", userService.findAll());
         return "Velkomin";
     }
