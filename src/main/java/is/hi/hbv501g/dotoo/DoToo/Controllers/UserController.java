@@ -66,10 +66,9 @@ public class UserController {
         if(exists != null) {
             return "redirect:/signup?error=true";
         } else {
-            System.out.println("User not present, signing up now!");
             userService.save(user);
             model.addAttribute("users", userService.findAll());
-            return "redirect:/";
+            return "redirect:/login?success=true";
         }
     }
 }
