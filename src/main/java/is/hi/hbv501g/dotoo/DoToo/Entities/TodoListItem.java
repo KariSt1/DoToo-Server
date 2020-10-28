@@ -18,9 +18,9 @@ public class TodoListItem {
     public TodoListItem() {
     }
 
-    public TodoListItem(String description, boolean isDone, TodoList todoList) {
+    public TodoListItem(String description, boolean checked, TodoList todoList) {
         this.description = description;
-        this.checked = isDone;
+        this.checked = checked;
         this.todoList = todoList;
     }
 

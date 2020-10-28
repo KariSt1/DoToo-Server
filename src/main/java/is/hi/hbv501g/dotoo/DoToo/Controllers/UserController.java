@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(@Valid User user, BindingResult result, Model model, HttpSession session) {
+    public String loginPOST(@Valid User user, BindingResult result, HttpSession session) {
         if(result.hasErrors()) {
 
             System.out.println("Result errors: " + result.getFieldErrors());
@@ -44,7 +45,7 @@ public class UserController {
             session.setAttribute("loggedInUser", user);
             return "redirect:/";
         }
-        return "redirect:/";
+        return "redirect:/login?error=true";
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
@@ -66,10 +67,15 @@ public class UserController {
         if(exists != null) {
             return "redirect:/signup?error=true";
         } else {
-            System.out.println("User not present, signing up now!");
             userService.save(user);
             model.addAttribute("users", userService.findAll());
-            return "redirect:/";
+            return "redirect:/login?success=true";
         }
+    }
+
+    @RequestMapping(value="/signout", method = RequestMethod.GET)
+    public String signout(HttpSession session) {
+        session.removeAttribute("loggedInUser");
+        return "redirect:/login";
     }
 }

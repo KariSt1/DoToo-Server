@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Calendar;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 
@@ -33,7 +35,12 @@ public class HomeController {
     }
 
     @RequestMapping("/")
-    public String HomePage(Model model) {
+    public String HomePage(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if(user == null ) {
+            return "redirect:/login";
+        }
+        model.addAttribute("loggedinuser", user);
         model.addAttribute("users", userService.findAll());
         return "Velkomin";
     }
@@ -44,7 +51,7 @@ public class HomeController {
     }
 
     @RequestMapping("/makedata")
-    public String makeData(Model model) {
+    public String makeData() {
 
         User nonni = new User("nonni", "Nonni", "1234");
         userService.save(nonni);

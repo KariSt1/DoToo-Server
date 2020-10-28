@@ -1,5 +1,6 @@
 package is.hi.hbv501g.dotoo.DoToo.Repositories;
 
+import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,6 +10,6 @@ import java.util.Optional;
 public interface TodoListItemRepository extends JpaRepository<TodoListItem, Long> {
     TodoListItem save(TodoListItem todoListItem);
     void delete(TodoListItem todolist);
-    List<TodoListItem> findAll();
+    List<TodoListItem> findByTodoList(TodoList todoList);
     Optional<TodoListItem> findById(long id);
 }
