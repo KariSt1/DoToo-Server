@@ -7,7 +7,7 @@ function itemChecked(item) {
         $.post(url, data);
     });
     let description = item.parentNode.nextElementSibling;
-    description.classList.add("linethrough");
+    description.classList.toggle("linethrough");
 }
 
 function itemDeleted(item) {
