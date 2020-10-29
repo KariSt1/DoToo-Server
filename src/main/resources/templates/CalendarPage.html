@@ -47,7 +47,7 @@
 </header>
 
 <body>
-<p th:text="'Vika '+${week}"> </p>
+<p th:text="'Vika '+${week}"></p>
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <input type="radio" th:name="dayView" th:value="1" th:text="Day">
