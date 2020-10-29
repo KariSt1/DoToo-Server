@@ -50,13 +50,14 @@
 <p th:text="'Week: '+${week}"> </p>
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
-        <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-radio" th:name="dayView" th:value="1" th:field="*{option}" th:text="Day">
-            <input type="radio" class="custom-control-radio" th:name="weekView" th:value="2" th:field="*{option}" checked="checked" th:text="Week">
-            <input type="radio" class="custom-control-radio" th:name="yearView" th:value="3" th:field="*{option}" th:text="Year">
+        <div class="custom-control">
+            <!--<input type="radio" class="custom-control-radio" th:name="view" th:value="day" th:field="*{option}" th:text="Day">
+            <input type="radio" class="custom-control-radio" th:name="view" th:value="week" th:field="*{option}" checked="checked" th:text="Week">
+            <input type="radio" class="custom-control-radio" th:name="view" th:value="month" th:field="*{option}" th:text="Year">-->
+            <button type="submit" th:name="view" value="day">Day</button>
+            <button type="submit" th:name="view" value="week">Week</button>
+            <button type="submit" th:name="view" value="year">Year</button>
         </div>
-
-        <button type="submit" class="btn btn-primary">Change view</button>
     </form>
     <div class="events">
         <div class="event" th:each="event : ${events}" th:classappend="${event.color}">
@@ -79,16 +80,15 @@
                min="2018-06-07T00:00" max="2030-06-14T00:00">
         <input type="text" class="form-control" th:name="category" placeholder="Category" required>
         <select id="colors" th:name="color">
-            <option value="yellow"> Yellow </option>
-            <option value="red"> Red </option>
-            <option value="green"> Green </option>
-            <option value="blue"> Blue </option>
-            <option value="pink"> Pink </option>
-            <option value="purple"> Purple </option>
-            <option value="orange"> Orange </option>
+            <option value="yellow"> Yellow</option>
+            <option value="red"> Red</option>
+            <option value="green"> Green</option>
+            <option value="blue"> Blue</option>
+            <option value="pink"> Pink</option>
+            <option value="purple"> Purple</option>
+            <option value="orange"> Orange</option>
         </select>
         <button type="submit" class="btn btn-primary" id="button-confirm">Confirm</button>
-
     </form>
 </div>
 
