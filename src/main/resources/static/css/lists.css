@@ -11,3 +11,31 @@
     border-color: transparent;
     font: bold 30px Georgia;
  }
+
+ .pink {
+    background-color: #fcc0f2;
+ }
+
+.green {
+    background-color: #c0fcc1;
+}
+
+.blue {
+    background-color: #bfefff;
+}
+
+.red {
+    background-color: #ff7a7a;
+}
+
+.yellow {
+    background-color: #faec9e;
+}
+
+.purple {
+    background-color: #e0a3ff;
+}
+
+.orange {
+    background-color: #ffad8a;
+}
