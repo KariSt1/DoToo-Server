@@ -71,8 +71,9 @@
     <form action="#" method="POST" th:action="@{/makenewevent}">
         <input type="text" class="form-control" th:name="title" placeholder="Event title" required>
         <input type="datetime-local" id="start-date"
-               th:name="startDate" value="2020-10-29T19:30"
+               th:name="startDate" th:value="${dates.format(#dates.createNow(), 'YYYY-MM-dd HH:mm')}"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
+        <!-- value="2020-10-29T19:30" -->
         <input type="datetime-local" id="end-date"
                th:name="endDate" value="2020-10-29T20:30"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
