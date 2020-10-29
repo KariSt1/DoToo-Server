@@ -1,6 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Services.Implementations;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
+import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.EventRepository;
 import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class EventServiceImplementation implements EventService {
     }
     public Optional<Event> findById(long id) {
         return eventRepository.findById(id);
+    }
+
+    @Override
+    public List<Event> findByUser(User user) {
+        return eventRepository.findByUser(user);
     }
 
     @Override
