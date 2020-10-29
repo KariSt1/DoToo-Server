@@ -47,8 +47,10 @@ public class EventController {
     }
 
     @RequestMapping("/changeview")
-    public String changeCalendarView(@ModelAttribute(value="view") Model model) {
-
+    public String changeCalendarView(@RequestParam(value="view") String view, Model model) {
+        Calendar now = Calendar.getInstance();
+        now.setTimeZone(TimeZone.getTimeZone("GMT"));
+        /*if (view.equals("day")) model.addAttribute("events", eventService.findByDay(now.));*/
         return "CalendarPage";
     }
 
