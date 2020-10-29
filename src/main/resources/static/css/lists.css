@@ -1,6 +1,6 @@
 .card {
     margin: 15px ;
-    box-shadow: 10px 10px 5px grey;
+    box-shadow: 10px 10px 5px #404040;
 }
 
 .linethrough {
@@ -10,7 +10,6 @@
  .table button {
     background-color: transparent;
     border-color: transparent;
-    font: bold 30px Georgia;
  }
 
  .card-header {
