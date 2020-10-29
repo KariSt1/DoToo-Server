@@ -18,6 +18,11 @@
     font-size: 22px;
  }
 
+ .card-header button {
+     background-color: transparent;
+     border-color: transparent;
+ }
+
  .table td, .table th {
     font-family: 'Signika', sans-serif;
  }
