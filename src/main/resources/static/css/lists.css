@@ -24,29 +24,29 @@
 
 
  .pink {
-    background-color: #fcc0f2;
+    background-color: #fcc0f2 !important;
  }
 
 .green {
-    background-color: #c0fcc1;
+    background-color: #c0fcc1 !important;
 }
 
 .blue {
-    background-color: #bfefff;
+    background-color: #bfefff !important;
 }
 
 .red {
-    background-color: #ff7a7a;
+    background-color: #ff7a7a !important;
 }
 
 .yellow {
-    background-color: #faec9e;
+    background-color: #faec9e !important;
 }
 
 .purple {
-    background-color: #e0a3ff;
+    background-color: #e0a3ff !important;
 }
 
 .orange {
-    background-color: #ffad8a;
+    background-color: #ffad8a !important;
 }
