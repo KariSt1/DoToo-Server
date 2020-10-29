@@ -5,3 +5,9 @@
 .linethrough {
     text-decoration: line-through;
  }
+
+ .table button {
+    background-color: transparent;
+    border-color: transparent;
+    font: bold 30px Georgia;
+ }
