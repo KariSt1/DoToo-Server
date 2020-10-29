@@ -47,21 +47,18 @@
 </header>
 
 <body>
-<p>Þetta er dagatals síðan</p>
+<p th:text="'Vika '+${week}"> </p>
 <div class="calendar-grid col-md-6">
-    <form action="#" th:action="@{/calendar}" th:object="${event}">
-
+    <form action="#" th:action="@{/changeview}" th:method="POST">
+        <input type="radio" th:name="dayView" th:value="1" th:text="Day">
+        <input type="radio" th:name="weekView" th:value="2" checked="checked" th:text="Week">
+        <input type="radio" th:name="yearView" th:value="3" th:text="Year">
     </form>
-    <button class="btn" id="monthView">Month</button>
-    <button class="btn" id="weekView">Week</button>
-    <button class="btn" id="dayView">Day</button>
     <div class="events">
         <div class="event" th:each="event : ${events}" th:classappend="${event.color}">
             <h2 th:text="${event.title}"></h2>
-            <p th:text="${event.startDate.DAY_OF_MONTH}+'/'+${event.startDate.MONTH}+'/'+${event.startDate.YEAR}"></p>
-            <p th:text="${event.endDate.DAY_OF_MONTH}+'/'+${event.endDate.MONTH}+'/'+${event.endDate.YEAR}"></p>
-            <!--<p th:text="${event.startDate.MONTH}">
-            <p th:text="${event.endDate.YEAR}">-->
+            <p th:text="${#calendars.day(event.startDate)}+'/'+${#calendars.month(event.startDate)}+'/'+${#calendars.year(event.startDate)}+' kl. '+${#calendars.hour(event.startDate)}+':'+${#calendars.minute(event.startDate)}"></p>
+            <p th:text="${#calendars.day(event.endDate)}+'/'+${#calendars.month(event.endDate)}+'/'+${#calendars.year(event.endDate)}+' kl. '+${#calendars.hour(event.endDate)}+':'+${#calendars.minute(event.endDate)}"></p>
         </div>
     </div>
 </div>
@@ -70,10 +67,10 @@
     <form action="#" method="POST" th:action="@{/makenewevent}">
         <input type="text" class="form-control" th:name="title" placeholder="Event title">
         <input type="datetime-local" id="start-date"
-               th:name="startDate" value="2018-06-12T19:30"
+               th:name="startDate" value="2020-10-29T19:30"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
         <input type="datetime-local" id="end-date"
-               th:name="endDate" value="2018-06-12T20:30"
+               th:name="endDate" value="2020-10-29T20:30"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
         <input type="text" class="form-control" th:name="category" placeholder="Category">
         <input type="text" class="form-control" th:name="color" placeholder="Color">
