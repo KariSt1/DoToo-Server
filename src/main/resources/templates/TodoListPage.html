@@ -85,26 +85,26 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCenter">
     New todolist
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <form action="#" method="POST" th:action="@{/newtodolist}">
                 <div class="modal-header">
 
-                    <h5 class="modal-title" id="exampleModalLongTitle">New todo-list</h5>
+                    <h5 class="modal-title" id="ModalLongTitle">New todo-list</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <input type="text" class="form-control" th:name="name" placeholder="Title">
-                    <input list="colors" class="form-control" th:color="color" placeholder="Color">
+                    <input type="text" list="colors" class="form-control" th:name="color" placeholder="Color">
                     <datalist id="colors">
                         <option value="yellow">
                         <option value="red">
