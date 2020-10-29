@@ -12,6 +12,17 @@
     font: bold 30px Georgia;
  }
 
+ .card-header {
+    text-transform: uppercase;
+    font-family: 'Signika', sans-serif;
+    font-size: 22px;
+ }
+
+ .table td, .table th {
+    font-family: 'Signika', sans-serif;
+ }
+
+
  .pink {
     background-color: #fcc0f2;
  }
