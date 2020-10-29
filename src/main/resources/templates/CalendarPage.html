@@ -46,12 +46,16 @@
 </header>
 
 <body>
-<p th:text="'Vika '+${week}"> </p>
+<p th:text="'Week: '+${week}"> </p>
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
-        <input type="radio" th:name="dayView" th:value="1" th:text="Day">
-        <input type="radio" th:name="weekView" th:value="2" checked="checked" th:text="Week">
-        <input type="radio" th:name="yearView" th:value="3" th:text="Year">
+        <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-radio" th:name="dayView" th:value="1" th:field="*{option}" th:text="Day">
+            <input type="radio" class="custom-control-radio" th:name="weekView" th:value="2" th:field="*{option}" checked="checked" th:text="Week">
+            <input type="radio" class="custom-control-radio" th:name="yearView" th:value="3" th:field="*{option}" th:text="Year">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Change view</button>
     </form>
     <div class="events">
         <div class="event" th:each="event : ${events}">

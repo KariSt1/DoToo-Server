@@ -38,8 +38,8 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByWeek(int year, int week) {
-        List<Event> events = findAll();
+    public List<Event> findByWeek(int year, int week, User user) {
+        List<Event> events = findByUser(user);
         List<Event> eventsByWeek = new ArrayList<>();
         for(int i = 0; i < events.size(); i++) {
             Event event = events.get(i);
@@ -50,8 +50,8 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByDay(int year, int month, int day) {
-        List<Event> events = findAll();
+    public List<Event> findByDay(int year, int month, int day, User user) {
+        List<Event> events = findByUser(user);
         List<Event> eventsByDay = new ArrayList<>();
         for(int i = 0; i < events.size(); i++) {
             Event event = events.get(i);
@@ -62,8 +62,8 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByMonth(int year, int month) {
-        List<Event> events = findAll();
+    public List<Event> findByMonth(int year, int month, User user) {
+        List<Event> events = findByUser(user);
         List<Event> eventsByMonth = new ArrayList<>();
         for(int i = 0; i < events.size(); i++) {
             Event event = events.get(i);
@@ -74,8 +74,8 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByYear(int year) {
-        List<Event> events = findAll();
+    public List<Event> findByYear(int year, User user) {
+        List<Event> events = findByUser(user);
         List<Event> eventsByYear = new ArrayList<>();
         for(int i = 0; i < events.size(); i++) {
             Event event = events.get(i);

@@ -14,8 +14,8 @@ public interface EventService {
     List<Event> findAll();
     Optional<Event> findById(long id);
     List<Event> findByUser(User user);
-    List<Event> findByDay(int year, int month, int day);
-    List<Event> findByWeek(int year, int week);
-    List<Event> findByMonth(int year, int month);
-    List<Event> findByYear(int year);
+    List<Event> findByDay(int year, int month, int day, User user);
+    List<Event> findByWeek(int year, int week, User user);
+    List<Event> findByMonth(int year, int month, User user);
+    List<Event> findByYear(int year, User user);
 }

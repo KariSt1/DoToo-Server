@@ -41,7 +41,7 @@ public class EventController {
         model.addAttribute("month", now.MONTH);
         model.addAttribute("year", now.YEAR);
         model.addAttribute("loggedinuser", sessionUser);
-        model.addAttribute("events", eventService.findAll());
+        model.addAttribute("events", eventService.findByUser(sessionUser));
 
         return "CalendarPage";
     }
