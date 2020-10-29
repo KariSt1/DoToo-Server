@@ -51,10 +51,11 @@ public class HomeController {
     }
 
     @RequestMapping("/makedata")
-    public String makeData() {
+    public String makeData(HttpSession session) {
 
         User nonni = new User("nonni", "Nonni", "1234");
         userService.save(nonni);
+        session.setAttribute("loggedInUser", nonni);
 
 
         for(int i=1; i<5; i++) {
