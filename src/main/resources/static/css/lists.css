@@ -1,6 +1,52 @@
+.card {
+    margin: 15px ;
+    box-shadow: 10px 10px 5px #404040;
+}
+
 .linethrough {
     text-decoration: line-through;
+ }
 
-.card {
-    margin: 15px;
+ .table button {
+    background-color: transparent;
+    border-color: transparent;
+ }
+
+ .card-header {
+    text-transform: uppercase;
+    font-family: 'Signika', sans-serif;
+    font-size: 22px;
+ }
+
+ .table td, .table th {
+    font-family: 'Signika', sans-serif;
+ }
+
+
+ .pink {
+    background-color: #fcc0f2;
+ }
+
+.green {
+    background-color: #c0fcc1;
+}
+
+.blue {
+    background-color: #bfefff;
+}
+
+.red {
+    background-color: #ff7a7a;
+}
+
+.yellow {
+    background-color: #faec9e;
+}
+
+.purple {
+    background-color: #e0a3ff;
+}
+
+.orange {
+    background-color: #ffad8a;
 }

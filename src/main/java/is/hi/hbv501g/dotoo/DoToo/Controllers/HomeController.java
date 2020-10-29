@@ -10,15 +10,10 @@ import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.Calendar;
 
 import javax.servlet.http.HttpSession;
+import java.util.Calendar;
 
 @Controller
 public class HomeController {
@@ -37,7 +32,7 @@ public class HomeController {
     @RequestMapping("/")
     public String HomePage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
-        if(user == null ) {
+        if (user == null) {
             return "redirect:/login";
         }
         model.addAttribute("loggedinuser", user);
@@ -51,27 +46,28 @@ public class HomeController {
     }
 
     @RequestMapping("/makedata")
-    public String makeData() {
+    public String makeData(HttpSession session) {
 
         User nonni = new User("nonni", "Nonni", "1234");
         userService.save(nonni);
+        session.setAttribute("loggedInUser", nonni);
 
 
-        for(int i=1; i<5; i++) {
-            TodoList todoList = new TodoList("Innkaupalisti " + i, "FFFFFF", nonni);
+        for (int i = 1; i < 5; i++) {
+            TodoList todoList = new TodoList("Innkaupalisti " + i, "pink", nonni);
             todoListService.save(todoList);
 
             Calendar startDate = Calendar.getInstance();
             Calendar endDate = Calendar.getInstance();
-            /*startDate.clear();
-            endDate.clear();*/
-            startDate.set(2020, 10, 25+i, 10+i, 30);
-            endDate.set(2020, 10, 25+i, 10+i+2, 45);
+            startDate.clear();
+            endDate.clear();
+            startDate.set(2020, 10, 20 + i, 10 + i, 30);
+            endDate.set(2020, 10, 20 + i, 10 + i + 2, 45);
             Event event = new Event(startDate, endDate, "Æfing " + i, "Íþróttir", "0x00ff", nonni);
             eventService.save(event);
 
-            for(int j=1; j<4;j++) {
-                 todoListService.addItem(todoList, new TodoListItem(i + " mjólk", false, todoList));
+            for (int j = 1; j < 4; j++) {
+                todoListService.addItem(todoList, new TodoListItem(i + " mjólk", false, todoList));
             }
         }
         return "redirect:/";
