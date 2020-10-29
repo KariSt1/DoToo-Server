@@ -44,12 +44,11 @@ public class TodoListController {
         return "TodoListPage";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteTodoList(@PathVariable("id") long id, Model model) {
+    @RequestMapping(value = "/deletelist", method = RequestMethod.POST)
+    public String deleteTodoList(@RequestParam(value = "id") long id) {
         TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
         todoListService.delete(todolist);
-        model.addAttribute("todolists", todoListService.findAll());
-        return "TodoListPage";
+        return "redirect:/todolist";
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/button.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/lists.css">
+    <link rel="stylesheet" href="/css/event.css">
 </head>
 
 <header>
@@ -30,7 +31,7 @@
                     <a class="nav-link" href="/calendar">Calendar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/todolist">To-do lists <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/todolist">Todo-lists<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -58,7 +59,7 @@
         <button type="submit" class="btn btn-primary">Change view</button>
     </form>
     <div class="events">
-        <div class="event" th:each="event : ${events}">
+        <div class="event" th:each="event : ${events}" th:classappend="${event.color}">
             <h2 th:text="${event.title}"></h2>
             <p th:text="${#calendars.day(event.startDate)}+'/'+${#calendars.month(event.startDate)}+'/'+${#calendars.year(event.startDate)}+' kl. '+${#calendars.hour(event.startDate)}+':'+${#calendars.minute(event.startDate)}"></p>
             <p th:text="${#calendars.day(event.endDate)}+'/'+${#calendars.month(event.endDate)}+'/'+${#calendars.year(event.endDate)}+' kl. '+${#calendars.hour(event.endDate)}+':'+${#calendars.minute(event.endDate)}"></p>
@@ -68,15 +69,23 @@
 
 <div id="new-event" class="container col-md-6">
     <form action="#" method="POST" th:action="@{/makenewevent}">
-        <input type="text" class="form-control" th:name="title" placeholder="Event title">
+        <input type="text" class="form-control" th:name="title" placeholder="Event title" required>
         <input type="datetime-local" id="start-date"
                th:name="startDate" value="2020-10-29T19:30"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
         <input type="datetime-local" id="end-date"
                th:name="endDate" value="2020-10-29T20:30"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
-        <input type="text" class="form-control" th:name="category" placeholder="Category">
-        <input type="text" class="form-control" th:name="color" placeholder="Color">
+        <input type="text" class="form-control" th:name="category" placeholder="Category" required>
+        <select id="colors" th:name="color">
+            <option value="yellow"> Yellow </option>
+            <option value="red"> Red </option>
+            <option value="green"> Green </option>
+            <option value="blue"> Blue </option>
+            <option value="pink"> Pink </option>
+            <option value="purple"> Purple </option>
+            <option value="orange"> Orange </option>
+        </select>
         <button type="submit" class="btn btn-primary" id="button-confirm">Confirm</button>
 
     </form>

@@ -31,7 +31,7 @@
                     <a class="nav-link" href="/calendar">Calendar</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/todolist">To-do lists <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/todolist">Todo-lists<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -50,14 +50,24 @@
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12" th:each="todolist : ${todolists}">
             <div class="card" th:classappend="${todolist.color}">
-                <div class="card-header" th:text="${todolist.name}"></div>
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div th:text="${todolist.name}"></div>
+                        <button th:id="${todolist.id}" onclick="listDeleted(this)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
                 <form action="#" method="POST" th:action="@{/additem(listId=${todolist.id})}">
                     <div class="input-group">
                         <input type="text" class="form-control" th:name="description" aria-label="Add new item"
-                               aria-describedby="button-add">
+                               aria-describedby="button-add" required>
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary" id="button-add">Add item</button>
+                            <button type="submit" class="btn btn-dark" id="button-add">Add item</button>
                         </div>
                     </div>
                 </form>
@@ -107,17 +117,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" th:name="name" placeholder="Title">
-                    <input list="colors" class="form-control" th:name="color" placeholder="Color">
-                    <datalist id="colors">
-                        <option value="yellow">
-                        <option value="red">
-                        <option value="green">
-                        <option value="blue">
-                        <option value="pink">
-                        <option value="purple">
-                        <option value="orange">
-                    </datalist>
+                    <input type="text" class="form-control" th:name="name" placeholder="Title" required>
+                    <select id="colors" th:name="color">
+                        <option value="yellow"> Yellow </option>
+                        <option value="red"> Red </option>
+                        <option value="green"> Green </option>
+                        <option value="blue"> Blue </option>
+                        <option value="pink"> Pink </option>
+                        <option value="purple"> Purple </option>
+                        <option value="orange"> Orange </option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -135,6 +144,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="/js/listitem.js"></script>
+<script type="text/javascript" src="/js/list.js"></script>
 </body>
 </html>
