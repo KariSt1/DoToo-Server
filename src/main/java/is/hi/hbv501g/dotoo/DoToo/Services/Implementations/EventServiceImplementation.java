@@ -41,10 +41,9 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByWeek(int year, int week, User user) {
         List<Event> events = findByUser(user);
         List<Event> eventsByWeek = new ArrayList<>();
-        for(int i = 0; i < events.size(); i++) {
-            Event event = events.get(i);
-            Calendar ev = event.getStartDate().getInstance();
-            if(ev.YEAR == year && ev.WEEK_OF_YEAR == week) eventsByWeek.add(event);
+        for (Event event : events) {
+            Calendar ev = event.getStartDate();
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.WEEK_OF_YEAR) == week) eventsByWeek.add(event);
         }
         return eventsByWeek;
     }
@@ -53,10 +52,9 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByDay(int year, int month, int day, User user) {
         List<Event> events = findByUser(user);
         List<Event> eventsByDay = new ArrayList<>();
-        for(int i = 0; i < events.size(); i++) {
-            Event event = events.get(i);
-            Calendar ev = event.getStartDate().getInstance();
-            if(ev.YEAR == year && ev.MONTH == month && ev.DAY_OF_MONTH == day) eventsByDay.add(event);
+        for (Event event : events) {
+            Calendar ev = event.getStartDate();
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) == month && ev.get(Calendar.DAY_OF_MONTH) == day) eventsByDay.add(event);
         }
         return eventsByDay;
     }
@@ -65,10 +63,9 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByMonth(int year, int month, User user) {
         List<Event> events = findByUser(user);
         List<Event> eventsByMonth = new ArrayList<>();
-        for(int i = 0; i < events.size(); i++) {
-            Event event = events.get(i);
-            Calendar ev = event.getStartDate().getInstance();
-            if(ev.YEAR == year && ev.MONTH == month) eventsByMonth.add(event);
+        for (Event event : events) {
+            Calendar ev = event.getStartDate();
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) == month) eventsByMonth.add(event);
         }
         return eventsByMonth;
     }
@@ -77,10 +74,9 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByYear(int year, User user) {
         List<Event> events = findByUser(user);
         List<Event> eventsByYear = new ArrayList<>();
-        for(int i = 0; i < events.size(); i++) {
-            Event event = events.get(i);
-            Calendar ev = event.getStartDate().getInstance();
-            if(ev.YEAR == year)  eventsByYear.add(event);
+        for (Event event : events) {
+            Calendar ev = event.getStartDate();
+            if (ev.get(Calendar.YEAR) == year) eventsByYear.add(event);
         }
         return eventsByYear;
     }
