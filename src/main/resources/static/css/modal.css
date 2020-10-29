@@ -14,11 +14,12 @@
 }
 
 .modal-colors {
-    font-size: 25px;
-    font-size: 25px;
     width: 100%;
     padding: 6px;
     margin-top: 20px;
+    font-size: 30px;
+    font-family: 'Signika', sans-serif;
+    color:gray;
 }
 
 .modal .form-control {
