@@ -9,6 +9,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/body.css">
     <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/colors.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/lists.css">
     <link rel="stylesheet" href="/css/event.css">
@@ -47,7 +48,7 @@
 </header>
 
 <body>
-<p th:text="'Week: '+${week}"> </p>
+<p th:text="'Week: '+${week}"></p>
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="custom-control">
@@ -56,7 +57,7 @@
             <input type="radio" class="custom-control-radio" th:name="view" th:value="month" th:field="*{option}" th:text="Year">-->
             <button type="submit" th:name="view" value="day">Day</button>
             <button type="submit" th:name="view" value="week">Week</button>
-            <button type="submit" th:name="view" value="year">Year</button>
+            <button type="submit" th:name="view" value="month">Month</button>
         </div>
     </form>
     <div class="events">

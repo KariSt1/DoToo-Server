@@ -36,10 +36,10 @@ public class EventController {
         }
         Calendar now = Calendar.getInstance();
         now.setTimeZone(TimeZone.getTimeZone("GMT"));
-        model.addAttribute("day", now.DAY_OF_WEEK);
-        model.addAttribute("week", now.WEEK_OF_MONTH);
-        model.addAttribute("month", now.MONTH);
-        model.addAttribute("year", now.YEAR);
+        model.addAttribute("day", now.get(Calendar.DAY_OF_MONTH));
+        model.addAttribute("week", now.get(Calendar.WEEK_OF_YEAR));
+        model.addAttribute("month", now.get(Calendar.MONTH));
+        model.addAttribute("year", now.get(Calendar.YEAR));
         model.addAttribute("loggedinuser", sessionUser);
         model.addAttribute("events", eventService.findByUser(sessionUser));
 
@@ -47,10 +47,25 @@ public class EventController {
     }
 
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value="view") String view, Model model) {
+    public String changeCalendarView(@RequestParam(value="view") String view, Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if (sessionUser == null) {
+            return "redirect:/login";
+        }
         Calendar now = Calendar.getInstance();
         now.setTimeZone(TimeZone.getTimeZone("GMT"));
-        /*if (view.equals("day")) model.addAttribute("events", eventService.findByDay(now.));*/
+        int year = now.get(Calendar.YEAR);
+        int month = now.get(Calendar.MONTH);
+        int week = now.get(Calendar.WEEK_OF_YEAR);
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        if (view.equals("day"))
+            model.addAttribute("events", eventService.findByDay(year, month, day, sessionUser));
+        else if(view.equals("week"))
+            model.addAttribute("events", eventService.findByWeek(year, week, sessionUser));
+        else if(view.equals("month"))
+            model.addAttribute("events", eventService.findByMonth(year, month, sessionUser));
+        else if(view.equals("year"))
+            model.addAttribute("events", eventService.findByYear(year, sessionUser));
         return "CalendarPage";
     }
 
