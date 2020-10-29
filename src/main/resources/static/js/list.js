@@ -20,3 +20,14 @@ function itemDeleted(item) {
     let row = item.parentNode.parentNode;
     row.parentNode.removeChild(row);
 }
+
+function listDeleted(list) {
+    jQuery(function($) {
+        var url = window.location.origin + '/deletelist';
+        var data = {};
+        data.id = list.id
+        $.post(url, data);
+    });
+    let card = list.parentNode.parentNode.parentNode;
+    card.parentNode.removeChild(card);
+}
