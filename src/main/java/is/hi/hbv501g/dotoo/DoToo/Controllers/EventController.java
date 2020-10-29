@@ -7,10 +7,7 @@ import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -18,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 @Controller
 public class EventController {
@@ -36,12 +34,20 @@ public class EventController {
             return "redirect:/login";
         }
         Calendar now = Calendar.getInstance();
+        now.setTimeZone(TimeZone.getTimeZone("GMT"));
         model.addAttribute("day", now.DAY_OF_WEEK);
         model.addAttribute("week", now.WEEK_OF_MONTH);
         model.addAttribute("month", now.MONTH);
         model.addAttribute("year", now.YEAR);
         model.addAttribute("loggedinuser", sessionUser);
         model.addAttribute("events", eventService.findAll());
+
+        return "CalendarPage";
+    }
+
+    @RequestMapping("/changeview")
+    public String changeCalendarView(@ModelAttribute(value="view") Model model) {
+
         return "CalendarPage";
     }
 
@@ -53,7 +59,7 @@ public class EventController {
         Calendar ed = Calendar.getInstance();
         startDate = startDate.replace(startDate.charAt(10), ' ');
         endDate = endDate.replace(endDate.charAt(10), ' '); //Get rid of the T from date string
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
         sd.setTime(sdf.parse(startDate));
         ed.setTime(sdf.parse(endDate));
 

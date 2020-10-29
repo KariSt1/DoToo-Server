@@ -63,10 +63,10 @@ public class HomeController {
 
             Calendar startDate = Calendar.getInstance();
             Calendar endDate = Calendar.getInstance();
-            startDate.clear();
-            endDate.clear();
-            startDate.set(2020, 10, 20+i, 10+i, 30);
-            endDate.set(2020, 10, 20+i, 10+i+2, 45);
+            /*startDate.clear();
+            endDate.clear();*/
+            startDate.set(2020, 10, 25+i, 10+i, 30);
+            endDate.set(2020, 10, 25+i, 10+i+2, 45);
             Event event = new Event(startDate, endDate, "Æfing " + i, "Íþróttir", "0x00ff", nonni);
             eventService.save(event);
 
