@@ -31,4 +31,7 @@ function listDeleted(list) {
     });
     let card = list.parentNode.parentNode.parentNode;
     card.parentNode.removeChild(card);
+    if(card.children != 0) {
+        document.getElementById("texti").style.visibility = "hidden";
+    }
 }
