@@ -47,9 +47,18 @@
 </header>
 
 <body>
-<p th:text="'Week: '+${week}"> </p>
+
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
+        <div class="calendar-nav">
+            <button type="submit" class="btn" th:name="calNav" value="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            </button>
+            <p th:text="'Week: '+${week}"></p>
+            <button type="submit" class="btn" th:name="calNav" value="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </button>
+        </div>
         <div class="custom-control">
             <!--<input type="radio" class="custom-control-radio" th:name="view" th:value="day" th:field="*{option}" th:text="Day">
             <input type="radio" class="custom-control-radio" th:name="view" th:value="week" th:field="*{option}" checked="checked" th:text="Week">

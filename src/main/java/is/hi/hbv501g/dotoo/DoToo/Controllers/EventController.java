@@ -41,7 +41,8 @@ public class EventController {
         model.addAttribute("month", now.get(Calendar.MONTH));
         model.addAttribute("year", now.get(Calendar.YEAR));
         model.addAttribute("loggedinuser", sessionUser);
-        model.addAttribute("events", eventService.findByUser(sessionUser));
+        model.addAttribute("view", "week");
+        model.addAttribute("events", eventService.findByWeek(now.get(Calendar.YEAR), now.get(Calendar.WEEK_OF_YEAR), sessionUser));
 
         return "CalendarPage";
     }
@@ -58,14 +59,33 @@ public class EventController {
         int month = now.get(Calendar.MONTH);
         int week = now.get(Calendar.WEEK_OF_YEAR);
         int day = now.get(Calendar.DAY_OF_MONTH);
-        if (view.equals("day"))
+
+        if (view.equals("day")) {
             model.addAttribute("events", eventService.findByDay(year, month, day, sessionUser));
-        else if(view.equals("week"))
+            model.addAttribute("view", "day");
+        }
+
+        else if(view.equals("week")) {
             model.addAttribute("events", eventService.findByWeek(year, week, sessionUser));
-        else if(view.equals("month"))
+            model.addAttribute("view", "week");
+        }
+
+        else if(view.equals("month")) {
             model.addAttribute("events", eventService.findByMonth(year, month, sessionUser));
-        else if(view.equals("year"))
+            model.addAttribute("view", "month");
+        }
+
+        else if(view.equals("year")) {
             model.addAttribute("events", eventService.findByYear(year, sessionUser));
+            model.addAttribute("view", "year");
+        }
+
+
+        model.addAttribute("day", day);
+        model.addAttribute("week", week);
+        model.addAttribute("month", month);
+        model.addAttribute("year", year);
+        model.addAttribute("loggedinuser", sessionUser);
         return "CalendarPage";
     }
 
