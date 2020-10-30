@@ -9,6 +9,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/body.css">
     <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/colors.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/lists.css">
     <link rel="stylesheet" href="/css/event.css">
@@ -47,7 +48,7 @@
 </header>
 
 <body>
-
+<p th:text="'Week: '+${week}"></p>
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
@@ -81,11 +82,13 @@
     <form action="#" method="POST" th:action="@{/makenewevent}">
         <input type="text" class="form-control" th:name="title" placeholder="Event title" required>
         <input type="datetime-local" id="start-date"
-               th:name="startDate" value="2020-10-29T19:30"
+               th:name="startDate"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
+        <!-- value="2020-10-29T19:30" th:value="${#dates.format(#dates.createNow(), 'YYYY-MM-DD hh:mm')}"-->
         <input type="datetime-local" id="end-date"
-               th:name="endDate" value="2020-10-29T20:30"
+               th:name="endDate"
                min="2018-06-07T00:00" max="2030-06-14T00:00">
+        <!-- value="2020-10-29T20:30" -->
         <input type="text" class="form-control" th:name="category" placeholder="Category" required>
         <select id="colors" th:name="color">
             <option value="yellow"> Yellow</option>
@@ -106,5 +109,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/event.js"></script>
 </body>
 </html>
