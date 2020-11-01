@@ -56,18 +56,24 @@
             </button>
 
             <th:block th:switch="${view}">
-                <p th:case="'day'" th:text="'Day: '+${day}"></p>
-                <p th:case="'week'" th:text="'Week: '+${week}"></p>
-                <p th:case="'month'" th:text="'Month: '+${month}"></p>
+                <span th:case="'day'" th:text="'Day: '+${day}"></span>
+                <span th:case="'week'" th:text="'Week: '+${week}"></span>
+                <span th:case="'month'" th:text="'Month: '+${month}"></span>
             </th:block>
             <button type="submit" class="btn button-next" th:name="nav" value="next"> >>
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </button>
         </div>
         <div class="btn-group">
-            <button class="btn btn-primary" type="submit" th:name="view" value="day" th:classappend="(${view} == 'day') ? active : ''">Day</button>
-            <button class="btn btn-primary" type="submit" th:name="view" value="week" th:classappend="(${view} == 'week') ? active : ''">Week</button>
-            <button class="btn btn-primary" type="submit" th:name="view" value="month" th:classappend="(${view} == 'month') ? active : ''">Month</button>
+            <button class="btn btn-primary" type="submit" th:name="view" value="day"
+                    th:classappend="(${view} == 'day') ? active : ''">Day
+            </button>
+            <button class="btn btn-primary" type="submit" th:name="view" value="week"
+                    th:classappend="(${view} == 'week') ? active : ''">Week
+            </button>
+            <button class="btn btn-primary" type="submit" th:name="view" value="month"
+                    th:classappend="(${view} == 'month') ? active : ''">Month
+            </button>
         </div>
     </form>
     <div class="events">
