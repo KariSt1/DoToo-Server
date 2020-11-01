@@ -76,10 +76,8 @@ public class EventController {
         else if(nav.equals("prev")) offset -= 1;
         else offset = 0;
 
-        //Calendar now = Calendar.getInstance();
         LocalDate now = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        //now.setTimeZone(TimeZone.getTimeZone("GMT"));
         int year = now.getYear();
         int month = now.getMonthValue();
         int week = now.get(weekFields.weekOfWeekBasedYear());
