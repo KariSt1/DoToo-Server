@@ -35,8 +35,8 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPOST(@Valid User user, BindingResult result, HttpSession session) {
+        // Will be adding regex for the password later
         if(result.hasErrors()) {
-
             System.out.println("Result errors: " + result.getFieldErrors());
             return "LoginPage";
         }

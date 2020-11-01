@@ -22,11 +22,9 @@ function itemDeleted(item) {
 }
 
 function listDeleted(list) {
-    console.log(document.getElementsByClassName("card").length);
     if(document.getElementsByClassName("card").length==1){
         document.getElementsByClassName("text")[0].innerText="Organize your life by making todo-lists here!";
     }
-    console.log("jámmm");
     jQuery(function($) {
         var url = window.location.origin + '/deletelist';
         var data = {};

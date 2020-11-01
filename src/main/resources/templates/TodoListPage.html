@@ -74,10 +74,9 @@
 
                 <form action="#" method="POST" th:action="@{/additem(listId=${todolist.id})}">
                     <div class="input-group">
-                        <input type="text" class="form-control" th:name="description" aria-label="Add new item"
-                               aria-describedby="button-add" required>
+                        <input type="text" class="form-control" th:name="description" required>
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-dark" id="button-add">Add item</button>
+                            <button type="submit" class="btn btn-dark">Add item</button>
                         </div>
                     </div>
                 </form>
