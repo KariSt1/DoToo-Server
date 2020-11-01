@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -73,12 +76,14 @@ public class EventController {
         else if(nav.equals("prev")) offset -= 1;
         else offset = 0;
 
-        Calendar now = Calendar.getInstance();
-        now.setTimeZone(TimeZone.getTimeZone("GMT"));
-        int year = now.get(Calendar.YEAR);
-        int month = now.get(Calendar.MONTH);
-        int week = now.get(Calendar.WEEK_OF_YEAR);
-        int day = now.get(Calendar.DAY_OF_MONTH);
+        //Calendar now = Calendar.getInstance();
+        LocalDate now = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        //now.setTimeZone(TimeZone.getTimeZone("GMT"));
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int week = now.get(weekFields.weekOfWeekBasedYear());
+        int day = now.getDayOfMonth();
 
 
         model.addAttribute("day", day);
@@ -87,31 +92,55 @@ public class EventController {
         model.addAttribute("year", year);
 
         if (view.equals("day")) {
-            model.addAttribute("events", eventService.findByDay(year, month, day+offset, sessionUser));
+            LocalDate newDate;
+            if(offset < 0) {
+                newDate = now.minus(Period.ofDays(Math.abs(offset)));
+            } else {
+                newDate = now.plus(Period.ofDays(offset));
+            }
+            model.addAttribute("events", eventService.findByDay(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth(), sessionUser));
             model.addAttribute("view", "day");
-            model.addAttribute("day", day+offset);
+            model.addAttribute("day", newDate.getDayOfMonth());
             session.setAttribute("view", "day");
         }
 
         else if(view.equals("week")) {
-            model.addAttribute("events", eventService.findByWeek(year, week+offset, sessionUser));
+            LocalDate newDate;
+            if(offset < 0) {
+                newDate = now.minus(Period.ofWeeks(Math.abs(offset)));
+            } else {
+                newDate = now.plus(Period.ofWeeks(offset));
+            }
+            model.addAttribute("events", eventService.findByWeek(newDate.getYear(), newDate.get(weekFields.weekOfWeekBasedYear()), sessionUser));
             model.addAttribute("view", "week");
-            model.addAttribute("week", week+offset);
+            model.addAttribute("week", newDate.get(weekFields.weekOfWeekBasedYear()));
             session.setAttribute("view", "week");
         }
 
         else if(view.equals("month")) {
-            model.addAttribute("events", eventService.findByMonth(year, month+offset, sessionUser));
+            LocalDate newDate;
+            if(offset < 0) {
+                newDate = now.minus(Period.ofMonths(Math.abs(offset)));
+            } else {
+                newDate = now.plus(Period.ofMonths(offset));
+            }
+            model.addAttribute("events", eventService.findByMonth(newDate.getYear(), newDate.getMonthValue(), sessionUser));
             model.addAttribute("view", "month");
-            model.addAttribute("month", month+offset);
+            model.addAttribute("month", newDate.getMonthValue());
             session.setAttribute("view", "month");
         }
 
         // Not implemented in interface for now
         else if(view.equals("year")) {
-            model.addAttribute("events", eventService.findByYear(year+offset, sessionUser));
+            LocalDate newDate;
+            if(offset < 0) {
+                newDate = now.minus(Period.ofMonths(offset));
+            } else {
+                newDate = now.plus(Period.ofMonths(offset));
+            }
+            model.addAttribute("events", eventService.findByYear(newDate.getYear(), sessionUser));
             model.addAttribute("view", "year");
-            model.addAttribute("year", year+offset);
+            model.addAttribute("year", newDate.getYear());
             session.setAttribute("view", "year");
         }
 
