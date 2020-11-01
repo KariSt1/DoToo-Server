@@ -48,11 +48,20 @@ public class EventController {
     }
 
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value="view") String view, Model model, HttpSession session) {
+    public String changeCalendarView(@RequestParam(value="view", required = false) String view, @RequestParam(value="nav", required = false) String nav, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if (sessionUser == null) {
             return "redirect:/login";
         }
+        if(view == null) {
+            view = "week";
+        }
+        int offset;
+        if(nav == null) offset = 0;
+        else if(nav.equals("next")) offset = 1;
+        else if(nav.equals("prev")) offset = -1;
+        else offset = 0;
+
         Calendar now = Calendar.getInstance();
         now.setTimeZone(TimeZone.getTimeZone("GMT"));
         int year = now.get(Calendar.YEAR);
@@ -60,23 +69,24 @@ public class EventController {
         int week = now.get(Calendar.WEEK_OF_YEAR);
         int day = now.get(Calendar.DAY_OF_MONTH);
 
+
         if (view.equals("day")) {
-            model.addAttribute("events", eventService.findByDay(year, month, day, sessionUser));
+            model.addAttribute("events", eventService.findByDay(year, month, day+offset, sessionUser));
             model.addAttribute("view", "day");
         }
 
         else if(view.equals("week")) {
-            model.addAttribute("events", eventService.findByWeek(year, week, sessionUser));
+            model.addAttribute("events", eventService.findByWeek(year, week+offset, sessionUser));
             model.addAttribute("view", "week");
         }
 
         else if(view.equals("month")) {
-            model.addAttribute("events", eventService.findByMonth(year, month, sessionUser));
+            model.addAttribute("events", eventService.findByMonth(year, month+offset, sessionUser));
             model.addAttribute("view", "month");
         }
 
         else if(view.equals("year")) {
-            model.addAttribute("events", eventService.findByYear(year, sessionUser));
+            model.addAttribute("events", eventService.findByYear(year+offset, sessionUser));
             model.addAttribute("view", "year");
         }
 

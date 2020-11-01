@@ -1,13 +1,33 @@
-function changeView(view) {
-    jQuery(function($) {
-        var url = window.location.origin + '/itemchecked';
-        var data = {};
-        data.id = item.id
-        data.checked = item.checked;
-        $.post(url, data);
+function createCalNavigation() {
+    var currentView = "week";
+    var currentOffset = 0;
+
+    function changeView(view) {
+        currentView = view;
+        jQuery(function ($) {
+            var url = window.location.origin + '/changeview';
+            var data = {};
+            data.view = view;
+            data.nav = currentOffset;
+            $.post(url, data);
+        });
+    }
+
+    function changeOffset(offset) {
+        currentOffset += offset;
+        jQuery(function ($) {
+            var url = window.location.origin + '/changeview';
+            var data = {};
+            data.view = currentView;
+            data.nav = currentOffset;
+            $.post(url, data);
+        });
+    }
+
+    return({
+        changeView : changeView,
+        changeOffset : changeOffset
     });
-    let description = item.parentNode.nextElementSibling;
-    description.classList.toggle("linethrough");
 }
 
 document.addEventListener('DOMContentLoaded', () => {
