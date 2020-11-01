@@ -52,21 +52,21 @@
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
-            <button type="submit" class="btn" th:name="nav" value="prev" onclick="calNavigation.changeOffset(-1)">
+            <button type="submit" class="btn" th:name="nav" value="prev">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             </button>
             <p th:text="'Week: '+${week}"></p>
             <button type="submit" class="btn" th:name="nav" value="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" onclick="calNavigation.changeOffset(1)"></span>
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </button>
         </div>
         <div class="custom-control">
             <!--<input type="radio" class="custom-control-radio" th:name="view" th:value="day" th:field="*{option}" th:text="Day">
             <input type="radio" class="custom-control-radio" th:name="view" th:value="week" th:field="*{option}" checked="checked" th:text="Week">
             <input type="radio" class="custom-control-radio" th:name="view" th:value="month" th:field="*{option}" th:text="Year">-->
-            <button type="submit" th:name="view" value="day" onclick="calNavigation.changeView(value)">Day</button>
-            <button type="submit" th:name="view" value="week" onclick="calNavigation.changeView(value)">Week</button>
-            <button type="submit" th:name="view" value="month" onclick="calNavigation.changeView(value)">Month</button>
+            <button type="submit" th:name="view" value="day">Day</button>
+            <button type="submit" th:name="view" value="week">Week</button>
+            <button type="submit" th:name="view" value="month">Month</button>
         </div>
     </form>
     <div class="events">
@@ -102,9 +102,7 @@
         <button type="submit" class="btn btn-primary" id="button-confirm">Confirm</button>
     </form>
 </div>
-<script>
-    var calNavigation = createCalNavigation();
-</script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

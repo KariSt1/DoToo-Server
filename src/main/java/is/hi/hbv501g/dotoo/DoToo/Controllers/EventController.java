@@ -43,6 +43,7 @@ public class EventController {
         model.addAttribute("loggedinuser", sessionUser);
         model.addAttribute("view", "week");
         model.addAttribute("events", eventService.findByWeek(now.get(Calendar.YEAR), now.get(Calendar.WEEK_OF_YEAR), sessionUser));
+        session.setAttribute("view", "week");
 
         return "CalendarPage";
     }
@@ -54,7 +55,7 @@ public class EventController {
             return "redirect:/login";
         }
         if(view == null) {
-            view = "week";
+            view = session.getAttribute("view").toString();
         }
         int offset;
         if(nav == null) offset = 0;
@@ -73,21 +74,25 @@ public class EventController {
         if (view.equals("day")) {
             model.addAttribute("events", eventService.findByDay(year, month, day+offset, sessionUser));
             model.addAttribute("view", "day");
+            session.setAttribute("view", "day");
         }
 
         else if(view.equals("week")) {
             model.addAttribute("events", eventService.findByWeek(year, week+offset, sessionUser));
             model.addAttribute("view", "week");
+            session.setAttribute("view", "week");
         }
 
         else if(view.equals("month")) {
             model.addAttribute("events", eventService.findByMonth(year, month+offset, sessionUser));
             model.addAttribute("view", "month");
+            session.setAttribute("view", "month");
         }
 
         else if(view.equals("year")) {
             model.addAttribute("events", eventService.findByYear(year+offset, sessionUser));
             model.addAttribute("view", "year");
+            session.setAttribute("view", "year");
         }
 
 
