@@ -51,7 +51,7 @@
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
-            <button type="submit" class="btn" th:name="nav" value="prev">
+            <button type="submit" class="btn button-prev" th:name="nav" value="prev"> <<
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             </button>
 
@@ -60,7 +60,7 @@
                 <p th:case="'week'" th:text="'Week: '+${week}"></p>
                 <p th:case="'month'" th:text="'Month: '+${month}"></p>
             </th:block>
-            <button type="submit" class="btn" th:name="nav" value="next">
+            <button type="submit" class="btn button-next" th:name="nav" value="next"> >>
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </button>
         </div>
