@@ -55,5 +55,4 @@ public class TodoListServiceImplementation implements TodoListService {
         return listRepository.save(list);
     }
 
-
 }
