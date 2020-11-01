@@ -11,17 +11,24 @@
 }
 
 .button-prev {
-    background-color: white;
     margin-right: 10px;
+    font-size: 30px;
+    padding-left: 0px;
 }
 
 .button-next {
-    background-color: white;
     margin-left: 10px;
+    font-size: 30px;
+    padding-right: 0px;
 }
 
 .calendar-nav {
     padding-top: 25px;
     padding-bottom: 25px;
+}
+
+.nav-text {
+    font-size: 20px;
+    font-weight: bold;
 }
 
