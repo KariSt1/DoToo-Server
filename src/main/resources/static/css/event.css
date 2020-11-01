@@ -12,13 +12,16 @@
 
 .button-prev {
     background-color: white;
+    margin-right: 10px;
 }
 
 .button-next {
     background-color: white;
+    margin-left: 10px;
 }
 
 .calendar-nav {
-    padding: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
