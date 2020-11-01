@@ -64,13 +64,10 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </button>
         </div>
-        <div class="custom-control">
-            <!--<input type="radio" class="custom-control-radio" th:name="view" th:value="day" th:field="*{option}" th:text="Day">
-            <input type="radio" class="custom-control-radio" th:name="view" th:value="week" th:field="*{option}" checked="checked" th:text="Week">
-            <input type="radio" class="custom-control-radio" th:name="view" th:value="month" th:field="*{option}" th:text="Year">-->
-            <button type="submit" th:name="view" value="day">Day</button>
-            <button type="submit" th:name="view" value="week">Week</button>
-            <button type="submit" th:name="view" value="month">Month</button>
+        <div class="btn-group">
+            <button class="btn btn-primary" type="submit" th:name="view" value="day" th:classappend="(${view} == 'day') ? active : ''">Day</button>
+            <button class="btn btn-primary" type="submit" th:name="view" value="week" th:classappend="(${view} == 'week') ? active : ''">Week</button>
+            <button class="btn btn-primary" type="submit" th:name="view" value="month" th:classappend="(${view} == 'month') ? active : ''">Month</button>
         </div>
     </form>
     <div class="events">
