@@ -66,13 +66,8 @@ public class TodoListController {
         return "redirect:/todolist";
     }
 
-    @RequestMapping(value = "/newtodolist", method = RequestMethod.GET)
-    public String newTodoListGET() {
-        return "NewTodoListPage";
-    }
-
     @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
-    public String newTodoListPOST(@RequestParam(value = "name") String name, @RequestParam(value = "color") String color, HttpSession session) {
+    public String newTodoList(@RequestParam(value = "name") String name, @RequestParam(value = "color") String color, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         TodoList todolist = new TodoList(name, color, sessionUser);
         todoListService.save(todolist);

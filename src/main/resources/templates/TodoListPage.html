@@ -50,9 +50,11 @@
 <body>
 
 <div class="container">
+
     <div class ="text">
-    <p th:if = "${todolists.isEmpty()}">Organize your life by making todo-lists here!</p>
+        <p th:if = "${todolists.isEmpty()}">Organize your life by making todo-lists here!</p>
     </div>
+
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12" th:each="todolist : ${todolists}">
             <div class="card" th:classappend="${todolist.color}">

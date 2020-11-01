@@ -19,7 +19,6 @@ function itemDeleted(item) {
     });
     let row = item.parentNode.parentNode;
     row.parentNode.removeChild(row);
-
 }
 
 function listDeleted(list) {
@@ -31,5 +30,4 @@ function listDeleted(list) {
     });
     let card = list.parentNode.parentNode.parentNode;
     card.parentNode.removeChild(card);
-
 }
