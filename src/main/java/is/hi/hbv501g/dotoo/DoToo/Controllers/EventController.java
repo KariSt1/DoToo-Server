@@ -44,10 +44,20 @@ public class EventController {
         model.addAttribute("view", "week");
         model.addAttribute("events", eventService.findByWeek(now.get(Calendar.YEAR), now.get(Calendar.WEEK_OF_YEAR), sessionUser));
         session.setAttribute("view", "week");
+        session.setAttribute("offset", 0);
 
         return "CalendarPage";
     }
 
+    /**
+     * Handles changes of view
+     * Shows list of events of chosen day, month or year
+     * @param view day, month or year
+     * @param nav prev or next - goes back or forward in time
+     * @param model
+     * @param session
+     * @return CalendarPage
+     */
     @RequestMapping("/changeview")
     public String changeCalendarView(@RequestParam(value="view", required = false) String view, @RequestParam(value="nav", required = false) String nav, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
@@ -57,10 +67,10 @@ public class EventController {
         if(view == null) {
             view = session.getAttribute("view").toString();
         }
-        int offset;
-        if(nav == null) offset = 0;
-        else if(nav.equals("next")) offset = 1;
-        else if(nav.equals("prev")) offset = -1;
+        int offset = Integer.valueOf(session.getAttribute("offset").toString());
+        if(nav == null) offset += 0;
+        else if(nav.equals("next")) offset += 1;
+        else if(nav.equals("prev")) offset -= 1;
         else offset = 0;
 
         Calendar now = Calendar.getInstance();
@@ -71,35 +81,42 @@ public class EventController {
         int day = now.get(Calendar.DAY_OF_MONTH);
 
 
+        model.addAttribute("day", day);
+        model.addAttribute("week", week);
+        model.addAttribute("month", month);
+        model.addAttribute("year", year);
+
         if (view.equals("day")) {
             model.addAttribute("events", eventService.findByDay(year, month, day+offset, sessionUser));
             model.addAttribute("view", "day");
+            model.addAttribute("day", day+offset);
             session.setAttribute("view", "day");
         }
 
         else if(view.equals("week")) {
             model.addAttribute("events", eventService.findByWeek(year, week+offset, sessionUser));
             model.addAttribute("view", "week");
+            model.addAttribute("week", week+offset);
             session.setAttribute("view", "week");
         }
 
         else if(view.equals("month")) {
             model.addAttribute("events", eventService.findByMonth(year, month+offset, sessionUser));
             model.addAttribute("view", "month");
+            model.addAttribute("month", month+offset);
             session.setAttribute("view", "month");
         }
 
+        // Not implemented in interface for now
         else if(view.equals("year")) {
             model.addAttribute("events", eventService.findByYear(year+offset, sessionUser));
             model.addAttribute("view", "year");
+            model.addAttribute("year", year+offset);
             session.setAttribute("view", "year");
         }
 
-
-        model.addAttribute("day", day);
-        model.addAttribute("week", week);
-        model.addAttribute("month", month);
-        model.addAttribute("year", year);
+        session.setAttribute("offset", offset);
+        model.addAttribute("offset", offset);
         model.addAttribute("loggedinuser", sessionUser);
         return "CalendarPage";
     }
