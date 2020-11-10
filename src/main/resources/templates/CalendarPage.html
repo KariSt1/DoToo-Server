@@ -80,8 +80,8 @@
     <div class="events">
         <div class="event" th:each="event : ${events}" th:classappend="${event.color}">
             <h2 th:text="${event.title}"></h2>
-            <p th:text="${#calendars.day(event.startDate)}+'/'+${#calendars.month(event.startDate)}+'/'+${#calendars.year(event.startDate)}+' kl. '+${#calendars.hour(event.startDate)}+':'+${#calendars.minute(event.startDate)}"></p>
-            <p th:text="${#calendars.day(event.endDate)}+'/'+${#calendars.month(event.endDate)}+'/'+${#calendars.year(event.endDate)}+' kl. '+${#calendars.hour(event.endDate)}+':'+${#calendars.minute(event.endDate)}"></p>
+            <p th:text="${#dates.format(event.startDate, 'dd/MMM/yyyy HH:mm')}"></p>
+            <p th:text="${#dates.format(event.endDate, 'dd/MMM/yyyy HH:mm')}"></p>
         </div>
     </div>
 </div>
