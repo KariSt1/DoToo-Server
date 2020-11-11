@@ -17,7 +17,12 @@ function invalidDateRange() {
             alert("End date should be greater than start date");
             return;
         }
-        $("#myForm").submit();
+       if( $("#myForm")[0].checkValidity()) {
+           $("#myForm").submit();
+       }
+       else {
+           return;
+       }
     });
 
 }
