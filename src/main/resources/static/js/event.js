@@ -9,6 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
     end.setAttribute("value", time);
 });
 
+function eventDeleted(event) {
+    jQuery(function($) {
+        var url = window.location.origin + '/deleteEvent';
+        var data = {};
+        data.id = event.id
+        $.post(url, data);
+    });
+    let card = event.parentNode;
+    card.parentNode.removeChild(card);
+}
+
+
 function invalidEventInput() {
     jQuery(function($) {
         debugger;
