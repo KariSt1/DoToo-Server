@@ -110,7 +110,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" th:name="title" placeholder="Event title" required>
+                    <input type="text" class="form-control" id="event-title" th:name="title" placeholder="Event title" required>
                     <input type="datetime-local" id="start-date"
                            th:name="startDate"
                            min="2018-06-07T00:00" max="2030-06-14T00:00">
@@ -130,7 +130,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="invalidDateRange()" >Save event</button>
+                    <button type="button" class="btn btn-primary" onclick="invalidEventInput()" >Save event</button>
                 </div>
             </form>
         </div>

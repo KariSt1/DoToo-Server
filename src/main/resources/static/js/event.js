@@ -1,4 +1,5 @@
 // Sets date fields in the add event form to the current date
+var title;
 document.addEventListener('DOMContentLoaded', () => {
     let start = document.getElementById("start-date");
     let end = document.getElementById("end-date");
@@ -8,11 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
     end.setAttribute("value", time);
 });
 
-function invalidDateRange() {
+function invalidEventInput() {
     jQuery(function($) {
+        debugger;
         var startDate = document.getElementById("start-date").value;
         var endDate = document.getElementById("end-date").value;
+        var title = document.getElementById("event-title").value;
 
+        if (title.length > 50) {
+            alert("Title cannot be longer than 50 characters");
+            return;
+        }
         if (Date.parse(endDate) <= Date.parse(startDate)) {
             alert("End date should be greater than start date");
             return;
