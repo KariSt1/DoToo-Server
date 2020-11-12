@@ -163,7 +163,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
-    public String deleteEvent(@PathVariable("id") long id) {
+    public String deleteEvent(@RequestParam(value = "id") long id) {
         Event event = eventService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
         eventService.delete(event);
         return "redirect:/calendar";
