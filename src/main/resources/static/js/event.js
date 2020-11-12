@@ -46,26 +46,20 @@ function invalidEventInput() {
 
 }
 
-function sortDayView() {
+function sortEvents() {
     jQuery(function($) {
+        var x = getElementsByClassName("event");
+        for(var i=0;i<x.length;i++){
+            x[i] = x[i].getElementsByTagName("p")[0].innerText;
+            console.log(x[i]);
+        }
 
            return;
        }
     });
 }
 
-function sortWeekView() {
-    jQuery(function($) {
 
-           return;
-       }
-    });
-}
 
-function sortMonthView() {
-    jQuery(function($) {
 
-           return;
-       }
-    });
 }
