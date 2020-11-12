@@ -13,7 +13,7 @@ function eventDeleted(event) {
     jQuery(function($) {
         var url = window.location.origin + '/deleteEvent';
         var data = {};
-        data.id = event.id
+        data.id = event.id;
         $.post(url, data);
     });
     let card = event.parentNode;
