@@ -49,7 +49,7 @@ public class EventController {
         session.setAttribute("view", "week");
         session.setAttribute("offset", 0);
 
-        return "CalendarPage";
+        return "EventPage";
     }
 
     /**
@@ -145,7 +145,7 @@ public class EventController {
         session.setAttribute("offset", offset);
         model.addAttribute("offset", offset);
         model.addAttribute("loggedinuser", sessionUser);
-        return "CalendarPage";
+        return "EventPage";
     }
 
     @RequestMapping("/makenewevent")
@@ -170,6 +170,6 @@ public class EventController {
         Event event = eventService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
         eventService.delete(event);
         model.addAttribute("events", eventService.findAll());
-        return "CalendarPage";
+        return "EventPage";
     }
 }
