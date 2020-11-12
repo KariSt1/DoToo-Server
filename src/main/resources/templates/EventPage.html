@@ -57,9 +57,9 @@
             </button>
 
             <th:block th:switch="${view}">
-                <span class="nav-text" th:case="'day'" th:text="'Day: '+${day}"></span>
-                <span class="nav-text" th:case="'week'" th:text="'Week: '+${week}"></span>
-                <span class="nav-text" th:case="'month'" th:text="'Month: '+${month}"></span>
+                <span class="nav-text" th:case="'day'" th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
+                <span class="nav-text" th:case="'week'" th:text="${#temporals.format(weekStart, 'd. MMMM yyyy')} + ' - ' + ${#temporals.format(weekEnd, 'd. MMMM yyyy')}"></span>
+                <span class="nav-text" th:case="'month'" th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
             </th:block>
             <button type="submit" class="btn button-next" th:name="nav" value="next"> ►
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -80,8 +80,8 @@
     <div class="events">
         <div class="event" th:each="event : ${events}" th:classappend="${event.color}">
             <h2 th:text="${event.title}"></h2>
-            <p th:text="${#dates.format(event.startDate, 'dd/MMM/yyyy HH:mm')}"></p>
-            <p th:text="${#dates.format(event.endDate, 'dd/MMM/yyyy HH:mm')}"></p>
+            <p th:text="${#dates.format(event.startDate, 'd. MMMM yyyy HH:mm')}"></p>
+            <p th:text="${#dates.format(event.endDate, 'd. MMMM yyyy HH:mm')}"></p>
         </div>
     </div>
 </div>
@@ -110,7 +110,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" th:name="title" placeholder="Event title" required>
+                    <input type="text" class="form-control" id="event-title" th:name="title" placeholder="Event title" required>
                     <input type="datetime-local" id="start-date"
                            th:name="startDate"
                            min="2018-06-07T00:00" max="2030-06-14T00:00">
@@ -130,7 +130,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="invalidDateRange()" >Save event</button>
+                    <button type="button" class="btn btn-primary" onclick="invalidEventInput()" >Save event</button>
                 </div>
             </form>
         </div>

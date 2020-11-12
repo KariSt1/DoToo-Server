@@ -38,10 +38,16 @@ public class EventController {
             return "redirect:/login";
         }
         Calendar now = Calendar.getInstance();
+        LocalDate currentDate = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
         now.setTimeZone(TimeZone.getTimeZone("GMT"));
-        model.addAttribute("day", now.get(Calendar.DAY_OF_MONTH));
-        model.addAttribute("week", now.get(Calendar.WEEK_OF_YEAR));
-        model.addAttribute("month", now.get(Calendar.MONTH));
+        //model.addAttribute("day", now.get(Calendar.DAY_OF_MONTH));
+        model.addAttribute("date", currentDate);
+        //model.addAttribute("week", now.get(Calendar.WEEK_OF_YEAR));
+        model.addAttribute("weekStart", currentDate.with(weekFields.dayOfWeek(), 1L));
+        model.addAttribute("weekEnd", currentDate.with(weekFields.dayOfWeek(), 7L));
+        //model.addAttribute("month", now.get(Calendar.MONTH));
+        //model.addAttribute("month", currentDate);
         model.addAttribute("year", now.get(Calendar.YEAR));
         model.addAttribute("loggedinuser", sessionUser);
         model.addAttribute("view", "week");
@@ -79,16 +85,8 @@ public class EventController {
 
         LocalDate now = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int week = now.get(weekFields.weekOfWeekBasedYear());
-        int day = now.getDayOfMonth();
 
-
-        model.addAttribute("day", day);
-        model.addAttribute("week", week);
-        model.addAttribute("month", month);
-        model.addAttribute("year", year);
+        model.addAttribute("date", now);
 
         if (view.equals("day")) {
             LocalDate newDate;
@@ -99,7 +97,7 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByDay(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth(), sessionUser));
             model.addAttribute("view", "day");
-            model.addAttribute("day", newDate.getDayOfMonth());
+            model.addAttribute("date", newDate);
             session.setAttribute("view", "day");
         } else if (view.equals("week")) {
             LocalDate newDate;
@@ -110,7 +108,8 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByWeek(newDate.getYear(), newDate.get(weekFields.weekOfWeekBasedYear()), sessionUser));
             model.addAttribute("view", "week");
-            model.addAttribute("week", newDate.get(weekFields.weekOfWeekBasedYear()));
+            model.addAttribute("weekStart", newDate.with(weekFields.dayOfWeek(), 1L));
+            model.addAttribute("weekEnd", newDate.with(weekFields.dayOfWeek(), 7L));
             session.setAttribute("view", "week");
             
         } else if (view.equals("month")) {
@@ -122,7 +121,7 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByMonth(newDate.getYear(), newDate.getMonthValue(), sessionUser));
             model.addAttribute("view", "month");
-            model.addAttribute("month", newDate.getMonthValue());
+            model.addAttribute("date", newDate);
             session.setAttribute("view", "month");
         }
 
@@ -136,7 +135,7 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByYear(newDate.getYear(), sessionUser));
             model.addAttribute("view", "year");
-            model.addAttribute("year", newDate.getYear());
+            //model.addAttribute("year", newDate.getYear());
             session.setAttribute("view", "year");
         }
 
