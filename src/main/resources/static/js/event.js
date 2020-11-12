@@ -45,3 +45,15 @@ function invalidEventInput() {
     });
 
 }
+
+function sortEvents() {
+    jQuery(function($) {
+        var x = getElementsByClassName("event");
+        for(var i=0;i<x.length;i++){
+            x[i] = x[i].getElementsByTagName("p")[0].innerText;
+            console.log(x[i]);
+        }
+
+           return;
+    });
+}
