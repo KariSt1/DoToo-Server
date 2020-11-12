@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function invalidDateRange() {
     jQuery(function($) {
         var startDate = document.getElementById("start-date").value;
-        var endDate = document.getElementById("end-date").value;
 
         if (Date.parse(endDate) <= Date.parse(startDate)) {
             alert("End date should be greater than start date");

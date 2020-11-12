@@ -1,13 +1,15 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
-import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -16,8 +18,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -25,7 +25,7 @@ import java.util.TimeZone;
 public class EventController {
 
     private EventService eventService;
-    
+
     @Autowired
     public EventController(EventService eventService) {
         this.eventService = eventService;
@@ -55,25 +55,26 @@ public class EventController {
     /**
      * Handles changes of view
      * Shows list of events of chosen day, month or year
-     * @param view day, month or year
-     * @param nav prev or next - goes back or forward in time
+     *
+     * @param view    day, month or year
+     * @param nav     prev or next - goes back or forward in time
      * @param model
      * @param session
      * @return CalendarPage
      */
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value="view", required = false) String view, @RequestParam(value="nav", required = false) String nav, Model model, HttpSession session) {
+    public String changeCalendarView(@RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if (sessionUser == null) {
             return "redirect:/login";
         }
-        if(view == null) {
+        if (view == null) {
             view = session.getAttribute("view").toString();
         }
         int offset = Integer.valueOf(session.getAttribute("offset").toString());
-        if(nav == null) offset += 0;
-        else if(nav.equals("next")) offset += 1;
-        else if(nav.equals("prev")) offset -= 1;
+        if (nav == null) offset += 0;
+        else if (nav.equals("next")) offset += 1;
+        else if (nav.equals("prev")) offset -= 1;
         else offset = 0;
 
         LocalDate now = LocalDate.now();
@@ -91,7 +92,7 @@ public class EventController {
 
         if (view.equals("day")) {
             LocalDate newDate;
-            if(offset < 0) {
+            if (offset < 0) {
                 newDate = now.minus(Period.ofDays(Math.abs(offset)));
             } else {
                 newDate = now.plus(Period.ofDays(offset));
@@ -100,11 +101,9 @@ public class EventController {
             model.addAttribute("view", "day");
             model.addAttribute("day", newDate.getDayOfMonth());
             session.setAttribute("view", "day");
-        }
-
-        else if(view.equals("week")) {
+        } else if (view.equals("week")) {
             LocalDate newDate;
-            if(offset < 0) {
+            if (offset < 0) {
                 newDate = now.minus(Period.ofWeeks(Math.abs(offset)));
             } else {
                 newDate = now.plus(Period.ofWeeks(offset));
@@ -113,11 +112,10 @@ public class EventController {
             model.addAttribute("view", "week");
             model.addAttribute("week", newDate.get(weekFields.weekOfWeekBasedYear()));
             session.setAttribute("view", "week");
-        }
-
-        else if(view.equals("month")) {
+            
+        } else if (view.equals("month")) {
             LocalDate newDate;
-            if(offset < 0) {
+            if (offset < 0) {
                 newDate = now.minus(Period.ofMonths(Math.abs(offset)));
             } else {
                 newDate = now.plus(Period.ofMonths(offset));
@@ -129,9 +127,9 @@ public class EventController {
         }
 
         // Not implemented in interface for now
-        else if(view.equals("year")) {
+        else if (view.equals("year")) {
             LocalDate newDate;
-            if(offset < 0) {
+            if (offset < 0) {
                 newDate = now.minus(Period.ofMonths(offset));
             } else {
                 newDate = now.plus(Period.ofMonths(offset));
@@ -165,7 +163,7 @@ public class EventController {
         return "redirect:/calendar";
     }
 
-    @RequestMapping(value="/calendar/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/calendar/delete/{id}", method = RequestMethod.GET)
     public String deleteEvent(@PathVariable("id") long id, Model model) {
         Event event = eventService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
         eventService.delete(event);
