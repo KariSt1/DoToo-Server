@@ -45,3 +45,27 @@ function invalidEventInput() {
     });
 
 }
+
+function sortDayView() {
+    jQuery(function($) {
+
+           return;
+       }
+    });
+}
+
+function sortWeekView() {
+    jQuery(function($) {
+
+           return;
+       }
+    });
+}
+
+function sortMonthView() {
+    jQuery(function($) {
+
+           return;
+       }
+    });
+}
