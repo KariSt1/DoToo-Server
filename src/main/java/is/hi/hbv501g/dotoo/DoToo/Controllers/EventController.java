@@ -165,11 +165,10 @@ public class EventController {
         return "redirect:/calendar";
     }
 
-    @RequestMapping(value="/calendar/delete/{id}", method = RequestMethod.GET)
-    public String deleteEvent(@PathVariable("id") long id, Model model) {
+    @RequestMapping(value="/deleteEvent", method = RequestMethod.POST)
+    public String deleteEvent(@PathVariable("id") long id) {
         Event event = eventService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
         eventService.delete(event);
-        model.addAttribute("events", eventService.findAll());
-        return "EventPage";
+        return "redirect:/calendar";
     }
 }
