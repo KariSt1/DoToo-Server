@@ -66,7 +66,7 @@ public class EventController {
      * @param nav     prev or next - goes back or forward in time
      * @param model
      * @param session
-     * @return CalendarPage
+     * @return EventPage
      */
     @RequestMapping("/changeview")
     public String changeCalendarView(@RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
