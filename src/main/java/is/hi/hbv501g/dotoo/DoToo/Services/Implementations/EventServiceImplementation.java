@@ -54,7 +54,7 @@ public class EventServiceImplementation implements EventService {
         List<Event> eventsByDay = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) == month && ev.get(Calendar.DAY_OF_MONTH) == day) eventsByDay.add(event);
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH)+1 == month && ev.get(Calendar.DAY_OF_MONTH) == day) eventsByDay.add(event);
         }
         return eventsByDay;
     }
