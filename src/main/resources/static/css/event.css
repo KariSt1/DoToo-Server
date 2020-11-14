@@ -5,6 +5,16 @@
     margin: 10px;
 }
 
+.event button {
+    float: right;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.event button:hover {
+    color: grey;
+}
+
 #new-event {
     background-color: white;
 
