@@ -5,9 +5,13 @@ import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Repositories.EventRepository;
 import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventServiceImplementation implements EventService {
@@ -25,21 +29,25 @@ public class EventServiceImplementation implements EventService {
     public void delete(Event event) {
         eventRepository.delete(event);
     }
+
     public List<Event> findAll() {
-        return eventRepository.findAll();
+        return eventRepository.findAll(Sort.by(Sort.Direction.ASC, "startDate"));
+
     }
+
     public Optional<Event> findById(long id) {
         return eventRepository.findById(id);
     }
 
     @Override
-    public List<Event> findByUser(User user) {
-        return eventRepository.findByUser(user);
+    public List<Event> findByUser(User user, Sort sort) {
+        return eventRepository.findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+
     }
 
     @Override
     public List<Event> findByWeek(int year, int week, User user) {
-        List<Event> events = findByUser(user);
+        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByWeek = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
@@ -50,29 +58,31 @@ public class EventServiceImplementation implements EventService {
 
     @Override
     public List<Event> findByDay(int year, int month, int day, User user) {
-        List<Event> events = findByUser(user);
+        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByDay = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH)+1 == month && ev.get(Calendar.DAY_OF_MONTH) == day) eventsByDay.add(event);
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && ev.get(Calendar.DAY_OF_MONTH) == day)
+                eventsByDay.add(event);
         }
         return eventsByDay;
     }
 
     @Override
     public List<Event> findByMonth(int year, int month, User user) {
-        List<Event> events = findByUser(user);
+        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByMonth = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH)+1 == month) eventsByMonth.add(event); //Not sure why but we add to add 1 month for it to show up correctly
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month)
+                eventsByMonth.add(event); //Not sure why but we add to add 1 month for it to show up correctly
         }
         return eventsByMonth;
     }
 
     @Override
     public List<Event> findByYear(int year, User user) {
-        List<Event> events = findByUser(user);
+        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByYear = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
