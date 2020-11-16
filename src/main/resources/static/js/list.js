@@ -32,5 +32,8 @@ function listDeleted(list) {
         $.post(url, data);
     });
     let card = list.parentNode.parentNode.parentNode;
-    card.parentNode.removeChild(card);
+    card.classList.add("fade-out");
+    setTimeout(() => {
+        card.parentNode.removeChild(card)
+    }, 1000);
 }

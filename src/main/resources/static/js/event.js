@@ -16,8 +16,13 @@ function eventDeleted(event) {
         data.id = event.id;
         $.post(url, data);
     });
+    debugger;
     let card = event.parentNode;
-    card.parentNode.removeChild(card);
+    card.classList.add("fade-out");
+    setTimeout(() => {
+        card.parentNode.removeChild(card)
+    }, 1000);
+
 }
 
 
