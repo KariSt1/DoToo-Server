@@ -89,9 +89,6 @@
     <div class="events">
         <div class="event" th:each="event : ${events}"
              th:classappend="${event.color}">
-            <!-- skoða hvort hægt sé að nota <tr th:each="ment : ${#lists.sort(mentor)}">
-            th:each="event.startDate: ${#lists.sort(events)}"   -->
-
             <button th:id="${event.id}" onclick="eventDeleted(this)">
                 <svg width="1.2em" height="1.5em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
                      xmlns="http://www.w3.org/2000/svg">
