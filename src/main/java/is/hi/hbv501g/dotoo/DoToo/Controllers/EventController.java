@@ -85,6 +85,7 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByMonth(viewedDate.getYear(), viewedDate.getMonthValue(), sessionUser));
         }
+        session.setAttribute("offset", 0);
         session.setAttribute("date", viewedDate);
         model.addAttribute("date", viewedDate);
         model.addAttribute("loggedinuser", sessionUser);
