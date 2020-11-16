@@ -53,19 +53,26 @@
 <div class="calendar-grid col-md-6">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
-            <button type="submit" class="btn button-prev" th:name="nav" value="prev"> ◄
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            </button>
+            <div class="calendar-nav-date">
+                <input type="date" id="view-data"
+                       th:name="viewDate">
+            </div>
+            <div class="calendar-nav-view">
+                <button type="submit" class="btn button-prev" th:name="nav" value="prev"> ◄
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </button>
 
-            <th:block th:switch="${view}">
-                <span class="nav-text" th:case="'day'" th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
-                <span class="nav-text" th:case="'week'"
-                      th:text="${#temporals.format(weekStart, 'd. MMMM yyyy')} + ' - ' + ${#temporals.format(weekEnd, 'd. MMMM yyyy')}"></span>
-                <span class="nav-text" th:case="'month'" th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
-            </th:block>
-            <button type="submit" class="btn button-next" th:name="nav" value="next"> ►
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </button>
+                <th:block th:switch="${view}">
+                    <span class="nav-text" th:case="'day'" th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
+                    <span class="nav-text" th:case="'week'"
+                          th:text="${#temporals.format(weekStart, 'd. MMMM yyyy')} + ' - ' + ${#temporals.format(weekEnd, 'd. MMMM yyyy')}"></span>
+                    <span class="nav-text" th:case="'month'" th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
+                </th:block>
+                <button type="submit" class="btn button-next" th:name="nav" value="next"> ►
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </button>
+            </div>
+
         </div>
         <div class="btn-group">
             <button class="btn btn-primary" type="submit" th:name="view" value="day"
