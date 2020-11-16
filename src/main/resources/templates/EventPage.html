@@ -55,7 +55,7 @@
         <div class="calendar-nav">
             <div class="calendar-nav-date">
                 <input type="date" id="view-data"
-                       th:name="viewDate">
+                       th:name="viewDate" onchange="postViewDate(this.value)">
             </div>
             <div class="calendar-nav-view">
                 <button type="submit" class="btn button-prev" th:name="nav" value="prev"> ◄

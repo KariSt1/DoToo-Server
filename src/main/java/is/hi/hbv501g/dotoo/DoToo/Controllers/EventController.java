@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Locale;
@@ -88,68 +89,6 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByMonth(viewedDate.getYear(), viewedDate.getMonthValue(), sessionUser));
         }
-
-        /*
-        Integer offset = (Integer) session.getAttribute("offset");
-        if(offset == null) {
-            offset = 0;
-        }
-        LocalDate newDate = null;
-        if (view.equals("day")) {
-            //LocalDate newDate;
-            if (offset < 0) {
-                newDate = date.minus(Period.ofDays(Math.abs(offset)));
-            } else {
-                newDate = date.plus(Period.ofDays(offset));
-            }
-            model.addAttribute("events", eventService.findByDay(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth(), sessionUser));
-            //model.addAttribute("date", newDate);
-            //session.setAttribute("date", newDate);
-        } else if (view.equals("week")) {
-            //LocalDate newDate;
-            if (offset < 0) {
-                newDate = date.minus(Period.ofWeeks(Math.abs(offset)));
-            } else {
-                newDate = date.plus(Period.ofWeeks(offset));
-            }
-            model.addAttribute("events", eventService.findByWeek(newDate.getYear(), newDate.get(weekFields.weekOfWeekBasedYear()), sessionUser));
-            model.addAttribute("weekStart", newDate.with(weekFields.dayOfWeek(), 1L));
-            model.addAttribute("weekEnd", newDate.with(weekFields.dayOfWeek(), 7L));
-
-        } else if (view.equals("month")) {
-            //LocalDate newDate;
-            if (offset < 0) {
-                newDate = date.minus(Period.ofMonths(Math.abs(offset)));
-            } else {
-                newDate = date.plus(Period.ofMonths(offset));
-            }
-            model.addAttribute("events", eventService.findByMonth(newDate.getYear(), newDate.getMonthValue(), sessionUser));
-            //model.addAttribute("date", newDate);
-            //session.setAttribute("date", newDate);
-        }
-
-        // Not implemented in interface for now
-        else if (view.equals("year")) {
-            //LocalDate newDate;
-            if (offset < 0) {
-                newDate = date.minus(Period.ofMonths(offset));
-            } else {
-                newDate = date.plus(Period.ofMonths(offset));
-            }
-            model.addAttribute("events", eventService.findByYear(newDate.getYear(), sessionUser));
-            model.addAttribute("view", "year");
-            //model.addAttribute("year", newDate.getYear());
-            session.setAttribute("view", "year");
-            session.setAttribute("date", newDate);
-        }
-        if(newDate != null) {
-            model.addAttribute("date", newDate);
-            session.setAttribute("date", newDate);
-        }
-        session.setAttribute("offset", offset);
-        model.addAttribute("offset", offset);
-
-         */
         session.setAttribute("date", viewedDate);
         model.addAttribute("date", viewedDate);
         model.addAttribute("loggedinuser", sessionUser);
@@ -189,7 +128,7 @@ public class EventController {
      * @return EventPage
      */
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
+    public String changeCalendarView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
 
         //int offset = Integer.valueOf(session.getAttribute("offset").toString());
@@ -198,77 +137,23 @@ public class EventController {
         if (sessionUser == null) {
             return "redirect:/login";
         }
-        if (view == null) {
+        if (viewDate.length() > 0) {
+            LocalDate date = LocalDate.parse(viewDate);
+            session.setAttribute("date", date);
+        }
+        if (view == null || view.equals("")) {
             view = session.getAttribute("view").toString();
         }/* else {
             offset = 0;
         }*/
 
 
-        if (nav == null) offset = 0;
+        if (nav == null || nav.equals("")) offset = 0;
         else if (nav.equals("next")) offset = 1;
         else if (nav.equals("prev")) offset = -1;
         //else offset = 0;
 
-        /*
-        LocalDate now = LocalDate.now();
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
-        model.addAttribute("date", now);
-
-        if (view.equals("day")) {
-            LocalDate newDate;
-            if (offset < 0) {
-                newDate = now.minus(Period.ofDays(Math.abs(offset)));
-            } else {
-                newDate = now.plus(Period.ofDays(offset));
-            }
-            model.addAttribute("events", eventService.findByDay(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth(), sessionUser));
-            model.addAttribute("view", "day");
-            model.addAttribute("date", newDate);
-            session.setAttribute("view", "day");
-            session.setAttribute("date", newDate);
-        } else if (view.equals("week")) {
-            LocalDate newDate;
-            if (offset < 0) {
-                newDate = now.minus(Period.ofWeeks(Math.abs(offset)));
-            } else {
-                newDate = now.plus(Period.ofWeeks(offset));
-            }
-            model.addAttribute("events", eventService.findByWeek(newDate.getYear(), newDate.get(weekFields.weekOfWeekBasedYear()), sessionUser));
-            model.addAttribute("view", "week");
-            model.addAttribute("weekStart", newDate.with(weekFields.dayOfWeek(), 1L));
-            model.addAttribute("weekEnd", newDate.with(weekFields.dayOfWeek(), 7L));
-            session.setAttribute("view", "week");
-
-        } else if (view.equals("month")) {
-            LocalDate newDate;
-            if (offset < 0) {
-                newDate = now.minus(Period.ofMonths(Math.abs(offset)));
-            } else {
-                newDate = now.plus(Period.ofMonths(offset));
-            }
-            model.addAttribute("events", eventService.findByMonth(newDate.getYear(), newDate.getMonthValue(), sessionUser));
-            model.addAttribute("view", "month");
-            model.addAttribute("date", newDate);
-            session.setAttribute("view", "month");
-            session.setAttribute("date", newDate);
-        }
-
-        // Not implemented in interface for now
-        else if (view.equals("year")) {
-            LocalDate newDate;
-            if (offset < 0) {
-                newDate = now.minus(Period.ofMonths(offset));
-            } else {
-                newDate = now.plus(Period.ofMonths(offset));
-            }
-            model.addAttribute("events", eventService.findByYear(newDate.getYear(), sessionUser));
-            model.addAttribute("view", "year");
-            //model.addAttribute("year", newDate.getYear());
-            session.setAttribute("view", "year");
-            session.setAttribute("date", newDate);
-        } */
         session.setAttribute("view", view);
 
         session.setAttribute("offset", offset);
