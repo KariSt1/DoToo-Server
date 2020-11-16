@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Locale;
@@ -85,6 +86,7 @@ public class EventController {
             }
             model.addAttribute("events", eventService.findByMonth(viewedDate.getYear(), viewedDate.getMonthValue(), sessionUser));
         }
+
         session.setAttribute("offset", 0);
         session.setAttribute("date", viewedDate);
         model.addAttribute("date", viewedDate);
@@ -103,20 +105,26 @@ public class EventController {
      * @return EventPage
      */
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
+    public String changeCalendarView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         int offset = 0;
 
         if (sessionUser == null) {
             return "redirect:/login";
         }
-        if (view == null) {
+        if (viewDate.length() > 0) {
+            LocalDate date = LocalDate.parse(viewDate);
+            session.setAttribute("date", date);
+        }
+        if (view == null || view.equals("")) {
             view = session.getAttribute("view").toString();
         }
 
-        if (nav == null) offset = 0;
+        if (nav == null || nav.equals("")) offset = 0;
         else if (nav.equals("next")) offset = 1;
         else if (nav.equals("prev")) offset = -1;
+        //else offset = 0;
+
 
         session.setAttribute("view", view);
         session.setAttribute("offset", offset);

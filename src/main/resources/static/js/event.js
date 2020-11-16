@@ -52,6 +52,24 @@ function invalidEventInput() {
 
 }
 
+function postViewDate(date) {
+    debugger;
+    jQuery(function($) {
+        var url = window.location.origin + '/changeview';
+        var data = {};
+        data.viewDate = date;
+        data.view = null;
+        data.nav = null;
+        $.post(url, data);
+    });
+    var viewButtons = document.querySelector(".btn-group").children;
+    var activeBtn;
+    for(let i = 0; i < viewButtons.length; i++) {
+        if(viewButtons[i].classList.contains("active")) activeBtn = viewButtons[i];
+    }
+    $(activeBtn).click();
+}
+
 function sortEvents() {
     jQuery(function($) {
         var x = document.getElementsByClassName("event");
