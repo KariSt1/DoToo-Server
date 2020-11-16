@@ -16,7 +16,6 @@ function eventDeleted(event) {
         data.id = event.id;
         $.post(url, data);
     });
-    debugger;
     let card = event.parentNode;
     card.classList.add("fade-out");
     setTimeout(() => {
@@ -41,13 +40,15 @@ function invalidEventInput() {
             alert("End date should be greater than start date");
             return;
         }
-       if( $("#myForm")[0].checkValidity()) {
-           $("#myForm").submit();
-       }
-       else {
-           return;
-       }
+
+        if (!$("#myForm")[0].checkValidity()) {
+            $("#myForm")[0].reportValidity();
+        } else {
+            $("#myForm").submit();
+        }
+
     });
+
 
 }
 
