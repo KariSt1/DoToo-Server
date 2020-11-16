@@ -290,6 +290,7 @@ public class EventController {
         ed.setTime(sdf.parse(endDate));
 
         Event event = new Event(sd, ed, title, category, color, (User) session.getAttribute("loggedInUser"));
+        session.setAttribute("offset", 0);
         eventService.save(event);
         return "redirect:/calendar";
     }
