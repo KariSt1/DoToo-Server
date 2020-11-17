@@ -34,12 +34,12 @@ function invalidEventInput() {
 
         if (title.length > 50) {
            // alert("Title cannot be longer than 50 characters");
-            swal("Ooops", "Title cannot be longer than 50 characters", "error");
+            swal("Uh oh...", "Title cannot be longer than 50 characters", "error");
             return;
         }
         if (Date.parse(endDate) <= Date.parse(startDate)) {
             //alert("End date should be greater than start date");
-            swal("Ooops", "End date should be greater than start date", "error");
+            swal("Uh oh...", "End date should be greater than start date", "error");
             return;
         }
 
