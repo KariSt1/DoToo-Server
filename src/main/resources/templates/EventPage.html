@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/event.css">
     <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" href="/css/animations.css">
+
 </head>
 
 <header>
@@ -100,6 +101,7 @@
             <h2 th:text="${event.title}"></h2>
             <p th:text="${#dates.format(event.startDate, 'd. MMMM yyyy HH:mm')}"></p>
             <p th:text="${#dates.format(event.endDate, 'd. MMMM yyyy HH:mm')}"></p>
+            <p th:text="${event.category}" class="category"></p>
         </div>
     </div>
 </div>
@@ -164,6 +166,7 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="/js/event.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 </html>

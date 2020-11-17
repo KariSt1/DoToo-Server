@@ -24,7 +24,6 @@ function eventDeleted(event) {
 
 }
 
-
 function invalidEventInput() {
     jQuery(function($) {
         debugger;
@@ -32,14 +31,18 @@ function invalidEventInput() {
         var endDate = document.getElementById("end-date").value;
         var title = document.getElementById("event-title").value;
 
+
         if (title.length > 50) {
-            alert("Title cannot be longer than 50 characters");
+           // alert("Title cannot be longer than 50 characters");
+            swal("Ooops", "Title cannot be longer than 50 characters", "error");
             return;
         }
         if (Date.parse(endDate) <= Date.parse(startDate)) {
-            alert("End date should be greater than start date");
+            //alert("End date should be greater than start date");
+            swal("Ooops", "End date should be greater than start date", "error");
             return;
         }
+
 
         if (!$("#myForm")[0].checkValidity()) {
             $("#myForm")[0].reportValidity();
