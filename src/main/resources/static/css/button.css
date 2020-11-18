@@ -3,9 +3,15 @@
     padding: 15px;
 }
 
+.newEventButton {
+    padding: 12px 20px;
+    letter-spacing: 1px;
+}
+
 .loginButton {
     padding-left: 0;
 }
+
 
 $color: #0cf;
 button {

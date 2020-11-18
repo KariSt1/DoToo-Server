@@ -51,6 +51,14 @@
 </header>
 
 <body>
+<div class="row">
+    <!-- Button trigger modal -->
+
+    <button type="button" class="btn btn-primary newEventButton" data-toggle="modal" data-target="#ModalCenter">
+        New event
+    </button>
+
+</div>
 <div class="calendar-grid col-md-7">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
@@ -106,14 +114,7 @@
     </div>
 </div>
 
-<div class="row">
-    <!-- Button trigger modal -->
 
-    <button type="button" class="btn btn-primary newEventButton" data-toggle="modal" data-target="#ModalCenter">
-        New event
-    </button>
-
-</div>
 </div>
 
 <!-- Modal -->
