@@ -51,7 +51,7 @@
 </header>
 
 <body>
-<div class="calendar-grid col-md-6">
+<div class="calendar-grid col-md-7">
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
             <div class="calendar-nav-date">
@@ -76,13 +76,13 @@
 
         </div>
         <div class="btn-group">
-            <button class="btn btn-primary" type="submit" th:name="view" value="day"
+            <button class="btn btn-dark" type="submit" th:name="view" value="day"
                     th:classappend="(${view} == 'day') ? active : ''">Day
             </button>
-            <button class="btn btn-primary" type="submit" th:name="view" value="week"
+            <button class="btn btn-dark" type="submit" th:name="view" value="week"
                     th:classappend="(${view} == 'week') ? active : ''">Week
             </button>
-            <button class="btn btn-primary" type="submit" th:name="view" value="month"
+            <button class="btn btn-dark" type="submit" th:name="view" value="month"
                     th:classappend="(${view} == 'month') ? active : ''">Month
             </button>
         </div>
