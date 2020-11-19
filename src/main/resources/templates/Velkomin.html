@@ -55,6 +55,11 @@
 
 <div class="container">
     <div class="row">
+        <p>Welcome, </p>
+        <p th:text="${loggedinuser.name}"></p>
+        <span>Here are your upcoming events for the week:</span>
+    </div>
+    <div class="row">
         <div class="newEventButton col-12">
             <div class="events">
                 <div class="event" th:each="event : ${events}"
