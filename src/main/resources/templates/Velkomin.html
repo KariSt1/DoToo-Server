@@ -54,10 +54,10 @@
 <body>
 
 <div class="container">
-    <div class="row">
-        <p>Welcome, </p>
-        <p th:text="${loggedinuser.name}"></p>
-        <span>Here are your upcoming events for the week:</span>
+    <div class="homepage-text">
+        <span>Welcome, </span>
+        <span th:text="${loggedinuser.name}"></span>
+        <p><br> Here are your upcoming events for the week:</p>
     </div>
     <div class="row">
         <div class="newEventButton col-12">
@@ -71,6 +71,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="homepage-text">
+        <p>Here are your to-do lists: </p>
     </div>
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12" th:each="todolist : ${todolists}">
