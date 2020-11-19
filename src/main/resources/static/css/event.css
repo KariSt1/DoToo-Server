@@ -93,3 +93,16 @@ p.category {
     display: none;
 }
 
+select#categories {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+input#start-date {
+    margin-top: 10px;
+}
+
+input#end-date {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
