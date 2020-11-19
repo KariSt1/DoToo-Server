@@ -61,7 +61,7 @@
             <div class="card" th:classappend="${todolist.color}">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div th:text="${todolist.name}"></div>
+                        <div class="card-text" th:text="${todolist.name}"></div>
                         <button th:id="${todolist.id}" onclick="listDeleted(this)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -86,8 +86,9 @@
                     <tbody>
                     <tr th:each="item : ${todolist.items}">
                         <td style="width:8%"><input type="checkbox" th:id="${item.id}" th:checked="${item.checked}"
-                                                    onclick="itemChecked(this)"></td>
-                        <td th:text="${item.description}" class="pull-left"
+                                                    onclick="itemChecked(this)">
+                        </td>
+                        <td th:text="${item.description}" class="card-text pull-left"
                             th:classappend="${item.checked ? 'linethrough' : ''}"></td>
                         <td style="width:8%">
                             <button th:id="${item.id}" onclick="itemDeleted(this)">
