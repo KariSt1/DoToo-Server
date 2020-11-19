@@ -63,7 +63,7 @@
     <form action="#" th:action="@{/changeview}" th:method="POST">
         <div class="calendar-nav">
             <div class="calendar-nav-date">
-                <input type="date" id="view-data"
+                <input type="date" id="view-data" th:value="${date}"
                        th:name="viewDate" onchange="postViewDate(this.value)">
             </div>
             <div class="calendar-nav-view">
