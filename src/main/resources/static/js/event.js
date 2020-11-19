@@ -3,7 +3,8 @@ var title;
 document.addEventListener('DOMContentLoaded', () => {
     let start = document.getElementById("start-date");
     let end = document.getElementById("end-date");
-    let now = new Date();
+    let now = new Date(document.getElementById("view-data").value);
+    console.log(document.getElementById("view-data").value);
     let time = now.toISOString().substring(0,16);
     start.setAttribute("value", time);
     end.setAttribute("value", time);
