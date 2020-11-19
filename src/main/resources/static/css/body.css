@@ -1,6 +1,7 @@
 body{
-    background: rgb(85,166,221);
-    background: linear-gradient(90deg, rgba(85,166,221,1) 0%, rgba(135,194,233,1) 18%, rgba(163,210,241,1) 63%, rgba(206,235,255,1) 100%);
+    //background: rgb(85,166,221);
+    background-color: rgb(255 254 245);
+    //background: linear-gradient(90deg, rgba(85,166,221,1) 0%, rgba(135,194,233,1) 18%, rgba(163,210,241,1) 63%, rgba(206,235,255,1) 100%);
 }
 
 .container {
