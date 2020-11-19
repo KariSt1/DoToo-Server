@@ -1,11 +1,19 @@
 .newlistButton {
-    margin: 30px;
-    padding: 15px;
+    //margin: 30px;
+    //padding: 15px;
+    width: 150px;
+    padding: 12px 20px;
+    letter-spacing: 1px;
+    margin: auto;
+    display: block;
 }
 
 .newEventButton {
+    width: 150px;
     padding: 12px 20px;
     letter-spacing: 1px;
+    margin: auto;
+    display: block;
 }
 
 .loginButton {

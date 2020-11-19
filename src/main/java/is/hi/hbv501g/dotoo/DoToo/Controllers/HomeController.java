@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
+import java.util.Locale;
 
 @Controller
 public class HomeController {
@@ -41,8 +44,14 @@ public class HomeController {
         if (sessionUser == null) {
             return "redirect:/login";
         }
-        model.addAttribute("loggedinuser", sessionUser);
+
+        LocalDate date = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), sessionUser));
+
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
+
+        model.addAttribute("loggedinuser", sessionUser);
         //model.addAttribute("users", userService.findAll());
         return "Velkomin";
     }

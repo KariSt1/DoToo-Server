@@ -51,70 +51,71 @@
 </header>
 
 <body>
-<div class="row">
-    <!-- Button trigger modal -->
-
-    <button type="button" class="btn btn-primary newEventButton" data-toggle="modal" data-target="#ModalCenter">
-        New event
-    </button>
-
-</div>
-<div class="calendar-grid col-md-7">
-    <form action="#" th:action="@{/changeview}" th:method="POST">
-        <div class="calendar-nav">
-            <div class="calendar-nav-date">
-                <input type="date" id="view-data" th:value="${date}"
-                       th:name="viewDate" onchange="postViewDate(this.value)">
-            </div>
-            <div class="calendar-nav-view">
-                <button type="submit" class="btn button-prev" th:name="nav" value="prev"> ◄
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                </button>
-
-                <th:block th:switch="${view}">
-                    <span class="nav-text" th:case="'day'" th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
-                    <span class="nav-text" th:case="'week'"
-                          th:text="${#temporals.format(weekStart, 'd. MMMM yyyy')} + ' - ' + ${#temporals.format(weekEnd, 'd. MMMM yyyy')}"></span>
-                    <span class="nav-text" th:case="'month'" th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
-                </th:block>
-                <button type="submit" class="btn button-next" th:name="nav" value="next"> ►
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
-            </div>
-
-        </div>
-        <div class="btn-group">
-            <button class="btn btn-dark" type="submit" th:name="view" value="day"
-                    th:classappend="(${view} == 'day') ? active : ''">Day
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary newEventButton" data-toggle="modal" data-target="#ModalCenter">
+                New event
             </button>
-            <button class="btn btn-dark" type="submit" th:name="view" value="week"
-                    th:classappend="(${view} == 'week') ? active : ''">Week
-            </button>
-            <button class="btn btn-dark" type="submit" th:name="view" value="month"
-                    th:classappend="(${view} == 'month') ? active : ''">Month
-            </button>
-        </div>
-    </form>
-    <div class="events">
-        <div class="event" th:each="event : ${events}"
-             th:classappend="${event.color}">
-            <button th:id="${event.id}" onclick="eventDeleted(this)">
-                <svg width="1.2em" height="1.5em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                    <path fill-rule="evenodd"
-                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                </svg>
-            </button>
-            <h2 th:text="${event.title}"></h2>
-            <p th:text="${#dates.format(event.startDate, 'd. MMMM yyyy HH:mm')}"></p>
-            <p th:text="${#dates.format(event.endDate, 'd. MMMM yyyy HH:mm')}"></p>
-            <p th:text="${event.category}" class="category"></p>
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="calendar-grid col-12">
+            <form action="#" th:action="@{/changeview}" th:method="POST">
+                <div class="calendar-nav">
+                    <div class="calendar-nav-date">
+                        <input type="date" id="view-data" th:value="${date}"
+                               th:name="viewDate" onchange="postViewDate(this.value)">
+                    </div>
+                    <div class="calendar-nav-view">
+                        <button type="submit" class="btn button-prev" th:name="nav" value="prev"> ◄
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        </button>
 
+                        <th:block th:switch="${view}">
+                            <span class="nav-text" th:case="'day'" th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
+                            <span class="nav-text" th:case="'week'"
+                                  th:text="${#temporals.format(weekStart, 'd. MMMM yyyy')} + ' - ' + ${#temporals.format(weekEnd, 'd. MMMM yyyy')}"></span>
+                            <span class="nav-text" th:case="'month'" th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
+                        </th:block>
+                        <button type="submit" class="btn button-next" th:name="nav" value="next"> ►
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
 
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-dark" type="submit" th:name="view" value="day"
+                            th:classappend="(${view} == 'day') ? active : ''">Day
+                    </button>
+                    <button class="btn btn-dark" type="submit" th:name="view" value="week"
+                            th:classappend="(${view} == 'week') ? active : ''">Week
+                    </button>
+                    <button class="btn btn-dark" type="submit" th:name="view" value="month"
+                            th:classappend="(${view} == 'month') ? active : ''">Month
+                    </button>
+                </div>
+            </form>
+            <div class="events">
+                <div class="event" th:each="event : ${events}"
+                     th:classappend="${event.color}">
+                    <button th:id="${event.id}" onclick="eventDeleted(this)">
+                        <svg width="1.2em" height="1.5em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd"
+                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </button>
+                    <h2 th:text="${event.title}"></h2>
+                    <p th:text="${#dates.format(event.startDate, 'd. MMMM yyyy HH:mm')}"></p>
+                    <p th:text="${#dates.format(event.endDate, 'd. MMMM yyyy HH:mm')}"></p>
+                    <p th:text="${event.category}" class="category"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->

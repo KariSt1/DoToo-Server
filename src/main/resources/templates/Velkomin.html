@@ -52,12 +52,21 @@
 </header>
 
 <body>
+
 <div class="container">
-
-    <div>
-        <p class="text"></p>
+    <div class="row">
+        <div class="newEventButton col-12">
+            <div class="events">
+                <div class="event" th:each="event : ${events}"
+                     th:classappend="${event.color}">
+                    <h2 th:text="${event.title}"></h2>
+                    <p th:text="${#dates.format(event.startDate, 'd. MMMM yyyy HH:mm')}"></p>
+                    <p th:text="${#dates.format(event.endDate, 'd. MMMM yyyy HH:mm')}"></p>
+                    <p th:text="${event.category}" class="category"></p>
+                </div>
+            </div>
+        </div>
     </div>
-
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12" th:each="todolist : ${todolists}">
             <div class="card" th:classappend="${todolist.color}">
