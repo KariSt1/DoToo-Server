@@ -23,6 +23,10 @@
      border-color: transparent;
  }
 
+.card-header button:hover {
+    color: grey;
+}
+
  .table td, .table th {
     font-family: 'Signika', sans-serif;
  }
