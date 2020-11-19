@@ -1,7 +1,14 @@
 function itemChecked(item) {
     jQuery(function($) {
-        var url = window.location.origin + '/itemchecked';
-        var data = {};
+        let url = window.location.origin;
+        if(window.location.pathname === '/todolist') {
+            url = url + '/itemchecked'
+        } else {
+            url = url + '/homeitemchecked'
+        }
+        console.log(url);
+        //var url = window.location.origin + '/itemchecked';
+        let data = {};
         data.id = item.id;
         data.checked = item.checked;
         $.post(url, data);

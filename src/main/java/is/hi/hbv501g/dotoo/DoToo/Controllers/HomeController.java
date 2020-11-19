@@ -5,12 +5,15 @@ import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
+import is.hi.hbv501g.dotoo.DoToo.Services.TodoListItemService;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.Calendar;
@@ -21,28 +24,36 @@ public class HomeController {
     private UserService userService;
     private TodoListService todoListService;
     private EventService eventService;
+    private TodoListItemService itemService;
 
     @Autowired
-    public HomeController(UserService userService, TodoListService todoListService, EventService eventService) {
+    public HomeController(UserService userService, TodoListService todoListService,
+                          EventService eventService, TodoListItemService itemService) {
         this.userService = userService;
         this.todoListService = todoListService;
         this.eventService = eventService;
+        this.itemService = itemService;
     }
 
     @RequestMapping("/")
     public String HomePage(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) {
+        User sessionUser = (User) session.getAttribute("loggedInUser");
+        if (sessionUser == null) {
             return "redirect:/login";
         }
-        model.addAttribute("loggedinuser", user);
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("loggedinuser", sessionUser);
+        model.addAttribute("todolists", todoListService.findByUser(sessionUser));
+        //model.addAttribute("users", userService.findAll());
         return "Velkomin";
     }
 
-    @RequestMapping("/main")
-    public String MainPage() {
-        return "MainPage";
+    @RequestMapping(value = "/homeitemchecked", method = RequestMethod.POST)
+    public String itemChecked(@RequestParam(value = "id") long id,
+                              @RequestParam(value = "checked") boolean checked) { ;
+        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
+        item.setChecked(checked);
+        itemService.save(item);
+        return "redirect:/";
     }
 
     @RequestMapping("/makedata")
