@@ -72,9 +72,9 @@ public class HomeController {
         userService.save(nonni);
         session.setAttribute("loggedInUser", nonni);
 
-
+        String colors[] = {"yellow", "orange", "red", "green", "blue", "pink", "purple"};
         for (int i = 1; i < 5; i++) {
-            TodoList todoList = new TodoList("Innkaupalisti " + i, "pink", nonni);
+            TodoList todoList = new TodoList("Innkaupalisti " + i, colors[(int) (Math.random()*7)], nonni);
             todoListService.save(todoList);
 
             Calendar startDate = Calendar.getInstance();
@@ -83,7 +83,7 @@ public class HomeController {
             endDate.clear();
             startDate.set(2020, 10, 20 + i, 10 + i, 30);
             endDate.set(2020, 10, 20 + i, 10 + i + 2, 45);
-            Event event = new Event(startDate, endDate, "Æfing " + i, "Íþróttir", "0x00ff", nonni);
+            Event event = new Event(startDate, endDate, "Æfing " + i, "Íþróttir", colors[(int) (Math.random()*7)], nonni);
             eventService.save(event);
 
             for (int j = 1; j < 4; j++) {
