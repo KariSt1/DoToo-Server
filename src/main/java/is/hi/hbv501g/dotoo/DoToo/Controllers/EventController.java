@@ -47,7 +47,8 @@ public class EventController {
 
         String category = (String) session.getAttribute("category");
         if(category == null) {
-            category="All";
+            session.setAttribute("category","All");
+            category = "All";
         }
 
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
