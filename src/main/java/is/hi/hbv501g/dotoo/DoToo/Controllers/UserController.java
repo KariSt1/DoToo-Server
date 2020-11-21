@@ -42,7 +42,7 @@ public class UserController {
         }
         User exists = userService.login(user);
         if(exists != null){
-            session.setAttribute("loggedInUser", user);
+            session.setAttribute("loggedInUser", exists);
             return "redirect:/";
         }
         return "redirect:/login?error=true";

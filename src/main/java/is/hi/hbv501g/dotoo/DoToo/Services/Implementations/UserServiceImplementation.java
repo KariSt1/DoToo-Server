@@ -42,7 +42,7 @@ public class UserServiceImplementation implements UserService {
         User exists = findByUserName(user.username);
         if(exists != null){
             if(exists.password.equals(user.password)){
-                return user;
+                return exists;
             }
         }
         return null;
