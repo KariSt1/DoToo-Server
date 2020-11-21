@@ -47,24 +47,35 @@ public class EventServiceImplementation implements EventService {
 
     @Override
     public List<Event> findByWeek(int year, int week, String category, User user) {
-        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        List<Event> events = null;
+        if(category.equals("All")) {
+           events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        }
+        else {
+            events = findByUserAndCategory(user, category,Sort.by(Sort.Direction.ASC, "startDate"));
+        }
         List<Event> eventsByWeek = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            String cat = event.getCategory();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.WEEK_OF_YEAR) == week && cat.equals(category)) eventsByWeek.add(event);
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.WEEK_OF_YEAR) == week )
+                eventsByWeek.add(event);
         }
         return eventsByWeek;
     }
 
     @Override
     public List<Event> findByDay(int year, int month, int day, String category, User user) {
-        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        List<Event> events = null;
+        if(category.equals("All")) {
+            events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        }
+        else {
+            events = findByUserAndCategory(user, category,Sort.by(Sort.Direction.ASC, "startDate"));
+        }
         List<Event> eventsByDay = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            String cat = event.getCategory();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && ev.get(Calendar.DAY_OF_MONTH) == day && cat.equals(category))
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && ev.get(Calendar.DAY_OF_MONTH) == day )
                 eventsByDay.add(event);
         }
         return eventsByDay;
@@ -72,12 +83,17 @@ public class EventServiceImplementation implements EventService {
 
     @Override
     public List<Event> findByMonth(int year, int month, String category, User user) {
-        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        List<Event> events = null;
+        if(category.equals("All")) {
+            events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        }
+        else {
+            events = findByUserAndCategory(user, category,Sort.by(Sort.Direction.ASC, "startDate"));
+        }
         List<Event> eventsByMonth = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            String cat = event.getCategory();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && cat.equals(category))
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month )
                 eventsByMonth.add(event); //Not sure why but we add to add 1 month for it to show up correctly
         }
         return eventsByMonth;
@@ -94,17 +110,15 @@ public class EventServiceImplementation implements EventService {
         return eventsByYear;
     }
 
-  /*  @Override
-    public List<Event> findByCategory(String category, User user) {
+    @Override
+    public List<Event> findByUserAndCategory(User user, String category, Sort sort) {
         List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
-        List<Event> eventsByCategory = new ArrayList<>();
+        List<Event> eventsByUserAndCategory = new ArrayList<>();
         for (Event event : events) {
             String cat = event.getCategory();
-            if(cat.equals(category)) eventsByCategory.add(event);
+            if(cat.equals(category))
+                eventsByUserAndCategory.add(event);
         }
-        return eventsByCategory;
+        return eventsByUserAndCategory;
     }
-
-   */
-
 }

@@ -45,6 +45,11 @@ public class EventController {
             viewedDate = date;
         }
 
+        String category = (String) session.getAttribute("category");
+        if(category == null) {
+            category="All";
+        }
+
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         model.addAttribute("date", date);
         String view = (String) session.getAttribute("view");
@@ -63,10 +68,6 @@ public class EventController {
             offset = 0;
         }
 
-        String category = (String) session.getAttribute("category");
-        if(category == null || category == "All") {
-            category = "Íþróttir";
-        }
 
         if(view.equals("day")) {
             if(offset > 0) {
@@ -123,12 +124,13 @@ public class EventController {
             LocalDate date = LocalDate.parse(viewDate);
             session.setAttribute("date", date);
         }
-        if (view == null || view.equals("")) {
-            view = session.getAttribute("view").toString();
-        }
 
         if (category == null || category.equals("")) {
             category = session.getAttribute("category").toString();
+        }
+
+        if (view == null || view.equals("")) {
+            view = session.getAttribute("view").toString();
         }
 
         if (nav == null || nav.equals("")) offset = 0;

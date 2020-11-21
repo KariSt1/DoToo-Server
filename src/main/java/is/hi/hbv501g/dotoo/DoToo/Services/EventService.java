@@ -27,5 +27,5 @@ public interface EventService {
 
     List<Event> findByYear(int year, User user);
 
-  //  List<Event> findByCategory(String category, User user);
+    List<Event> findByUserAndCategory(User user, String category, Sort sort);
 }
