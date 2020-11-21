@@ -56,7 +56,6 @@ function invalidEventInput() {
 }
 
 function postViewDate(date) {
-    debugger;
     jQuery(function($) {
         var url = window.location.origin + '/changeview';
         var data = {};
@@ -74,13 +73,18 @@ function postViewDate(date) {
 }
 
 function sortEvents() {
-    jQuery(function($) {
+    jQuery(function ($) {
         var x = document.getElementsByClassName("event");
-        for(var i=0;i<x.length;i++){
+        for (var i = 0; i < x.length; i++) {
             x[i] = x[i].getElementsByTagName("p")[0].innerText;
             console.log(x[i]);
         }
 
-           return;
+        return;
     });
 }
+
+function outputValue(item){
+    document.getElementById("categoryView").value = item.value;
+}
+

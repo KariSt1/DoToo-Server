@@ -46,35 +46,38 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByWeek(int year, int week, User user) {
+    public List<Event> findByWeek(int year, int week, String category, User user) {
         List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByWeek = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.WEEK_OF_YEAR) == week) eventsByWeek.add(event);
+            String cat = event.getCategory();
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.WEEK_OF_YEAR) == week && cat.equals(category)) eventsByWeek.add(event);
         }
         return eventsByWeek;
     }
 
     @Override
-    public List<Event> findByDay(int year, int month, int day, User user) {
+    public List<Event> findByDay(int year, int month, int day, String category, User user) {
         List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByDay = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && ev.get(Calendar.DAY_OF_MONTH) == day)
+            String cat = event.getCategory();
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && ev.get(Calendar.DAY_OF_MONTH) == day && cat.equals(category))
                 eventsByDay.add(event);
         }
         return eventsByDay;
     }
 
     @Override
-    public List<Event> findByMonth(int year, int month, User user) {
+    public List<Event> findByMonth(int year, int month, String category, User user) {
         List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
         List<Event> eventsByMonth = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
-            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month)
+            String cat = event.getCategory();
+            if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month && cat.equals(category))
                 eventsByMonth.add(event); //Not sure why but we add to add 1 month for it to show up correctly
         }
         return eventsByMonth;
@@ -90,4 +93,18 @@ public class EventServiceImplementation implements EventService {
         }
         return eventsByYear;
     }
+
+  /*  @Override
+    public List<Event> findByCategory(String category, User user) {
+        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        List<Event> eventsByCategory = new ArrayList<>();
+        for (Event event : events) {
+            String cat = event.getCategory();
+            if(cat.equals(category)) eventsByCategory.add(event);
+        }
+        return eventsByCategory;
+    }
+
+   */
+
 }

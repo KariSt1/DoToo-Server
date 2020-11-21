@@ -47,7 +47,12 @@ public class HomeController {
 
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), sessionUser));
+        String category = (String) session.getAttribute("category");
+
+        if(category == null) {
+            category = "Íþróttir";
+        }
+        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), category, sessionUser));
 
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
 

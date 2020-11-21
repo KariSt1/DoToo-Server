@@ -48,6 +48,7 @@ public class EventController {
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         model.addAttribute("date", date);
         String view = (String) session.getAttribute("view");
+
         if(view != null) {
             model.addAttribute("view", view);
             session.setAttribute("view", view);
@@ -62,20 +63,25 @@ public class EventController {
             offset = 0;
         }
 
+        String category = (String) session.getAttribute("category");
+        if(category == null || category == "All") {
+            category = "Íþróttir";
+        }
+
         if(view.equals("day")) {
             if(offset > 0) {
                 viewedDate = viewedDate.plusDays(1);
             } else if(offset < 0) {
                 viewedDate = viewedDate.minusDays(1);
             }
-            model.addAttribute("events", eventService.findByDay(viewedDate.getYear(), viewedDate.getMonthValue(), viewedDate.getDayOfMonth(), sessionUser));
+            model.addAttribute("events", eventService.findByDay(viewedDate.getYear(), viewedDate.getMonthValue(), viewedDate.getDayOfMonth(), category, sessionUser));
         } else if(view.equals("week")) {
             if(offset > 0) {
                 viewedDate = viewedDate.plusWeeks(1);
             } else if(offset < 0) {
                 viewedDate = viewedDate.minusWeeks(1);
             }
-            model.addAttribute("events", eventService.findByWeek(viewedDate.getYear(), viewedDate.get(weekFields.weekOfWeekBasedYear()), sessionUser));
+            model.addAttribute("events", eventService.findByWeek(viewedDate.getYear(), viewedDate.get(weekFields.weekOfWeekBasedYear()), category, sessionUser));
             model.addAttribute("weekStart", viewedDate.with(weekFields.dayOfWeek(), 1L));
             model.addAttribute("weekEnd", viewedDate.with(weekFields.dayOfWeek(), 7L));
         } else if(view.equals("month")) {
@@ -84,7 +90,7 @@ public class EventController {
             } else if(offset < 0) {
                 viewedDate = viewedDate.minusMonths(1);
             }
-            model.addAttribute("events", eventService.findByMonth(viewedDate.getYear(), viewedDate.getMonthValue(), sessionUser));
+            model.addAttribute("events", eventService.findByMonth(viewedDate.getYear(), viewedDate.getMonthValue(), category, sessionUser));
         }
 
         session.setAttribute("offset", 0);
@@ -105,7 +111,8 @@ public class EventController {
      * @return EventPage
      */
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view, @RequestParam(value = "nav", required = false) String nav, Model model, HttpSession session) {
+    public String changeCalendarView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view,
+                                     @RequestParam(value = "nav", required = false) String nav, @RequestParam(value = "category", required = false) String category, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         int offset = 0;
 
@@ -120,14 +127,18 @@ public class EventController {
             view = session.getAttribute("view").toString();
         }
 
+        if (category == null || category.equals("")) {
+            category = session.getAttribute("category").toString();
+        }
+
         if (nav == null || nav.equals("")) offset = 0;
         else if (nav.equals("next")) offset = 1;
         else if (nav.equals("prev")) offset = -1;
         //else offset = 0;
 
-
         session.setAttribute("view", view);
         session.setAttribute("offset", offset);
+        session.setAttribute("category",category);
         return "redirect:/calendar";
     }
 

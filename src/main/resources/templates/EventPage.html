@@ -68,6 +68,20 @@
                         <input type="date" id="view-data" th:value="${date}"
                                th:name="viewDate" onchange="postViewDate(this.value)">
                     </div>
+
+                    <div class="calendar-category">
+                        <label>Category:</label>
+                        <input list="viewByCategory" id="categoryView" th:name="category">
+                        <datalist id="viewByCategory">
+                            <option value="All">
+                            <option value="Work">
+                            <option value="School">
+                            <option value="Training">
+                            <option value="Other">
+                        </datalist>
+                        <input type="submit">
+                    </div>
+
                     <div class="calendar-nav-view">
                         <button type="submit" class="btn button-prev" th:name="nav" value="prev"> ◄
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -97,6 +111,7 @@
                     </button>
                 </div>
             </form>
+
             <div class="events">
                 <div class="event" th:each="event : ${events}"
                      th:classappend="${event.color}">
