@@ -47,17 +47,12 @@ public class HomeController {
 
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        String category = (String) session.getAttribute("category");
 
-        if(category == null) {
-            category = "Íþróttir";
-        }
-        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), category, sessionUser));
+        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), "All", sessionUser));
 
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
 
         model.addAttribute("loggedinuser", sessionUser);
-        //model.addAttribute("users", userService.findAll());
         return "Velkomin";
     }
 
