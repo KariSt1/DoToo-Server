@@ -85,9 +85,8 @@ function sortEvents() {
 }
 
 function submitSelected(val){
-    jQuery(function($) {
-        $("#viewByCategory").submit();
-    })
-
+    var x = document.querySelector("#viewByCategory").selectedIndex;
+    let optionText = document.getElementsByTagName("option")[x].innerText;
+    document.querySelector("#viewByCategory").innerText = optionText;
 }
 

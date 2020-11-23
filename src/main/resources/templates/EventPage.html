@@ -73,15 +73,18 @@
 
                     <div class="calendar-category">
                         <label>Category:</label>
+<<<<<<< HEAD
                         <form id="submitForm">
                             <select id="viewByCategory" th:name="category" onchange="this.form.submit()">
+=======
+                            <select id="viewByCategory" th:name="category" onchange="this.form.submit()" onclick="submitSelected()">
+>>>>>>> 5a6f2d8a487e74eeff19aec25972752b45d2399b
                                 <option value="All"> All</option>
                                 <option value="Work"> Work</option>
                                 <option value="School"> School</option>
                                 <option value="Training"> Training</option>
                                 <option value="Other"> Other</option>
                             </select>
-                        </form>
                     </div>
 
                     <div class="calendar-nav-view">
@@ -102,7 +105,7 @@
                         </button>
                     </div>
 
-                </div>
+
                 <div class="btn-group">
                     <button class="btn btn-dark" type="submit" th:name="view" value="day"
                             th:classappend="(${view} == 'day') ? active : ''">Day
@@ -113,6 +116,7 @@
                     <button class="btn btn-dark" type="submit" th:name="view" value="month"
                             th:classappend="(${view} == 'month') ? active : ''">Month
                     </button>
+                </div>
                 </div>
             </form>
 
