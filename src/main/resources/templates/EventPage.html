@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="/css/colors.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/lists.css">
-    <link rel="stylesheet" href="/css/event.css">
     <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/event.css">
 
 </head>
 
@@ -73,13 +73,13 @@
 
                     <div class="calendar-category">
                         <label>Category:</label>
-                        <form id="submitForm" >
+                        <form id="submitForm">
                             <select id="viewByCategory" th:name="category" onchange="this.form.submit()">
                                 <option value="All"> All</option>
-                                <option value="Work"> Work </option>
-                                <option value="School"> School </option>
-                                <option value="Training"> Training </option>
-                                <option value="Other"> Other </option>
+                                <option value="Work"> Work</option>
+                                <option value="School"> School</option>
+                                <option value="Training"> Training</option>
+                                <option value="Other"> Other</option>
                             </select>
                         </form>
                     </div>
@@ -90,10 +90,12 @@
                         </button>
 
                         <th:block th:switch="${view}">
-                            <span class="nav-text" th:case="'day'" th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
+                            <span class="nav-text" th:case="'day'"
+                                  th:text="${#temporals.format(date, 'd. MMMM yyyy')}"></span>
                             <span class="nav-text" th:case="'week'"
                                   th:text="${#temporals.format(weekStart, 'd. MMMM yyyy')} + ' - ' + ${#temporals.format(weekEnd, 'd. MMMM yyyy')}"></span>
-                            <span class="nav-text" th:case="'month'" th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
+                            <span class="nav-text" th:case="'month'"
+                                  th:text="${#temporals.format(date, 'MMMM yyyy')}"></span>
                         </th:block>
                         <button type="submit" class="btn button-next" th:name="nav" value="next"> ►
                             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -157,13 +159,13 @@
                     <input type="datetime-local" id="end-date"
                            th:name="endDate"
                            min="2018-06-07T00:00" max="2030-06-14T00:00">
-                     <select id="categories" th:name="category">
-                         <option disabled selected> Select a category</option>
-                         <option value=""> None</option>
-                         <option value="Work"> Work</option>
-                         <option value="School"> School</option>
-                         <option value="Training"> Training</option>
-                         <option value="Other"> Other</option>
+                    <select id="categories" th:name="category">
+                        <option disabled selected> Select a category</option>
+                        <option value=""> None</option>
+                        <option value="Work"> Work</option>
+                        <option value="School"> School</option>
+                        <option value="Training"> Training</option>
+                        <option value="Other"> Other</option>
                     </select>
                     <select id="colors" th:name="color">
                         <option disabled selected> Select color</option>
