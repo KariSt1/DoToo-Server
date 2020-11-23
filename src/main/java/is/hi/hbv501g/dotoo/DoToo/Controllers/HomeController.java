@@ -66,7 +66,7 @@ public class HomeController {
     }
 
     @RequestMapping("/makedata")
-    public String makeData(HttpSession session) {
+);    public String makeData(HttpSession session) {
 
         User nonni = new User("nonni", "Nonni", "1234");
         userService.save(nonni);
