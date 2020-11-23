@@ -99,6 +99,7 @@ public class EventController {
         session.setAttribute("date", viewedDate);
         model.addAttribute("date", viewedDate);
         model.addAttribute("loggedinuser", sessionUser);
+        model.addAttribute("category", category);
         return "EventPage";
     }
 

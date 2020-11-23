@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function eventDeleted(event) {
     jQuery(function($) {
-        var url = window.location.origin + '/deleteEvent';
-        var data = {};
+        let url = window.location.origin + '/deleteEvent';
+        let data = {};
         data.id = event.id;
         $.post(url, data);
     });
@@ -27,9 +27,9 @@ function eventDeleted(event) {
 function invalidEventInput() {
     jQuery(function($) {
         debugger;
-        var startDate = document.getElementById("start-date").value;
-        var endDate = document.getElementById("end-date").value;
-        var title = document.getElementById("event-title").value;
+        let startDate = document.getElementById("start-date").value;
+        let endDate = document.getElementById("end-date").value;
+        let title = document.getElementById("event-title").value;
 
 
         if (title.length > 50) {
@@ -57,15 +57,15 @@ function invalidEventInput() {
 
 function postViewDate(date) {
     jQuery(function($) {
-        var url = window.location.origin + '/changeview';
-        var data = {};
+        let url = window.location.origin + '/changeview';
+        let data = {};
         data.viewDate = date;
         data.view = null;
         data.nav = null;
         $.post(url, data);
     });
-    var viewButtons = document.querySelector(".btn-group").children;
-    var activeBtn;
+    let viewButtons = document.querySelector(".btn-group").children;
+    let activeBtn;
     for(let i = 0; i < viewButtons.length; i++) {
         if(viewButtons[i].classList.contains("active")) activeBtn = viewButtons[i];
     }
@@ -74,8 +74,8 @@ function postViewDate(date) {
 
 function sortEvents() {
     jQuery(function ($) {
-        var x = document.getElementsByClassName("event");
-        for (var i = 0; i < x.length; i++) {
+        let x = document.getElementsByClassName("event");
+        for (let i = 0; i < x.length; i++) {
             x[i] = x[i].getElementsByTagName("p")[0].innerText;
             console.log(x[i]);
         }
@@ -84,9 +84,22 @@ function sortEvents() {
     });
 }
 
-function submitSelected(val){
-    var x = document.querySelector("#viewByCategory").selectedIndex;
-    let optionText = document.getElementsByTagName("option")[x].innerText;
-    document.querySelector("#viewByCategory").innerText = optionText;
+function selectCategory(){
+    let selected_category = document.querySelector("#viewByCategory").selectedIndex;
+    jQuery(function($) {
+        let url = window.location.origin + '/changeview';
+        let data = {};
+        data.viewDate = null;
+        data.view = null;
+        data.nav = null;
+        data.category = document.getElementsByTagName("option")[selected_category].innerText;
+        $.post(url, data);
+    });
+    let viewButtons = document.querySelector(".btn-group").children;
+    let activeBtn;
+    for(let i = 0; i < viewButtons.length; i++) {
+        if(viewButtons[i].classList.contains("active")) activeBtn = viewButtons[i];
+    }
+    $(activeBtn).click();
 }
 

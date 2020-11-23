@@ -73,12 +73,12 @@
 
                     <div class="calendar-category">
                         <label>Category:</label>
-                            <select id="viewByCategory" th:name="category" onchange="this.form.submit()" onclick="submitSelected()">
-                                <option value="All"> All</option>
-                                <option value="Work"> Work </option>
-                                <option value="School"> School </option>
-                                <option value="Training"> Training </option>
-                                <option value="Other"> Other </option>
+                            <select id="viewByCategory" th:name="category" onchange="selectCategory()">
+                                <option value="All" th:selected="${category == 'All'}"> All</option>
+                                <option value="Work" th:selected="${category == 'Work'}"> Work </option>
+                                <option value="School" th:selected="${category == 'School'}"> School </option>
+                                <option value="Training" th:selected="${category == 'Training'}"> Training </option>
+                                <option value="Other" th:selected="${category == 'Other'}"> Other </option>
                             </select>
                     </div>
 
