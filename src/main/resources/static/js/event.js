@@ -84,7 +84,10 @@ function sortEvents() {
     });
 }
 
-function outputValue(item){
-    document.getElementById("categoryView").value = item.value;
+function submitSelected(val){
+    jQuery(function($) {
+        $("#viewByCategory").submit();
+    })
+
 }
 
