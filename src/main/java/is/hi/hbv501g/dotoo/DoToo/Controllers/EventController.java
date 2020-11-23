@@ -51,7 +51,7 @@ public class EventController {
             category = "All";
         }
 
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        WeekFields weekFields = WeekFields.of(Locale.UK);
         model.addAttribute("date", date);
         String view = (String) session.getAttribute("view");
 
