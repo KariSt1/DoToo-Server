@@ -19,8 +19,8 @@ function itemChecked(item) {
 
 function itemDeleted(item) {
     jQuery(function($) {
-        var url = window.location.origin + '/deleteitem';
-        var data = {};
+        let url = window.location.origin + '/deleteitem';
+        let data = {};
         data.id = item.id;
         $.post(url, data);
     });
@@ -33,8 +33,8 @@ function listDeleted(list) {
         document.getElementsByClassName("text")[0].innerText="Organize your life by making todo-lists here!";
     }
     jQuery(function($) {
-        var url = window.location.origin + '/deletelist';
-        var data = {};
+        let url = window.location.origin + '/deletelist';
+        let data = {};
         data.id = list.id
         $.post(url, data);
     });
