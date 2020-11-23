@@ -94,7 +94,7 @@ public class HomeController {
         todoListService.addItem(todoList, new TodoListItem("Vinna í verkefni", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Horfa á fyrirlestur", false, todoList));
 
-        todoList = new TodoList("Jólagjafa kaup", colors[2], nonni);
+        todoList = new TodoList("Jólagjafakaup", colors[2], nonni);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Kaupa gjöf handa mömmu", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Kaupa gjöf handa pabba", true, todoList));
