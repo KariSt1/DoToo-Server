@@ -53,7 +53,7 @@ public class HomeController {
         model.addAttribute("todolists", todoListService.findByUser(sessionUser));
 
         model.addAttribute("loggedinuser", sessionUser);
-        return "Velkomin";
+        return "HomePage";
     }
 
     @RequestMapping(value = "/homeitemchecked", method = RequestMethod.POST)
