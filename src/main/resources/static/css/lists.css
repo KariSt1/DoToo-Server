@@ -36,6 +36,11 @@
 
  .table td, .table th {
     font-family: 'Signika', sans-serif;
+     border: none !important;
+ }
+
+ .table tr {
+     border-top: 1px solid #dee2e6;
  }
 
 .text {
