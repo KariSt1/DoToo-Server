@@ -73,15 +73,15 @@
 
                     <div class="calendar-category">
                         <label>Category:</label>
-                        <input list="viewByCategory" id="categoryView" th:name="category">
-                        <datalist id="viewByCategory">
-                            <option value="All">
-                            <option value="Work">
-                            <option value="School">
-                            <option value="Training">
-                            <option value="Other">
-                        </datalist>
-                        <input type="submit">
+                        <form id="submitForm" >
+                            <select id="viewByCategory" th:name="category" onchange="this.form.submit()">
+                                <option value="All"> All</option>
+                                <option value="Work"> Work </option>
+                                <option value="School"> School </option>
+                                <option value="Training"> Training </option>
+                                <option value="Other"> Other </option>
+                            </select>
+                        </form>
                     </div>
 
                     <div class="calendar-nav-view">
