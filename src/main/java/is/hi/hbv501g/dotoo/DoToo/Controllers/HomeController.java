@@ -58,7 +58,8 @@ public class HomeController {
 
     @RequestMapping(value = "/homeitemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
-                              @RequestParam(value = "checked") boolean checked) { ;
+                              @RequestParam(value = "checked") boolean checked) {
+        ;
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
         item.setChecked(checked);
         itemService.save(item);
@@ -88,7 +89,7 @@ public class HomeController {
         todoListService.addItem(todoList, new TodoListItem("Fara í sturtu", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Bursta tennurnar", false, todoList));
 
-        todoList = new TodoList("Skóli", colors[6], nonni);
+        todoList = new TodoList("Skóli", colors[4], nonni);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Lesa kafla 4 til 6", true, todoList));
         todoListService.addItem(todoList, new TodoListItem("Vinna í verkefni", false, todoList));
@@ -111,52 +112,52 @@ public class HomeController {
         todoListService.addItem(todoList, new TodoListItem("Skipta á ljósaperunni í eldhúsinu", false, todoList));
 
         for (int i = 0; i < 2; i++) {
-            for(int j=1; j < 31; j++) {
-                if(j%6 == 4) {
+            for (int j = 1; j < 31; j++) {
+                if (j % 6 == 4) {
                     Calendar startDate = Calendar.getInstance();
                     Calendar endDate = Calendar.getInstance();
                     startDate.clear();
                     endDate.clear();
-                    startDate.set(2020, 10+i, 0+j, 10 + i, 30);
-                    endDate.set(2020, 10+i, 0+j, 10 + i + 2, 45);
+                    startDate.set(2020, 10 + i, 0 + j, 10 + i, 30);
+                    endDate.set(2020, 10 + i, 0 + j, 10 + i + 2, 45);
                     Event event = new Event(startDate, endDate, "Æfing - Cardio", "Training", colors[3], nonni);
                     eventService.save(event);
-                } else if(j%6 == 2) {
+                } else if (j % 6 == 2) {
                     Calendar startDate = Calendar.getInstance();
                     Calendar endDate = Calendar.getInstance();
                     startDate.clear();
                     endDate.clear();
-                    startDate.set(2020, 10+i, 0+j, 10 + i, 30);
-                    endDate.set(2020, 10+i, 0+j, 10 + i + 2, 45);
+                    startDate.set(2020, 10 + i, 0 + j, 10 + i, 30);
+                    endDate.set(2020, 10 + i, 0 + j, 10 + i + 2, 45);
                     Event event = new Event(startDate, endDate, "Æfing - Fætur", "Training", colors[3], nonni);
                     eventService.save(event);
-                } else if(j%6 == 0) {
+                } else if (j % 6 == 0) {
                     Calendar startDate = Calendar.getInstance();
                     Calendar endDate = Calendar.getInstance();
                     startDate.clear();
                     endDate.clear();
-                    startDate.set(2020, 10+i, 0+j, 10 + i, 30);
-                    endDate.set(2020, 10+i, 0+j, 10 + i + 2, 45);
+                    startDate.set(2020, 10 + i, 0 + j, 10 + i, 30);
+                    endDate.set(2020, 10 + i, 0 + j, 10 + i + 2, 45);
                     Event event = new Event(startDate, endDate, "Æfing - Hendur", "Training", colors[3], nonni);
                     eventService.save(event);
                 }
-                if(j%3 == 0) {
+                if (j % 3 == 0) {
                     Calendar startDate = Calendar.getInstance();
                     Calendar endDate = Calendar.getInstance();
                     startDate.clear();
                     endDate.clear();
-                    startDate.set(2020, 10+i, 0+j, 8, 0);
-                    endDate.set(2020, 10+i, 0+j, 16, 30);
+                    startDate.set(2020, 10 + i, 0 + j, 8, 0);
+                    endDate.set(2020, 10 + i, 0 + j, 16, 30);
                     Event event = new Event(startDate, endDate, "Vinna", "Work", colors[4], nonni);
                     eventService.save(event);
                 }
-                if(j%7 == 0) {
+                if (j % 7 == 0) {
                     Calendar startDate = Calendar.getInstance();
                     Calendar endDate = Calendar.getInstance();
                     startDate.clear();
                     endDate.clear();
-                    startDate.set(2020, 10+i, 0+j, 13, 20);
-                    endDate.set(2020, 10+i, 0+j, 14, 50);
+                    startDate.set(2020, 10 + i, 0 + j, 13, 20);
+                    endDate.set(2020, 10 + i, 0 + j, 14, 50);
                     Event event = new Event(startDate, endDate, "Fyrirlestur", "School", colors[6], nonni);
                     eventService.save(event);
                 }
