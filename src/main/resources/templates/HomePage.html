@@ -55,7 +55,7 @@
 
 <body>
 <div class="container">
-    <div class="homepage-text">
+    <div class="text">
         <span>Welcome, </span>
         <span th:text="${loggedinuser.name}"></span>
         <p th:if="${not #lists.isEmpty(events)}"><br>Here are your events for the week:</p>
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class="homepage-text">
+    <div class="text">
         <p th:if="${not #lists.isEmpty(todolists)}"><br>Here are your todo-lists: </p>
         <p th:if="${#lists.isEmpty(todolists)}"><br>You don't have any todo-lists, create new todo-lists in the
             Todo-lists tab</p>
