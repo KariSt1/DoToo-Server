@@ -35,7 +35,7 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/calendar">Calendar</a>
+                    <a class="nav-link" href="/events">Events</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/todolist">Todo-lists<span class="sr-only">(current)</span></a>
@@ -60,7 +60,7 @@
         <span th:text="${loggedinuser.name}"></span>
         <p th:if="${not #lists.isEmpty(events)}"><br>Here are your events for the week:</p>
         <p th:if="${#lists.isEmpty(events)}"><br>You have no events this week, create new events in the
-            Calendar tab</p>
+            Events tab</p>
     </div>
     <div class="row">
         <div class="col-12">

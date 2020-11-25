@@ -33,8 +33,8 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @RequestMapping("/calendar")
-    public String CalendarPage(Model model, HttpSession session) {
+    @RequestMapping("/events")
+    public String EventPage(Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         if (sessionUser == null) {
             return "redirect:/login";
@@ -114,7 +114,7 @@ public class EventController {
      * @return EventPage
      */
     @RequestMapping("/changeview")
-    public String changeCalendarView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view,
+    public String changeEventView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view,
                                      @RequestParam(value = "nav", required = false) String nav, @RequestParam(value = "category", required = false) String category, Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("loggedInUser");
         int offset = 0;
@@ -143,7 +143,7 @@ public class EventController {
         session.setAttribute("view", view);
         session.setAttribute("offset", offset);
         session.setAttribute("category",category);
-        return "redirect:/calendar";
+        return "redirect:/events";
     }
 
     @RequestMapping("/makenewevent")
@@ -161,13 +161,13 @@ public class EventController {
         Event event = new Event(sd, ed, title, category, color, (User) session.getAttribute("loggedInUser"));
         session.setAttribute("offset", 0);
         eventService.save(event);
-        return "redirect:/calendar";
+        return "redirect:/events";
     }
 
     @RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
     public String deleteEvent(@RequestParam(value = "id") long id) {
         Event event = eventService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
         eventService.delete(event);
-        return "redirect:/calendar";
+        return "redirect:/events";
     }
 }
