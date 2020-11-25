@@ -22,14 +22,11 @@ public class TodoListController {
 
     private TodoListService todoListService;
     private TodoListItemService itemService;
-    private UserService userService;
 
     @Autowired
     public TodoListController(TodoListService todoListService,
-                              UserService userService,
                               TodoListItemService itemService) {
         this.todoListService = todoListService;
-        this.userService = userService;
         this.itemService = itemService;
     }
 
