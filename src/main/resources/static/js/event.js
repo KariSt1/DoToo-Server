@@ -72,7 +72,6 @@ function postViewDate(date) {
     $(activeBtn).click();
 }
 
-
 function selectCategory(){
     let selected_category = document.querySelector("#viewByCategory").selectedIndex;
     jQuery(function($) {
