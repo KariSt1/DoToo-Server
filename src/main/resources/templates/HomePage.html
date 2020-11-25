@@ -58,8 +58,8 @@
     <div class="homepage-text">
         <span>Welcome, </span>
         <span th:text="${loggedinuser.name}"></span>
-        <p th:if="${not #lists.isEmpty(events)}"><br>Here are your upcoming events for the week:</p>
-        <p th:if="${#lists.isEmpty(events)}"><br>You have no upcoming events this week, create new events in the
+        <p th:if="${not #lists.isEmpty(events)}"><br>Here are your events for the week:</p>
+        <p th:if="${#lists.isEmpty(events)}"><br>You have no events this week, create new events in the
             Calendar tab</p>
     </div>
     <div class="row">
@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="homepage-text">
-        <p th:if="${not #lists.isEmpty(todolists)}"><br>Here are your to-do lists: </p>
+        <p th:if="${not #lists.isEmpty(todolists)}"><br>Here are your todo-lists: </p>
         <p th:if="${#lists.isEmpty(todolists)}"><br>You don't have any todo-lists, create new todo-lists in the
             Todo-lists tab</p>
     </div>
