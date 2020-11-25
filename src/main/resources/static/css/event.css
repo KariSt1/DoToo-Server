@@ -104,3 +104,7 @@ input#end-date {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+#no-events {
+    text-align: center;
+}

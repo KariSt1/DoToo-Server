@@ -117,6 +117,7 @@
             </form>
 
             <div class="events">
+                <p class="text" id="no-events" th:if="${events.size() == 0}">No planned events during this period.</p>
                 <div class="event" th:each="event : ${events}"
                      th:classappend="${event.color}">
                     <button th:id="${event.id}" onclick="eventDeleted(this)">
