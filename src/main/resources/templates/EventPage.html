@@ -58,7 +58,7 @@
     <div class="row">
         <div class="col-12">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary newEventButton" data-toggle="modal" data-target="#ModalCenter">
+            <button type="button" class="btn btn-primary newButton" data-toggle="modal" data-target="#ModalCenter">
                 New event
             </button>
         </div>
@@ -74,13 +74,13 @@
 
                     <div class="event-category">
                         <label>Category:</label>
-                            <select id="viewByCategory" th:name="category" onchange="selectCategory()">
-                                <option value="All" th:selected="${category == 'All'}"> All</option>
-                                <option value="Work" th:selected="${category == 'Work'}"> Work </option>
-                                <option value="School" th:selected="${category == 'School'}"> School </option>
-                                <option value="Training" th:selected="${category == 'Training'}"> Training </option>
-                                <option value="Other" th:selected="${category == 'Other'}"> Other </option>
-                            </select>
+                        <select id="viewByCategory" th:name="category" onchange="selectCategory()">
+                            <option value="All" th:selected="${category == 'All'}"> All</option>
+                            <option value="Work" th:selected="${category == 'Work'}"> Work</option>
+                            <option value="School" th:selected="${category == 'School'}"> School</option>
+                            <option value="Training" th:selected="${category == 'Training'}"> Training</option>
+                            <option value="Other" th:selected="${category == 'Other'}"> Other</option>
+                        </select>
                     </div>
 
                     <div class="event-nav-view">
