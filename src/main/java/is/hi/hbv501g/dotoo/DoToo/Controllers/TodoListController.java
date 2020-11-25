@@ -9,7 +9,6 @@ import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,7 +76,8 @@ public class TodoListController {
 
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
-                              @RequestParam(value = "checked") boolean checked) { ;
+                              @RequestParam(value = "checked") boolean checked) {
+        ;
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
         item.setChecked(checked);
         itemService.save(item);
