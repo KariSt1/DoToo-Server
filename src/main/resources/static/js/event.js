@@ -72,17 +72,6 @@ function postViewDate(date) {
     $(activeBtn).click();
 }
 
-function sortEvents() {
-    jQuery(function ($) {
-        let x = document.getElementsByClassName("event");
-        for (let i = 0; i < x.length; i++) {
-            x[i] = x[i].getElementsByTagName("p")[0].innerText;
-            console.log(x[i]);
-        }
-
-        return;
-    });
-}
 
 function selectCategory(){
     let selected_category = document.querySelector("#viewByCategory").selectedIndex;
