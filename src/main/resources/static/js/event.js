@@ -33,7 +33,6 @@ function invalidEventInput() {
 
 
         if (title.length > 50) {
-           // alert("Title cannot be longer than 50 characters");
             swal("Uh oh...", "Title cannot be longer than 50 characters", "error");
             return;
         }

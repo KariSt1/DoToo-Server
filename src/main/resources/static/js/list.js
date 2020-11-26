@@ -44,3 +44,17 @@ function listDeleted(list) {
         card.parentNode.removeChild(card)
     }, 1000);
 }
+
+function invalidListTitle() {
+    jQuery(function($) {
+    let title = document.getElementById("list-title").value;
+
+    if (title.length > 50) {
+        swal("Uh oh...", "Title cannot be longer than 50 characters", "error");
+        return;
+    }
+
+    $("#myForm").submit();
+
+    });
+}
