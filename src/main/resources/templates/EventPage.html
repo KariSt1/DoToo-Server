@@ -160,16 +160,16 @@
                     <input type="datetime-local" id="end-date"
                            th:name="endDate"
                            min="2018-06-07T00:00" max="2030-06-14T00:00">
-                    <select id="categories" th:name="category">
-                        <option disabled selected> Select a category</option>
+                    <select id="categories" th:name="category" required="required">
+                        <option value="" th:disabled="disabled" th:selected="selected" disabled selected> Select a category</option>
                         <option value=""> None</option>
                         <option value="Work"> Work</option>
                         <option value="School"> School</option>
                         <option value="Training"> Training</option>
                         <option value="Other"> Other</option>
                     </select>
-                    <select id="colors" th:name="color">
-                        <option disabled selected> Select color</option>
+                    <select id="colors" th:name="color" required="required">
+                        <option value="" th:disabled="disabled" th:selected="selected" disabled selected> Select color</option>
                         <option value="yellow" class="yellow"> Yellow</option>
                         <option value="orange" class="orange"> Orange</option>
                         <option value="red" class="red"> Red</option>
