@@ -58,3 +58,17 @@ function invalidListTitle() {
 
     });
 }
+
+function invalidDescription() {
+    jQuery(function($) {
+        let description = document.getElementById("description").value;
+
+        if (description.length > 50) {
+            swal("Uh oh...", "Description cannot be longer than 50 characters", "error");
+            return;
+        }
+
+        $("#itemForm").submit();
+
+    });
+}
