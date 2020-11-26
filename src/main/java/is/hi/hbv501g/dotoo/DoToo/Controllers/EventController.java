@@ -98,16 +98,6 @@ public class EventController {
         return "EventPage";
     }
 
-    /**
-     * Handles changes of view
-     * Shows list of events of chosen day, month or year
-     *
-     * @param view    day, month or year
-     * @param nav     prev or next - goes back or forward in time
-     * @param model
-     * @param session
-     * @return EventPage
-     */
     @RequestMapping("/changeview")
     public String changeEventView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view,
                                   @RequestParam(value = "nav", required = false) String nav, @RequestParam(value = "category", required = false) String category, Model model, HttpSession session) {
@@ -133,7 +123,6 @@ public class EventController {
         if (nav == null || nav.equals("")) offset = 0;
         else if (nav.equals("next")) offset = 1;
         else if (nav.equals("prev")) offset = -1;
-        //else offset = 0;
 
         session.setAttribute("view", view);
         session.setAttribute("offset", offset);

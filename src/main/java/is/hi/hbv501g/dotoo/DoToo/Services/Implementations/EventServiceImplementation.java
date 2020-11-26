@@ -94,7 +94,7 @@ public class EventServiceImplementation implements EventService {
         for (Event event : events) {
             Calendar ev = event.getStartDate();
             if (ev.get(Calendar.YEAR) == year && ev.get(Calendar.MONTH) + 1 == month )
-                eventsByMonth.add(event); //Not sure why but we add to add 1 month for it to show up correctly
+                eventsByMonth.add(event);
         }
         return eventsByMonth;
     }
