@@ -52,6 +52,11 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, @NotNull String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User() {
     }
 }

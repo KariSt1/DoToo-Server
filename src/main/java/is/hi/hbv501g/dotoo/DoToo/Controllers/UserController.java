@@ -23,9 +23,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
-    public User loginPOST(@Valid @RequestBody User user, BindingResult result, HttpSession session) {
+    public User loginGET(@Valid @RequestBody User user, BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");
         }
@@ -33,7 +33,7 @@ public class UserController {
         if (exists != null) {
             session.setAttribute("loggedInUser", exists);
             return exists;
-        } {
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
         }
     }
@@ -41,13 +41,16 @@ public class UserController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
     public User signupPOST(@Valid @RequestBody User user, BindingResult result) {
+        System.out.println("Erum í signupPost");
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");
         }
         User exists = userService.findByUserName(user.username);
         if (exists == null) {
+            System.out.println("Notandi ekki til, bý til nýjan");
             return userService.save(user);
-        } {
+        } else {
+            System.out.println("Notandi til, nafn: " + exists.getName());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username unavailable");
         }
     }
