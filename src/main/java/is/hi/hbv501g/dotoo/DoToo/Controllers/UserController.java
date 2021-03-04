@@ -26,6 +26,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
     public User loginGET(@Valid @RequestBody User user, BindingResult result, HttpSession session) {
+        System.out.println("Erum í loginGET");
         if (result.hasErrors()) {
             System.out.println("Fengum villu í result");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");
