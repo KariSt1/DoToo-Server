@@ -25,7 +25,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
-    public User loginGET(@Valid @RequestBody User user, BindingResult result, HttpSession session) {
+    public User loginGET(@Valid @RequestBody User user, BindingResult result) {
         System.out.println("Erum í loginGET");
         if (result.hasErrors()) {
             System.out.println("Fengum villu í result");
@@ -35,7 +35,7 @@ public class UserController {
         User exists = userService.login(user);
         if (exists != null) {
             System.out.println("Innskráning tókst, nafn notanda: " + exists.getName());
-            session.setAttribute("loggedInUser", exists);
+            //session.setAttribute("loggedInUser", exists);
             return exists;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
