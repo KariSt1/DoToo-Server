@@ -27,10 +27,13 @@ public class UserController {
     @ResponseBody
     public User loginGET(@Valid @RequestBody User user, BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
+            System.out.println("Fengum villu í result");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");
         }
+        System.out.println("Komumst framhjá if-setningunni");
         User exists = userService.login(user);
         if (exists != null) {
+            System.out.println("Innskráning tókst, nafn notanda: " + exists.getName());
             session.setAttribute("loggedInUser", exists);
             return exists;
         } else {
