@@ -23,9 +23,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public User loginGET(@Valid @RequestBody User user, BindingResult result) {
+    public User loginPOST(@Valid @RequestBody User user, BindingResult result) {
         System.out.println("Erum í loginGET");
         if (result.hasErrors()) {
             System.out.println("Fengum villu í result");
