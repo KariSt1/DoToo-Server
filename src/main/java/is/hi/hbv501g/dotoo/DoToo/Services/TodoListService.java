@@ -15,4 +15,5 @@ public interface TodoListService {
     Optional<TodoList> findById(long id);
     List<TodoList> findByUser(User user);
     TodoList addItem(TodoList list, TodoListItem item);
+    List<TodoList> findByUserAndFavorite(User user, boolean favorite);
 }
