@@ -8,12 +8,11 @@ import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,14 +29,8 @@ public class TodoListController {
     }
 
     @RequestMapping("/todolist")
-    public String TodoListPage(Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("loggedInUser");
-        if (sessionUser == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("loggedinuser", sessionUser);
-        model.addAttribute("todolists", todoListService.findByUser(sessionUser));
-        return "TodoListPage";
+    public List<TodoList> getTodoLists(@Valid @RequestBody User user) {
+        return todoListService.findByUser(user);
     }
 
     @RequestMapping(value = "/deletelist", method = RequestMethod.POST)
