@@ -28,7 +28,7 @@ public class TodoListController {
         this.itemService = itemService;
     }
 
-    @RequestMapping("/todolist", method = RequestMethod.POST)
+    @RequestMapping(value="/todolist", method = RequestMethod.POST)
     @ResponseBody
     public List<TodoList> postTodoLists(@Valid @RequestBody User user) {
         System.out.println("User: " + user.getName());
