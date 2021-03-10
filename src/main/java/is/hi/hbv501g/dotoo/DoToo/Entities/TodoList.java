@@ -61,6 +61,14 @@ public class TodoList {
         this.user = user;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
     public TodoList(String name, String color, User user, boolean isFavorite) {
         this.name = name;
         this.color = color;

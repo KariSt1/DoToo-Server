@@ -33,6 +33,11 @@ public class TodoListController {
         return todoListService.findByUser(user);
     }
 
+    @RequestMapping("/favoritetodolists")
+    public List<TodoList> getFavoriteTodoLists(@Valid @RequestBody User user) {
+        return todoListService.findByUserAndFavorite(user, true);
+    }
+
     @RequestMapping(value = "/deletelist", method = RequestMethod.POST)
     public String deleteTodoList(@RequestParam(value = "id") long id) {
         TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
@@ -67,10 +72,18 @@ public class TodoListController {
     @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
     public String itemChecked(@RequestParam(value = "id") long id,
                               @RequestParam(value = "checked") boolean checked) {
-        ;
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
         item.setChecked(checked);
         itemService.save(item);
+        return "redirect:/todolist";
+    }
+
+    @RequestMapping(value = "/setFavorite", method = RequestMethod.POST)
+    public String setFavorite(@RequestParam(value = "id") long id,
+                               @RequestParam(value = "favorite") boolean isFavorite) {
+        TodoList todoList = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
+        todoList.setFavorite(!todoList.isFavorite());
+        todoListService.save(todoList);
         return "redirect:/todolist";
     }
 }
