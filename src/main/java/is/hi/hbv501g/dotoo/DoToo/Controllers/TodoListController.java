@@ -82,7 +82,7 @@ public class TodoListController {
     public String setFavorite(@RequestParam(value = "id") long id,
                                @RequestParam(value = "favorite") boolean isFavorite) {
         TodoList todoList = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
-        todoList.setFavorite(!todoList.isFavorite());
+        todoList.setFavorite(isFavorite);
         todoListService.save(todoList);
         return "redirect:/todolist";
     }
