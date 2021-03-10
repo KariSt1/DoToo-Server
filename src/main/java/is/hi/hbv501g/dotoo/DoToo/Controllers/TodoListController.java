@@ -6,12 +6,9 @@ import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListItemService;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -31,13 +28,8 @@ public class TodoListController {
         this.itemService = itemService;
     }
 
-    @RequestMapping(value="/todolist", method = RequestMethod.POST)
-    @ResponseBody
-    public List<TodoList> postTodoLists(@Valid @RequestBody User user, BindingResult result) {
-        if (result.hasErrors()) {
-            System.out.println("Fengum villu í result");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");
-        }
+    @RequestMapping("/todolist")
+    public List<TodoList> getTodoLists(@Valid @RequestBody User user) {
         System.out.println("User: " + user.getName());
         return todoListService.findByUser(user);
     }
