@@ -51,7 +51,7 @@ public class HomeController {
 
         model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), "All", sessionUser));
 
-        model.addAttribute("todolists", todoListService.findByUser(sessionUser));
+        model.addAttribute("todolists", todoListService.findByUserAndFavorite(sessionUser, true));
 
         model.addAttribute("loggedinuser", sessionUser);
         return "HomePage";
@@ -77,26 +77,26 @@ public class HomeController {
         String colors[] = {"yellow", "orange", "red", "green", "blue", "pink", "purple"};
 
         // Todo-lists:
-        TodoList todoList = new TodoList("Innkaupalisti", colors[0], nonni);
+        TodoList todoList = new TodoList("Innkaupalisti", colors[0], nonni, false);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Mjólk", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Brauð", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Egg", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Gulrætur", false, todoList));
 
-        todoList = new TodoList("Morgun rútína", colors[5], nonni);
+        todoList = new TodoList("Morgun rútína", colors[5], nonni, true);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Borða morgunmat", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Fara í sturtu", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Bursta tennurnar", false, todoList));
 
-        todoList = new TodoList("Skóli", colors[4], nonni);
+        todoList = new TodoList("Skóli", colors[4], nonni, false);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Lesa kafla 4 til 6", true, todoList));
         todoListService.addItem(todoList, new TodoListItem("Vinna í verkefni", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Horfa á fyrirlestur", false, todoList));
 
-        todoList = new TodoList("Jólagjafakaup", colors[2], nonni);
+        todoList = new TodoList("Jólagjafakaup", colors[2], nonni, false);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Kaupa gjöf handa mömmu", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Kaupa gjöf handa pabba", true, todoList));
@@ -104,7 +104,7 @@ public class HomeController {
         todoListService.addItem(todoList, new TodoListItem("Pakka inn gjöf handa Donna", true, todoList));
         todoListService.addItem(todoList, new TodoListItem("Kaupa gjöf handa Konna", false, todoList));
 
-        todoList = new TodoList("Heimilisstörf", colors[1], nonni);
+        todoList = new TodoList("Heimilisstörf", colors[1], nonni, true);
         todoListService.save(todoList);
         todoListService.addItem(todoList, new TodoListItem("Ryksuga stofuna", false, todoList));
         todoListService.addItem(todoList, new TodoListItem("Taka úr uppþvottavélinni", false, todoList));

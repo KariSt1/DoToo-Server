@@ -48,6 +48,11 @@ public class TodoListServiceImplementation implements TodoListService {
     }
 
     @Override
+    public List<TodoList> findByUserAndFavorite(User user, boolean favorite) {
+        return listRepository.findByUserAndFavorite(user, favorite);
+    }
+
+    @Override
     public TodoList addItem(TodoList list, TodoListItem item) {
         List<TodoListItem> currentItems = list.getItems();
         currentItems.add(item);
