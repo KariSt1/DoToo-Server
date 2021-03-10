@@ -29,6 +29,7 @@ public class TodoListController {
     }
 
     @RequestMapping("/todolist")
+    @ResponseBody
     public List<TodoList> getTodoLists(@Valid @RequestBody User user) {
         System.out.println("User: " + user.getName());
         return todoListService.findByUser(user);
