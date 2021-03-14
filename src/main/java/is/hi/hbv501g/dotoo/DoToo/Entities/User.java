@@ -1,5 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;

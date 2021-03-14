@@ -1,5 +1,8 @@
 package is.hi.hbv501g.dotoo.DoToo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ public class TodoList {
     @OneToMany(mappedBy = "todoList", cascade=CascadeType.ALL)
     private List<TodoListItem> items = new ArrayList<>();
 
+    @JsonBackReference
     @ManyToOne
     private User user;
     private boolean favorite;

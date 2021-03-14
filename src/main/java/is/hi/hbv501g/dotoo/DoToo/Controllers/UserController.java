@@ -26,7 +26,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public User loginPOST(@Valid @RequestBody User user, BindingResult result) {
-        System.out.println("Erum í loginGET");
+        System.out.println("Erum í loginGET á intellij server");
         if (result.hasErrors()) {
             System.out.println("Fengum villu í result");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");

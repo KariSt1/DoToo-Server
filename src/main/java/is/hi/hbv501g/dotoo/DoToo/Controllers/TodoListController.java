@@ -5,10 +5,13 @@ import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListItemService;
 import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
+import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -20,18 +23,28 @@ public class TodoListController {
 
     private TodoListService todoListService;
     private TodoListItemService itemService;
+    private UserService userService;
 
     @Autowired
     public TodoListController(TodoListService todoListService,
-                              TodoListItemService itemService) {
+                              TodoListItemService itemService,
+                              UserService userService) {
         this.todoListService = todoListService;
         this.itemService = itemService;
+        this.userService = userService;
     }
 
     @RequestMapping("/todolist")
+    @ResponseBody
     public List<TodoList> getTodoLists(@Valid @RequestBody User user) {
-        System.out.println("User: " + user.getName());
-        return todoListService.findByUser(user);
+        User loggedInUser = userService.login(user);
+        if (loggedInUser != null) {
+            System.out.println("Notandi til, nafn notanda: " + loggedInUser.getName());
+            //session.setAttribute("loggedInUser", exists);
+            return todoListService.findByUser(loggedInUser);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
+        }
     }
 
     @RequestMapping("/favoritetodolists")

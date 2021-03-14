@@ -1,5 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class TodoListItem {
     private String description;
     private boolean checked;
 
+    @JsonBackReference
     @ManyToOne
     private TodoList todoList;
 
@@ -21,7 +24,7 @@ public class TodoListItem {
     public TodoListItem(String description, boolean checked, TodoList todoList) {
         this.description = description;
         this.checked = checked;
-        this.todoList = todoList;
+       this.todoList = todoList;
     }
 
     public long getId() {
