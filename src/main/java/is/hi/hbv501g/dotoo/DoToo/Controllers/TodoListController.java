@@ -8,6 +8,7 @@ import is.hi.hbv501g.dotoo.DoToo.Services.TodoListService;
 import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +53,26 @@ public class TodoListController {
         return todoListService.findByUserAndFavorite(user, true);
     }
 
-    @RequestMapping(value = "/deletelist", method = RequestMethod.POST)
+    @RequestMapping(value = "/deletelists", method = RequestMethod.POST)
+    public ResponseEntity<?> deleteTodoLists(@Valid @RequestBody User user, @RequestBody List<TodoList> todoLists) {
+        System.out.println("er í delete lists");
+        List<TodoList> allLists = todoListService.findByUser(user);
+
+        for (TodoList list : allLists) {
+            System.out.println("currently iterating" + list);
+            System.out.println("contains? " + todoLists.contains(list));
+            if(todoLists.contains(list)) todoListService.delete(list);
+        }
+
+        System.out.println("á að vera búið að deleta");
+        return (ResponseEntity<?>) ResponseEntity.noContent();
+
+
+    }
+
+    @RequestMapping(value="/deletelist", method = RequestMethod.POST)
     public String deleteTodoList(@RequestParam(value = "id") long id) {
         TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
-        todoListService.delete(todolist);
         return "redirect:/todolist";
     }
 
