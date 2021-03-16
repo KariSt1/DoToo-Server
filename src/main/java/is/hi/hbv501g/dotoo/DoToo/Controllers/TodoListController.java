@@ -68,17 +68,18 @@ public class TodoListController {
         for (TodoList list : allLists) {
             todoListService.delete(list);
         } */
-        long bla = todoLists.longValue();
+        String bla = todoLists.toString();
+        String blabla = bla.substring(2,3);
+        long firstID = Long.parseLong(blabla);
+        Optional<TodoList> list = todoListService.findById(firstID);
+        if(list.isPresent()) todoListService.delete(list.get());
+
         for(int i = 0; i < todoLists.size(); i++) {
             long id = todoLists.get(i).asLong();
-            Optional<TodoList> list = todoListService.findById(id);
-            if(list.isPresent()) todoListService.delete(list.get());
+            Optional<TodoList> blalist = todoListService.findById(id);
+            if(blalist.isPresent()) todoListService.delete(blalist.get());
 
         }
-
-        /*System.out.println("currently iterating" + list);
-        System.out.println("contains? " + todoLists.contains(list));
-        if(todoLists.contains(list))*/
 
         System.out.println("á að vera búið að deleta");
          return new ResponseEntity<>(HttpStatus.OK);
