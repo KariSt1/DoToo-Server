@@ -1,5 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
@@ -17,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -54,18 +57,31 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/deletelists", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteTodoLists(@Valid @RequestBody User user, @RequestBody List<TodoList> todoLists) {
+    @ResponseBody
+    public ResponseEntity<String> deleteTodoLists(@Valid @RequestBody ObjectNode objectNode) {
         System.out.println("er í delete lists");
-        List<TodoList> allLists = todoListService.findByUser(user);
+        JsonNode todoLists = objectNode.get("todolists");
+        JsonNode username = objectNode.get("username");
+        User user = userService.findByUserName(username.asText());
+        /*List<TodoList> allLists = todoListService.findByUser(user);
 
         for (TodoList list : allLists) {
-            System.out.println("currently iterating" + list);
-            System.out.println("contains? " + todoLists.contains(list));
-            if(todoLists.contains(list)) todoListService.delete(list);
+            todoListService.delete(list);
+        } */
+        long bla = todoLists.longValue();
+        for(int i = 0; i < todoLists.size(); i++) {
+            long id = todoLists.get(i).asLong();
+            Optional<TodoList> list = todoListService.findById(id);
+            if(list.isPresent()) todoListService.delete(list.get());
+
         }
 
+        /*System.out.println("currently iterating" + list);
+        System.out.println("contains? " + todoLists.contains(list));
+        if(todoLists.contains(list))*/
+
         System.out.println("á að vera búið að deleta");
-        return (ResponseEntity<?>) ResponseEntity.noContent();
+         return new ResponseEntity<>(HttpStatus.OK);
 
 
     }
