@@ -1,102 +1,50 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
+import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.EventService;
+import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 @RestController
 public class EventController {
 
     private EventService eventService;
+    private UserService userService;
 
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @RequestMapping("/events")
-    public String EventPage(Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("loggedInUser");
-        if (sessionUser == null) {
-            return "redirect:/login";
-        }
-        LocalDate date = LocalDate.now();
-        LocalDate viewedDate = (LocalDate) session.getAttribute("date");
-        if (viewedDate == null) {
-            viewedDate = date;
-        }
-
-        String category = (String) session.getAttribute("category");
-        if (category == null) {
-            session.setAttribute("category", "All");
-            category = "All";
-        }
-
-        WeekFields weekFields = WeekFields.of(Locale.UK);
-        model.addAttribute("date", date);
-        String view = (String) session.getAttribute("view");
-
-        if (view != null) {
-            model.addAttribute("view", view);
-            session.setAttribute("view", view);
+    @ResponseBody
+    public List<Event> getEvents(@Valid @RequestBody User user) {
+        User loggedInUser = userService.login(user);
+        if (loggedInUser != null) {
+            System.out.println("Notandi til, nafn notanda: " + loggedInUser.getName());
+            //session.setAttribute("loggedInUser", exists);
+            return eventService.findByUser(loggedInUser);
         } else {
-            view = "week";
-            model.addAttribute("view", "week");
-            session.setAttribute("view", "week");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
         }
-
-        Integer offset = (Integer) session.getAttribute("offset");
-        if (offset == null) {
-            offset = 0;
-        }
-
-
-        if (view.equals("day")) {
-            if (offset > 0) {
-                viewedDate = viewedDate.plusDays(1);
-            } else if (offset < 0) {
-                viewedDate = viewedDate.minusDays(1);
-            }
-            model.addAttribute("events", eventService.findByDay(viewedDate.getYear(), viewedDate.getMonthValue(), viewedDate.getDayOfMonth(), category, sessionUser));
-        } else if (view.equals("week")) {
-            if (offset > 0) {
-                viewedDate = viewedDate.plusWeeks(1);
-            } else if (offset < 0) {
-                viewedDate = viewedDate.minusWeeks(1);
-            }
-            model.addAttribute("events", eventService.findByWeek(viewedDate.getYear(), viewedDate.get(weekFields.weekOfWeekBasedYear()), category, sessionUser));
-            model.addAttribute("weekStart", viewedDate.with(weekFields.dayOfWeek(), 1L));
-            model.addAttribute("weekEnd", viewedDate.with(weekFields.dayOfWeek(), 7L));
-        } else if (view.equals("month")) {
-            if (offset > 0) {
-                viewedDate = viewedDate.plusMonths(1);
-            } else if (offset < 0) {
-                viewedDate = viewedDate.minusMonths(1);
-            }
-            model.addAttribute("events", eventService.findByMonth(viewedDate.getYear(), viewedDate.getMonthValue(), category, sessionUser));
-        }
-
-        session.setAttribute("offset", 0);
-        session.setAttribute("date", viewedDate);
-        model.addAttribute("date", viewedDate);
-        model.addAttribute("loggedinuser", sessionUser);
-        model.addAttribute("category", category);
-        return "EventPage";
     }
 
     @RequestMapping("/changeview")

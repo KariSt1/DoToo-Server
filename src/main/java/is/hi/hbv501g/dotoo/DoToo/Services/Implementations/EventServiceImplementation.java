@@ -31,7 +31,7 @@ public class EventServiceImplementation implements EventService {
     }
 
     public List<Event> findAll() {
-        return eventRepository.findAll(Sort.by(Sort.Direction.ASC, "startDate"));
+        return eventRepository.findAll();
 
     }
 
@@ -40,8 +40,8 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByUser(User user, Sort sort) {
-        return eventRepository.findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+    public List<Event> findByUser(User user) {
+        return eventRepository.findByUser(user);
 
     }
 
@@ -49,10 +49,10 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByWeek(int year, int week, String category, User user) {
         List<Event> events = null;
         if(category.equals("All")) {
-           events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+           events = findByUser(user);
         }
         else {
-            events = findByUserAndCategory(user, category,Sort.by(Sort.Direction.ASC, "startDate"));
+            events = findByUserAndCategory(user, category);
         }
         List<Event> eventsByWeek = new ArrayList<>();
         for (Event event : events) {
@@ -67,10 +67,10 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByDay(int year, int month, int day, String category, User user) {
         List<Event> events = null;
         if(category.equals("All")) {
-            events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+            events = findByUser(user);
         }
         else {
-            events = findByUserAndCategory(user, category,Sort.by(Sort.Direction.ASC, "startDate"));
+            events = findByUserAndCategory(user, category);
         }
         List<Event> eventsByDay = new ArrayList<>();
         for (Event event : events) {
@@ -85,10 +85,10 @@ public class EventServiceImplementation implements EventService {
     public List<Event> findByMonth(int year, int month, String category, User user) {
         List<Event> events = null;
         if(category.equals("All")) {
-            events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+            events = findByUser(user);
         }
         else {
-            events = findByUserAndCategory(user, category,Sort.by(Sort.Direction.ASC, "startDate"));
+            events = findByUserAndCategory(user, category);
         }
         List<Event> eventsByMonth = new ArrayList<>();
         for (Event event : events) {
@@ -101,7 +101,7 @@ public class EventServiceImplementation implements EventService {
 
     @Override
     public List<Event> findByYear(int year, User user) {
-        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+        List<Event> events = findByUser(user);
         List<Event> eventsByYear = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
@@ -111,8 +111,8 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByUserAndCategory(User user, String category, Sort sort) {
-        List<Event> events = findByUser(user, Sort.by(Sort.Direction.ASC, "startDate"));
+    public List<Event> findByUserAndCategory(User user, String category) {
+        List<Event> events = findByUser(user);
         List<Event> eventsByUserAndCategory = new ArrayList<>();
         for (Event event : events) {
             String cat = event.getCategory();
