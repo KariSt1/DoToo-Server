@@ -38,10 +38,12 @@ public class TodoListController {
         this.userService = userService;
     }
 
-    @RequestMapping("/todolist")
+    @RequestMapping(value = "/todolist", method = RequestMethod.GET)
     @ResponseBody
-    public List<TodoList> getTodoLists(@Valid @RequestBody User user) {
-        User loggedInUser = userService.login(user);
+    public List<TodoList> getTodoLists(@RequestParam String username,
+                                       @RequestParam String password) {
+        User userInfo = new User(username, password);
+        User loggedInUser = userService.login(userInfo);
         if (loggedInUser != null) {
             System.out.println("Notandi til, nafn notanda: " + loggedInUser.getName());
             //session.setAttribute("loggedInUser", exists);
@@ -51,9 +53,40 @@ public class TodoListController {
         }
     }
 
+    @RequestMapping(value = "/todolist", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> postTodoLists(@RequestParam String username,
+                                                @RequestParam String password,
+                                                @RequestBody List<TodoList> todolists) {
+        User userInfo = new User(username, password);
+        User loggedInUser = userService.login(userInfo);
+        if (loggedInUser != null) {
+            System.out.println(todolists.size());
+            for(TodoList list: todolists) {
+                list.setUser(loggedInUser);
+                for(TodoListItem item: list.getItems()) {
+                    item.setTodoList(list);
+                    //todoListService.addItem(list, item);
+                }
+                todoListService.save(list);
+            }
+            //todolists.get(0).setUser(loggedInUser)
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
     @RequestMapping("/favoritetodolists")
-    public List<TodoList> getFavoriteTodoLists(@Valid @RequestBody User user) {
-        return todoListService.findByUserAndFavorite(user, true);
+    public List<TodoList> getFavoriteTodoLists(@RequestParam String username,
+                                               @RequestParam String password) {
+        User userInfo = new User(username, password);
+        User loggedInUser = userService.login(userInfo);
+        if (loggedInUser != null) {
+            return todoListService.findByUserAndFavorite(loggedInUser, true);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user is signed in");
+        }
     }
 
     @RequestMapping(value = "/deletelists", method = RequestMethod.POST)
