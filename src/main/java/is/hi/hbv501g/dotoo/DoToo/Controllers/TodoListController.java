@@ -95,28 +95,18 @@ public class TodoListController {
         System.out.println("er í delete lists");
         JsonNode todoLists = objectNode.get("todolists");
         JsonNode username = objectNode.get("username");
-        User user = userService.findByUserName(username.asText());
-        /*List<TodoList> allLists = todoListService.findByUser(user);
 
-        for (TodoList list : allLists) {
-            todoListService.delete(list);
-        } */
-        String bla = todoLists.toString();
-        String blabla = bla.substring(2,3);
-        long firstID = Long.parseLong(blabla);
-        Optional<TodoList> list = todoListService.findById(firstID);
-        if(list.isPresent()) todoListService.delete(list.get());
+        String sTodoLists = todoLists.toString();
+        String[] allIDs = sTodoLists.replaceAll("[^0-9,]", "").split(",");
 
-        for(int i = 0; i < todoLists.size(); i++) {
-            long id = todoLists.get(i).asLong();
-            Optional<TodoList> blalist = todoListService.findById(id);
-            if(blalist.isPresent()) todoListService.delete(blalist.get());
-
+        for (String id: allIDs) {
+            long deletedId = Long.parseLong(id);
+            Optional<TodoList> list = todoListService.findById(deletedId);
+            if(list.isPresent()) todoListService.delete(list.get());
         }
 
         System.out.println("á að vera búið að deleta");
          return new ResponseEntity<>(HttpStatus.OK);
-
 
     }
 
