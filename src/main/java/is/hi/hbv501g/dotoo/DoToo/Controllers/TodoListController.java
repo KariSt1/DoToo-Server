@@ -146,6 +146,16 @@ public class TodoListController {
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
         item.setChecked(checked);
         itemService.save(item);
+        TodoList list = item.getTodoList();
+        List<TodoListItem> listItems = list.getItems();
+        boolean isFinished = true;
+        for (TodoListItem td: listItems) {
+            if(!td.getChecked()) {
+                isFinished = false;
+                break;
+            }
+        }
+        list.setFinished(isFinished);
         return "redirect:/todolist";
     }
 

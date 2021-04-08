@@ -24,6 +24,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Event> events = new ArrayList<>();
 
+    private int finishedTodoLists;
+
     public String getUsername() {
         return username;
     }
@@ -46,6 +48,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getFinishedTodoLists() {
+        return finishedTodoLists;
+    }
+
+    public void setFinishedTodoLists(int finishedTodoLists) {
+        this.finishedTodoLists = finishedTodoLists;
     }
 
     public User(String username, String name, @NotNull String password) {

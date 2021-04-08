@@ -24,6 +24,7 @@ public class TodoList {
     @ManyToOne
     private User user;
     private boolean favorite;
+    private boolean finished;
 
     public long getId() {
         return id;
@@ -71,6 +72,14 @@ public class TodoList {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public TodoList(String name, String color, User user, boolean isFavorite) {
