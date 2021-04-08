@@ -71,6 +71,7 @@ public class TodoListController {
                     //todoListService.addItem(list, item);
                 }
                 list.setFinished(isFinished);
+                System.out.println(list);
                 todoListService.save(list);
             }
             //todolists.get(0).setUser(loggedInUser)
