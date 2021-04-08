@@ -64,10 +64,13 @@ public class TodoListController {
             System.out.println(todolists.size());
             for(TodoList list: todolists) {
                 list.setUser(loggedInUser);
+                boolean isFinished = true;
                 for(TodoListItem item: list.getItems()) {
                     item.setTodoList(list);
+                    if(!item.getChecked()) isFinished = false;
                     //todoListService.addItem(list, item);
                 }
+                list.setFinished(isFinished);
                 todoListService.save(list);
             }
             //todolists.get(0).setUser(loggedInUser)
@@ -146,6 +149,8 @@ public class TodoListController {
         TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
         item.setChecked(checked);
         itemService.save(item);
+        /* Not used now but nice to have? */
+
         TodoList list = item.getTodoList();
         List<TodoListItem> listItems = list.getItems();
         boolean isFinished = true;
