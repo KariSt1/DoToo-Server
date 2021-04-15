@@ -1,5 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +19,7 @@ public class Event {
     private String category;
     private String color;
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     public Event(Calendar startDate, Calendar endDate, String title, String category, String color, User user) {
@@ -78,5 +81,13 @@ public class Event {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
