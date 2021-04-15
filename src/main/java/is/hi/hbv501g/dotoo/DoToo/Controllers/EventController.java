@@ -59,6 +59,26 @@ public class EventController {
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
         System.out.println("Erum í event server");
+/*
+        String stringStartDate = event.getStartDate().toString();
+        String stringEndDate = event.getEndDate().toString();
+        Calendar sd = Calendar.getInstance();
+        Calendar ed = Calendar.getInstance();
+        stringStartDate = stringStartDate.replace(stringStartDate.charAt(10), ' ');
+        stringEndDate = stringEndDate.replace(stringEndDate.charAt(10), ' '); //Get rid of the T from date string
+        System.out.println(stringEndDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        try {
+            sd.setTime(sdf.parse(stringStartDate));
+            ed.setTime(sdf.parse(stringEndDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        Event newEvent = new Event(sd, ed, event.getTitle(), event.getCategory(), event.getColor(), userInfo);
+
+ */
         if (loggedInUser != null) {
             event.setUser(loggedInUser);
             eventService.save(event);
