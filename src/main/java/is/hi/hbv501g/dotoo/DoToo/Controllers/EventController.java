@@ -1,5 +1,7 @@
 package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import is.hi.hbv501g.dotoo.DoToo.Entities.Event;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoList;
 import is.hi.hbv501g.dotoo.DoToo.Entities.TodoListItem;
@@ -59,26 +61,7 @@ public class EventController {
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
         System.out.println("Erum í event server");
-/*
-        String stringStartDate = event.getStartDate().toString();
-        String stringEndDate = event.getEndDate().toString();
-        Calendar sd = Calendar.getInstance();
-        Calendar ed = Calendar.getInstance();
-        stringStartDate = stringStartDate.replace(stringStartDate.charAt(10), ' ');
-        stringEndDate = stringEndDate.replace(stringEndDate.charAt(10), ' '); //Get rid of the T from date string
-        System.out.println(stringEndDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
-        try {
-            sd.setTime(sdf.parse(stringStartDate));
-            ed.setTime(sdf.parse(stringEndDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-
-        Event newEvent = new Event(sd, ed, event.getTitle(), event.getCategory(), event.getColor(), userInfo);
-
- */
         if (loggedInUser != null) {
             event.setUser(loggedInUser);
             eventService.save(event);
@@ -89,66 +72,14 @@ public class EventController {
         }
     }
 
-
-
-
-    @RequestMapping("/changeview")
-    public String changeEventView(@RequestParam(value = "viewDate", required = false) String viewDate, @RequestParam(value = "view", required = false) String view,
-                                  @RequestParam(value = "nav", required = false) String nav, @RequestParam(value = "category", required = false) String category, Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("loggedInUser");
-        int offset = 0;
-
-        if (sessionUser == null) {
-            return "redirect:/login";
-        }
-        if (viewDate.length() > 0) {
-            LocalDate date = LocalDate.parse(viewDate);
-            session.setAttribute("date", date);
-        }
-
-        if (category == null || category.equals("")) {
-            category = session.getAttribute("category").toString();
-        }
-
-        if (view == null || view.equals("")) {
-            view = session.getAttribute("view").toString();
-        }
-
-        if (nav == null || nav.equals("")) offset = 0;
-        else if (nav.equals("next")) offset = 1;
-        else if (nav.equals("prev")) offset = -1;
-
-        session.setAttribute("view", view);
-        session.setAttribute("offset", offset);
-        session.setAttribute("category", category);
-        return "redirect:/events";
-    }
-
-    /*
-    @RequestMapping("/makenewevent")
-    public String makeEvent(@RequestParam(value = "startDate") String startDate, @RequestParam(value = "endDate") String endDate,
-                            @RequestParam(value = "title") String title, @RequestParam(value = "category") String category,
-                            @RequestParam(value = "color") String color, HttpSession session) throws ParseException {
-        Calendar sd = Calendar.getInstance();
-        Calendar ed = Calendar.getInstance();
-        startDate = startDate.replace(startDate.charAt(10), ' ');
-        endDate = endDate.replace(endDate.charAt(10), ' '); //Get rid of the T from date string
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
-        sd.setTime(sdf.parse(startDate));
-        ed.setTime(sdf.parse(endDate));
-
-        Event event = new Event(sd, ed, title, category, color, (User) session.getAttribute("loggedInUser"));
-        session.setAttribute("offset", 0);
-        eventService.save(event);
-        return "redirect:/events";
-    }
-
-     */
-
     @RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
-    public String deleteEvent(@RequestParam(value = "id") long id) {
-        Event event = eventService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
+    public ResponseEntity<String> deleteEvent(@Valid @RequestBody ObjectNode objectNode) {
+        JsonNode id = objectNode.get("id");
+        JsonNode username = objectNode.get("username");
+        String sId = id.toString();
+        long deletedId = Long.parseLong(sId);
+        Event event = eventService.findById(deletedId).orElseThrow(() -> new IllegalArgumentException("Invalid event id"));
         eventService.delete(event);
-        return "redirect:/events";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
