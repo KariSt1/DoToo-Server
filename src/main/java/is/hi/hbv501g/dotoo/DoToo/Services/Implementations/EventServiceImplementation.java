@@ -46,14 +46,10 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByWeek(int year, int week, String category, User user) {
+    public List<Event> findByWeek(int year, int week, User user) {
         List<Event> events = null;
-        if(category.equals("All")) {
-           events = findByUser(user);
-        }
-        else {
-            events = findByUserAndCategory(user, category);
-        }
+        events = findByUser(user);
+
         List<Event> eventsByWeek = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
@@ -64,14 +60,9 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByDay(int year, int month, int day, String category, User user) {
+    public List<Event> findByDay(int year, int month, int day, User user) {
         List<Event> events = null;
-        if(category.equals("All")) {
-            events = findByUser(user);
-        }
-        else {
-            events = findByUserAndCategory(user, category);
-        }
+        events = findByUser(user);
         List<Event> eventsByDay = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
@@ -82,14 +73,9 @@ public class EventServiceImplementation implements EventService {
     }
 
     @Override
-    public List<Event> findByMonth(int year, int month, String category, User user) {
+    public List<Event> findByMonth(int year, int month, User user) {
         List<Event> events = null;
-        if(category.equals("All")) {
-            events = findByUser(user);
-        }
-        else {
-            events = findByUserAndCategory(user, category);
-        }
+        events = findByUser(user);
         List<Event> eventsByMonth = new ArrayList<>();
         for (Event event : events) {
             Calendar ev = event.getStartDate();
@@ -108,17 +94,5 @@ public class EventServiceImplementation implements EventService {
             if (ev.get(Calendar.YEAR) == year) eventsByYear.add(event);
         }
         return eventsByYear;
-    }
-
-    @Override
-    public List<Event> findByUserAndCategory(User user, String category) {
-        List<Event> events = findByUser(user);
-        List<Event> eventsByUserAndCategory = new ArrayList<>();
-        for (Event event : events) {
-            String cat = event.getCategory();
-            if(cat.equals(category))
-                eventsByUserAndCategory.add(event);
-        }
-        return eventsByUserAndCategory;
     }
 }

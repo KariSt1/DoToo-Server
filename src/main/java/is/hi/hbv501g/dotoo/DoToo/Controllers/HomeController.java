@@ -49,7 +49,7 @@ public class HomeController {
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
-        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), "All", sessionUser));
+        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), sessionUser));
 
         model.addAttribute("todolists", todoListService.findByUserAndFavorite(sessionUser, true));
 
