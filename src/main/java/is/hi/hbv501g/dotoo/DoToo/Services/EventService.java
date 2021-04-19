@@ -19,13 +19,12 @@ public interface EventService {
 
     List<Event> findByUser(User user);
 
-    List<Event> findByDay(int year, int month, int day, String category, User user);
+    List<Event> findByDay(int year, int month, int day, User user);
 
-    List<Event> findByWeek(int year, int week, String category, User user);
+    List<Event> findByWeek(int year, int week,  User user);
 
-    List<Event> findByMonth(int year, int month, String category, User user);
+    List<Event> findByMonth(int year, int month, User user);
 
     List<Event> findByYear(int year, User user);
 
-    List<Event> findByUserAndCategory(User user, String category);
 }
