@@ -74,7 +74,6 @@ public class TodoListController {
                 System.out.println(list);
                 todoListService.save(list);
             }
-            //todolists.get(0).setUser(loggedInUser)
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
