@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -47,6 +48,7 @@ public class TodoListController {
         if (loggedInUser != null) {
             System.out.println("Notandi til, nafn notanda: " + loggedInUser.getName());
             //session.setAttribute("loggedInUser", exists);
+            List<TodoList> test = todoListService.findByUser(loggedInUser);
             return todoListService.findByUser(loggedInUser);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
@@ -57,24 +59,23 @@ public class TodoListController {
     @ResponseBody
     public ResponseEntity<String> postTodoLists(@RequestParam String username,
                                                 @RequestParam String password,
+                                                @RequestParam int finishedTodoLists,
                                                 @RequestBody List<TodoList> todolists) {
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
+        loggedInUser.setFinishedTodoLists(finishedTodoLists);
         if (loggedInUser != null) {
             System.out.println(todolists.size());
             for(TodoList list: todolists) {
                 list.setUser(loggedInUser);
-                boolean isFinished = true;
                 for(TodoListItem item: list.getItems()) {
                     item.setTodoList(list);
-                    if(!item.getChecked()) isFinished = false;
                     //todoListService.addItem(list, item);
                 }
-                list.setFinished(isFinished);
-                System.out.println(list);
+                Optional<TodoList> existingList = todoListService.findById((long) list.getId());
+                if(existingList.isPresent()) todoListService.delete(existingList.get());
                 todoListService.save(list);
             }
-            //todolists.get(0).setUser(loggedInUser)
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

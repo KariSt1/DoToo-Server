@@ -57,7 +57,6 @@ public class TodoListServiceImplementation implements TodoListService {
         List<TodoListItem> currentItems = list.getItems();
         currentItems.add(item);
         list.setItems(currentItems);
-        list.setFinished(false);
         return listRepository.save(list);
     }
 

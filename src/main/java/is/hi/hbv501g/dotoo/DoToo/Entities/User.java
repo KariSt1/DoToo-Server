@@ -18,6 +18,9 @@ public class User {
     @NotNull
     public String password;
 
+    @ElementCollection
+    public List<String> friends = new ArrayList<>();
+
     @OneToMany(mappedBy = "user")
     private List<TodoList> todoLists = new ArrayList<>();
 
@@ -49,6 +52,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<String> getFriends() { return friends; }
+
+    public void addFriend(String username) { friends.add(username); }
 
     public int getFinishedTodoLists() {
         return finishedTodoLists;
