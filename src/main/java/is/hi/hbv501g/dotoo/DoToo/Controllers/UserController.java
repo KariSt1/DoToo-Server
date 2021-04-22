@@ -2,8 +2,11 @@ package is.hi.hbv501g.dotoo.DoToo.Controllers;
 
 import is.hi.hbv501g.dotoo.DoToo.Entities.User;
 import is.hi.hbv501g.dotoo.DoToo.Services.UserService;
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import org.hibernate.collection.internal.PersistentBag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -89,6 +94,7 @@ public class UserController {
                     if (!loggedInUser.getFriends().contains(friendUsername)) {
                         System.out.println("Vinur til, nafn: " + friend.getName());
                         loggedInUser.addFriend(friendUsername);
+                        userService.save(loggedInUser);
                         json.put("friendName", friend.getName());
                         json.put("friendUsername", friend.getUsername());
                         json.put("streak", friend.getFinishedTodoLists());
@@ -103,5 +109,27 @@ public class UserController {
         }
 
         return json;
+    }
+
+    @RequestMapping(value = "/friends", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONArray getFriends(@RequestParam String username,
+                                       @RequestParam String password) {
+        User userInfo = new User(username, password);
+        User loggedInUser = userService.login(userInfo);
+        JSONArray friendsList = new JSONArray();
+        if (loggedInUser != null) {
+            List<String> friends = loggedInUser.getFriends();
+            for(String friend: friends) {
+                JSONObject friendJson = new JSONObject();
+                User friendUser = userService.findByUserName(friend);
+                friendJson.put("username", friendUser.getUsername());
+                friendJson.put("name", friendUser.getName());
+                friendJson.put("highestStreak", friendUser.getFinishedTodoLists());
+                friendsList.add(friendJson);
+            }
+        }
+
+        return friendsList;
     }
 }
