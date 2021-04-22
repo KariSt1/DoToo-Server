@@ -55,20 +55,19 @@ public class EventController {
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> postEvents(@RequestParam String username,
+    public Event postEvents(@RequestParam String username,
                                                 @RequestParam String password,
                                                 @RequestBody Event event) {
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
-        System.out.println("Erum í event server");
 
         if (loggedInUser != null) {
             event.setUser(loggedInUser);
             eventService.save(event);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return event;
         } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
         }
     }
 
