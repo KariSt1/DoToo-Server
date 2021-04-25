@@ -33,16 +33,11 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public User loginPOST(@Valid @RequestBody User user, BindingResult result) {
-        System.out.println("Erum í loginGET á intellij server");
         if (result.hasErrors()) {
-            System.out.println("Fengum villu í result");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "");
         }
-        System.out.println("Komumst framhjá if-setningunni");
         User exists = userService.login(user);
         if (exists != null) {
-            System.out.println("Innskráning tókst, nafn notanda: " + exists.getName());
-            //session.setAttribute("loggedInUser", exists);
             return exists;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");
@@ -52,25 +47,15 @@ public class UserController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
     public User signupPOST(@Valid @RequestBody User user, BindingResult result) {
-        System.out.println("Erum í signupPost");
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Signup info error");
         }
         User exists = userService.findByUserName(user.username);
         if (exists == null) {
-            System.out.println("Notandi ekki til, bý til nýjan");
             return userService.save(user);
         } else {
-            System.out.println("Notandi til, nafn: " + exists.getName());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username unavailable");
         }
-    }
-
-    // TODO: Skoða hvort þurfi
-    @RequestMapping(value = "/signout", method = RequestMethod.GET)
-    public String signout(HttpSession session) {
-        session.removeAttribute("loggedInUser");
-        return "redirect:/login";
     }
 
     @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
@@ -81,7 +66,6 @@ public class UserController {
         String friendUsername = friendJSON.getAsString("friendUsername");
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
-        System.out.println("Username: " + username + ", friendUsername: " + friendUsername);
         JSONObject json = new JSONObject();
         if (loggedInUser != null) {
             User friend = userService.findByUserName(friendUsername);
@@ -92,7 +76,6 @@ public class UserController {
                     json.put("error", "You cannot add yourself as a friend.");
                 } else {
                     if (!loggedInUser.getFriends().contains(friendUsername)) {
-                        System.out.println("Vinur til, nafn: " + friend.getName());
                         loggedInUser.addFriend(friendUsername);
                         userService.save(loggedInUser);
                         json.put("friendName", friend.getName());
@@ -101,13 +84,11 @@ public class UserController {
                     } else {
                         json.put("error", friend.getName() + " is already your friend.");
                     }
-
                 }
             }
         } else {
             json.put("error", "User authentication error.");
         }
-
         return json;
     }
 

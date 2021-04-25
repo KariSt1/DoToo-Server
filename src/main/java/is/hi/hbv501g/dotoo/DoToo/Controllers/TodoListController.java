@@ -46,8 +46,6 @@ public class TodoListController {
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
         if (loggedInUser != null) {
-            System.out.println("Notandi til, nafn notanda: " + loggedInUser.getName());
-            //session.setAttribute("loggedInUser", exists);
             List<TodoList> test = todoListService.findByUser(loggedInUser);
             return todoListService.findByUser(loggedInUser);
         } else {
@@ -65,12 +63,10 @@ public class TodoListController {
         User loggedInUser = userService.login(userInfo);
         loggedInUser.setFinishedTodoLists(finishedTodoLists);
         if (loggedInUser != null) {
-            System.out.println(todolists.size());
             for(TodoList list: todolists) {
                 list.setUser(loggedInUser);
                 for(TodoListItem item: list.getItems()) {
                     item.setTodoList(list);
-                    //todoListService.addItem(list, item);
                 }
                 Optional<TodoList> existingList = todoListService.findById((long) list.getId());
                 if(existingList.isPresent()) todoListService.delete(existingList.get());
@@ -97,7 +93,6 @@ public class TodoListController {
     @RequestMapping(value = "/deletelists", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> deleteTodoLists(@Valid @RequestBody ObjectNode objectNode) {
-        System.out.println("er í delete lists");
         JsonNode todoLists = objectNode.get("todolists");
         JsonNode username = objectNode.get("username");
 
@@ -109,69 +104,6 @@ public class TodoListController {
             Optional<TodoList> list = todoListService.findById(deletedId);
             if(list.isPresent()) todoListService.delete(list.get());
         }
-
-        System.out.println("á að vera búið að deleta");
          return new ResponseEntity<>(HttpStatus.OK);
-
-    }
-
-    @RequestMapping(value="/deletelist", method = RequestMethod.POST)
-    public String deleteTodoList(@RequestParam(value = "id") long id) {
-        TodoList todolist = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
-        return "redirect:/todolist";
-    }
-
-    @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    public String addItem(@RequestParam(value = "description") String description,
-                          @RequestParam(value = "listId") long id) {
-        Optional<TodoList> todolist = todoListService.findById(id);
-        todoListService.addItem(todolist.get(), new TodoListItem(description, false, todolist.get()));
-        return "redirect:/todolist";
-    }
-
-    @RequestMapping(value = "/deleteitem", method = RequestMethod.POST)
-    public String deleteItem(@RequestParam(value = "id") long id) {
-        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
-        itemService.delete(item);
-        return "redirect:/todolist";
-    }
-
-    @RequestMapping(value = "/newtodolist", method = RequestMethod.POST)
-    public String newTodoList(@RequestParam(value = "name") String name, @RequestParam(value = "color") String color, boolean isFavorite, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("loggedInUser");
-        TodoList todolist = new TodoList(name, color, sessionUser, isFavorite);
-        todoListService.save(todolist);
-        return "redirect:/todolist";
-    }
-
-
-    @RequestMapping(value = "/itemchecked", method = RequestMethod.POST)
-    public String itemChecked(@RequestParam(value = "id") long id,
-                              @RequestParam(value = "checked") boolean checked) {
-        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
-        item.setChecked(checked);
-        itemService.save(item);
-        /* Not used now but nice to have? */
-
-        TodoList list = item.getTodoList();
-        List<TodoListItem> listItems = list.getItems();
-        boolean isFinished = true;
-        for (TodoListItem td: listItems) {
-            if(!td.getChecked()) {
-                isFinished = false;
-                break;
-            }
-        }
-        list.setFinished(isFinished);
-        return "redirect:/todolist";
-    }
-
-    @RequestMapping(value = "/setFavorite", method = RequestMethod.POST)
-    public String setFavorite(@RequestParam(value = "id") long id,
-                               @RequestParam(value = "favorite") boolean isFavorite) {
-        TodoList todoList = todoListService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid todo list id"));
-        todoList.setFavorite(isFavorite);
-        todoListService.save(todoList);
-        return "redirect:/todolist";
     }
 }

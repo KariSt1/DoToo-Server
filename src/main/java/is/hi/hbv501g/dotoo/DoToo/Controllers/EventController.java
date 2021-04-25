@@ -45,8 +45,6 @@ public class EventController {
         User userInfo = new User(username, password);
         User loggedInUser = userService.login(userInfo);
         if (loggedInUser != null) {
-            System.out.println("Notandi til, nafn notanda: " + loggedInUser.getName());
-            //session.setAttribute("loggedInUser", exists);
             return eventService.findByUser(loggedInUser);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login unsuccessful");

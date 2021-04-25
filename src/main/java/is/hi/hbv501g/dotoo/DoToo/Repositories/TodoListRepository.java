@@ -16,7 +16,6 @@ public interface TodoListRepository extends JpaRepository<TodoList, Long> {
     List<TodoList> findAll();
     Optional<TodoList> findById(long id);
     List<TodoList> findByUser(User user);
-/*    @Query("SELECT * FROM TodoList WHERE favorite=true AND User=?1");*/
     List<TodoList> findByUserAndFavorite(User user, boolean favorite);
 
 }

@@ -39,34 +39,6 @@ public class HomeController {
         this.itemService = itemService;
     }
 
-    @RequestMapping("/")
-    public String HomePage(Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("loggedInUser");
-        if (sessionUser == null) {
-            return "redirect:/login";
-        }
-
-        LocalDate date = LocalDate.now();
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
-
-        model.addAttribute("events", eventService.findByWeek(date.getYear(), date.get(weekFields.weekOfWeekBasedYear()), sessionUser));
-
-        model.addAttribute("todolists", todoListService.findByUserAndFavorite(sessionUser, true));
-
-        model.addAttribute("loggedinuser", sessionUser);
-        return "HomePage";
-    }
-
-    @RequestMapping(value = "/homeitemchecked", method = RequestMethod.POST)
-    public String itemChecked(@RequestParam(value = "id") long id,
-                              @RequestParam(value = "checked") boolean checked) {
-        ;
-        TodoListItem item = itemService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
-        item.setChecked(checked);
-        itemService.save(item);
-        return "redirect:/";
-    }
-
     @RequestMapping("/makedata")
     public String makeData(HttpSession session) {
 
